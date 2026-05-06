@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>주식 수익률 계산기 · 손익분기점 계산기 | 주식인포</title>
+<meta name="description" content="주식 매수·매도 수익률, 손익분기점, 목표가 계산을 한번에. 수수료·세금 자동 반영.">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9578749307688434" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0e1a;--bg2:#0f1629;--bg3:#151d35;--card:#111827;--border:#1e2d4a;--accent:#00d4aa;--accent2:#0ea5e9;--up:#22c55e;--down:#ef4444;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:14px;}
+nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;height:56px;gap:24px;position:sticky;top:0;z-index:100;}
+.logo{font-size:18px;font-weight:700;color:var(--accent);text-decoration:none;}
+.logo span{color:var(--text);}
+nav a{color:var(--text2);text-decoration:none;font-size:13px;}
+.hero{background:var(--bg2);border-bottom:1px solid var(--border);padding:32px 24px;}
+.hero-inner{max-width:960px;margin:0 auto;}
+.hero h1{font-size:24px;font-weight:700;margin-bottom:6px;}
+.hero h1 em{color:var(--accent);font-style:normal;}
+.hero p{color:var(--text2);}
+.main{max-width:960px;margin:0 auto;padding:28px 24px;}
+.tab-row{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:24px;}
+.tab{padding:10px 24px;font-size:14px;font-weight:500;cursor:pointer;border-bottom:2px solid transparent;color:var(--text3);transition:all .2s;}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+.panel{display:none;} .panel.active{display:block;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:16px;}
+.card-title{font-size:15px;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:8px;}
+.card-title::before{content:'';width:3px;height:16px;background:var(--accent);border-radius:2px;}
+.input-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:20px;}
+.input-group label{display:block;font-size:12px;color:var(--text3);margin-bottom:6px;}
+.input-group input,.input-group select{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:14px;font-family:'IBM Plex Mono',monospace;outline:none;transition:border-color .2s;}
+.input-group input:focus,.input-group select:focus{border-color:var(--accent);}
+.result-box{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:20px;}
+.result-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px;}
+.result-row:last-child{border-bottom:none;}
+.result-label{color:var(--text2);}
+.result-val{font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:500;}
+.result-big{text-align:center;padding:20px;margin-top:16px;background:var(--bg);border-radius:10px;}
+.result-big .label{font-size:12px;color:var(--text3);margin-bottom:8px;}
+.result-big .value{font-family:'IBM Plex Mono',monospace;font-size:32px;font-weight:700;}
+.up{color:var(--up);} .down{color:var(--down);}
+.neutral{color:var(--text2);}
+.btn{background:var(--accent);color:var(--bg);border:none;border-radius:8px;padding:11px 28px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:opacity .2s;width:100%;margin-top:6px;}
+.btn:hover{opacity:.85;}
+.bep-visual{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;}
+.bep-item{flex:1;min-width:140px;background:var(--bg);border-radius:10px;padding:14px;text-align:center;}
+.bep-label{font-size:11px;color:var(--text3);margin-bottom:6px;}
+.bep-val{font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:600;}
+@media(max-width:768px){
+  nav{gap:10px;padding:0 12px;overflow-x:auto;}
+  nav a{font-size:12px;white-space:nowrap;}
+  nav a:nth-child(n+5){display:none;}
+  .hero{padding:24px 16px;}
+  .hero h1{font-size:20px;}
+  .main{padding:20px 14px;}
+  .card{padding:16px;}
+  .input-grid{grid-template-columns:1fr 1fr!important;}
+  .result-big .value{font-size:24px;}
+  .bep-visual{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:480px){
+  nav a:not(.logo){display:none;}
+  .input-grid{grid-template-columns:1fr!important;}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">주식<span>인포</span></a>
+  <a href="/stocks.html">국내주식</a>
+  <a href="/calculator.html" style="color:var(--accent)">계산기</a>
+  <a href="/dividend-calc.html">배당계산기</a>
+  <a href="/compare.html">종목비교</a>
+</nav>
+<div class="hero">
+  <div class="hero-inner">
+    <h1>🧮 주식 <em>수익률 · 손익분기점</em> 계산기</h1>
+    <p>매수·매도 수익률과 본전을 찾기 위한 목표가를 계산하세요.</p>
+  </div>
+</div>
+<div class="main">
+  <div class="tab-row">
+    <div class="tab active" onclick="switchTab('profit',this)">수익률 계산기</div>
+    <div class="tab" onclick="switchTab('bep',this)">손익분기점 계산기</div>
+    <div class="tab" onclick="switchTab('target',this)">목표가 계산기</div>
+  </div>
+
+  <!-- 수익률 -->
+  <div class="panel active" id="panel-profit">
+    <div class="card">
+      <div class="card-title">매수 정보 입력</div>
+      <div class="input-grid">
+        <div class="input-group"><label>매수 단가 (원)</label><input type="number" id="p-buy" value="70000" oninput="calcProfit()"></div>
+        <div class="input-group"><label>매수 수량 (주)</label><input type="number" id="p-qty" value="100" oninput="calcProfit()"></div>
+        <div class="input-group"><label>현재가 / 매도가 (원)</label><input type="number" id="p-sell" value="74800" oninput="calcProfit()"></div>
+        <div class="input-group"><label>매수 수수료</label><select id="p-buyfee" onchange="calcProfit()"><option value="0.00015">키움 0.015%</option><option value="0.00019">미래에셋 0.019%</option><option value="0.00020">삼성 0.020%</option><option value="0.00018">NH 0.018%</option></select></div>
+        <div class="input-group"><label>매도 수수료</label><select id="p-sellfee" onchange="calcProfit()"><option value="0.00015">키움 0.015%</option><option value="0.00019">미래에셋 0.019%</option><option value="0.00020">삼성 0.020%</option></select></div>
+        <div class="input-group"><label>증권거래세</label><select id="p-tax" onchange="calcProfit()"><option value="0.0018">KOSPI 0.18%</option><option value="0.0018">KOSDAQ 0.18%</option><option value="0">비과세</option></select></div>
+      </div>
+      <div class="result-box" id="profit-result"></div>
+    </div>
+  </div>
+
+  <!-- 손익분기점 -->
+  <div class="panel" id="panel-bep">
+    <div class="card">
+      <div class="card-title">손익분기점 계산</div>
+      <div class="input-grid">
+        <div class="input-group"><label>매수 단가 (원)</label><input type="number" id="b-buy" value="70000" oninput="calcBep()"></div>
+        <div class="input-group"><label>매수 수량 (주)</label><input type="number" id="b-qty" value="100" oninput="calcBep()"></div>
+        <div class="input-group"><label>수수료 (매수+매도)</label><select id="b-fee" onchange="calcBep()"><option value="0.0003">키움 0.030%</option><option value="0.00038">미래에셋 0.038%</option><option value="0.0004">삼성 0.040%</option></select></div>
+      </div>
+      <div class="result-box" id="bep-result"></div>
+    </div>
+  </div>
+
+  <!-- 목표가 -->
+  <div class="panel" id="panel-target">
+    <div class="card">
+      <div class="card-title">목표 수익률로 목표가 계산</div>
+      <div class="input-grid">
+        <div class="input-group"><label>매수 단가 (원)</label><input type="number" id="t-buy" value="70000" oninput="calcTarget()"></div>
+        <div class="input-group"><label>목표 수익률 (%)</label><input type="number" id="t-rate" value="10" oninput="calcTarget()"></div>
+        <div class="input-group"><label>매수 수량 (주)</label><input type="number" id="t-qty" value="100" oninput="calcTarget()"></div>
+      </div>
+      <div class="result-box" id="target-result"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function fmt(n){return Math.round(n).toLocaleString('ko-KR');}
+function fmtF(n,d=2){return n.toFixed(d);}
+
+function switchTab(id, el) {
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('panel-'+id).classList.add('active');
+}
+
+function calcProfit() {
+  const buy=+document.getElementById('p-buy').value||0;
+  const qty=+document.getElementById('p-qty').value||0;
+  const sell=+document.getElementById('p-sell').value||0;
+  const bf=+document.getElementById('p-buyfee').value;
+  const sf=+document.getElementById('p-sellfee').value;
+  const tax=+document.getElementById('p-tax').value;
+  const buyTotal=buy*qty*(1+bf);
+  const sellTotal=sell*qty*(1-sf-tax);
+  const profit=sellTotal-buyTotal;
+  const rate=(profit/buyTotal)*100;
+  const up=profit>=0;
+  document.getElementById('profit-result').innerHTML=`
+    <div class="result-big"><div class="label">총 손익</div><div class="value ${up?'up':'down'}">${up?'+':''}${fmt(profit)}원</div></div>
+    <div style="margin-top:12px">
+      <div class="result-row"><span class="result-label">수익률</span><span class="result-val ${up?'up':'down'}">${up?'+':''}${fmtF(rate)}%</span></div>
+      <div class="result-row"><span class="result-label">총 매수금액</span><span class="result-val">${fmt(buy*qty)}원</span></div>
+      <div class="result-row"><span class="result-label">매수 수수료</span><span class="result-val">${fmt(buy*qty*bf)}원</span></div>
+      <div class="result-row"><span class="result-label">매도 수수료+거래세</span><span class="result-val">${fmt(sell*qty*(sf+tax))}원</span></div>
+      <div class="result-row"><span class="result-label">실제 수령액</span><span class="result-val">${fmt(sellTotal)}원</span></div>
+    </div>`;
+}
+
+function calcBep() {
+  const buy=+document.getElementById('b-buy').value||0;
+  const qty=+document.getElementById('b-qty').value||0;
+  const fee=+document.getElementById('b-fee').value;
+  const tax=0.0018;
+  const bep=buy*(1+fee)/(1-fee-tax);
+  const needPct=((bep-buy)/buy)*100;
+  document.getElementById('bep-result').innerHTML=`
+    <div class="bep-visual">
+      <div class="bep-item"><div class="bep-label">손익분기 주가</div><div class="bep-val up">${fmt(bep)}원</div></div>
+      <div class="bep-item"><div class="bep-label">필요 상승률</div><div class="bep-val up">+${fmtF(needPct)}%</div></div>
+      <div class="bep-item"><div class="bep-label">총 투자금</div><div class="bep-val">${fmt(buy*qty)}원</div></div>
+      <div class="bep-item"><div class="bep-label">총 수수료+세금</div><div class="bep-val down">${fmt(buy*qty*(fee*2+tax))}원</div></div>
+    </div>
+    <div class="result-row" style="margin-top:12px"><span class="result-label">현재 매수가</span><span class="result-val">${fmt(buy)}원</span></div>
+    <div class="result-row"><span class="result-label">이 가격 이상 팔아야 본전</span><span class="result-val up">${fmt(bep)}원 이상</span></div>`;
+}
+
+function calcTarget() {
+  const buy=+document.getElementById('t-buy').value||0;
+  const rate=+document.getElementById('t-rate').value||0;
+  const qty=+document.getElementById('t-qty').value||0;
+  const target=buy*(1+rate/100);
+  const profit=(target-buy)*qty;
+  document.getElementById('target-result').innerHTML=`
+    <div class="result-big"><div class="label">목표가</div><div class="value up">${fmt(target)}원</div></div>
+    <div style="margin-top:12px">
+      <div class="result-row"><span class="result-label">필요 상승액</span><span class="result-val up">+${fmt(target-buy)}원</span></div>
+      <div class="result-row"><span class="result-label">목표 수익 (${qty}주 기준)</span><span class="result-val up">+${fmt(profit)}원</span></div>
+      <div class="result-row"><span class="result-label">총 투자금</span><span class="result-val">${fmt(buy*qty)}원</span></div>
+    </div>`;
+}
+
+calcProfit(); calcBep(); calcTarget();
+</script>
+</body>
+</html>
