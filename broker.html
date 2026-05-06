@@ -61,6 +61,76 @@
 
   .notice{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:16px;font-size:12px;color:var(--text3);line-height:1.8;}
   footer{border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--text3);font-size:12px;margin-top:48px;}
+@media (max-width: 768px) {
+  nav { gap: 12px; padding: 0 14px; overflow-x: auto; }
+  nav a { font-size: 12px; white-space: nowrap; }
+  .logo { font-size: 16px; }
+  .hero { padding: 24px 16px; }
+  .hero h1 { font-size: 20px; }
+  .main { padding: 20px 16px; }
+  table { display: block; overflow-x: auto; white-space: nowrap; }
+  .grid2, .grid3 { grid-template-columns: 1fr !important; }
+  .input-row { grid-template-columns: 1fr !important; }
+  .compare-header { grid-template-columns: 1fr !important; }
+  .result-grid { grid-template-columns: 1fr 1fr !important; }
+  .hero-stats { gap: 10px; }
+  .hero-stat { min-width: 140px; padding: 12px 14px; }
+  .hero-stat .value { font-size: 16px; }
+  .category-grid { grid-template-columns: 1fr 1fr !important; }
+  .stock-grid { grid-template-columns: 1fr 1fr !important; }
+  .broker-grid { grid-template-columns: 1fr !important; }
+  .detail-grid { grid-template-columns: 1fr 1fr !important; }
+  .popular-grid { grid-template-columns: 1fr 1fr !important; }
+  .selector-row { grid-template-columns: 1fr 40px 1fr !important; }
+  .search-row { flex-direction: column; }
+  .search-row select { width: 100%; }
+  .indicator-row { grid-template-columns: 1fr 1fr !important; }
+  .stock-header { flex-direction: column; gap: 16px; }
+  .stock-stats { border-left: none !important; padding-left: 0 !important; border-top: 1px solid var(--border); padding-top: 14px; flex-wrap: wrap; }
+  .stat-item { min-width: 120px; }
+  .goal-row { flex-direction: column; align-items: flex-start; }
+  .goal-input { width: 100% !important; }
+  .good-bad { flex-direction: column; }
+  .tabs { overflow-x: auto; }
+  .tab { white-space: nowrap; }
+  .theme-tabs { gap: 6px; }
+  .theme-tab { padding: 6px 12px; font-size: 12px; }
+  .cat-tabs { gap: 6px; }
+  .cat-tab { padding: 6px 12px; font-size: 12px; }
+  .filter-row { gap: 6px; }
+  .filter-btn { padding: 6px 12px; font-size: 11px; }
+  .full-width { grid-column: 1 !important; }
+  .price-big { font-size: 28px !important; }
+  .stock-name-big { font-size: 20px !important; }
+  .section-title { font-size: 14px; }
+  tbody td { padding: 9px 10px; font-size: 12px; }
+  thead th { padding: 8px 10px; font-size: 10px; }
+  .card { padding: 16px; }
+  .card-title { font-size: 13px; margin-bottom: 14px; }
+  .broker-header { padding: 14px; }
+  .broker-body { padding: 14px; }
+  .term-header { flex-wrap: wrap; gap: 8px; }
+  .term-short { margin-left: 0 !important; text-align: left !important; }
+  .cta-btn { padding: 11px; font-size: 13px; }
+  .result-val { font-size: 18px !important; }
+  .ind-val { font-size: 14px !important; }
+  .hero-stat .value { font-size: 18px !important; }
+  .chart-wrap { height: 180px !important; }
+  .pagination { flex-wrap: wrap; }
+  .stats-row { gap: 8px; }
+  .stat-pill { font-size: 12px; padding: 6px 12px; }
+}
+@media (max-width: 480px) {
+  .result-grid { grid-template-columns: 1fr !important; }
+  .stock-grid { grid-template-columns: 1fr !important; }
+  .category-grid { grid-template-columns: 1fr 1fr !important; }
+  .hero-stats { flex-direction: column; }
+  .hero-stat { min-width: unset; width: 100%; }
+  nav a:not(.logo) { display: none; }
+  .nav-right { display: none; }
+  .indicator-row { grid-template-columns: 1fr !important; }
+}
+
 </style>
 </head>
 <body>
