@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>오늘의 주식 뉴스 - 증시 뉴스 모음 | 주식인포</title>
+<meta name="description" content="오늘의 주식·증시·경제 뉴스를 한눈에. 국내외 주식 시장, 기업 뉴스, 경제 이슈를 실시간으로 모아드립니다.">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9578749307688434" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0a0e1a; --bg2:#0f1629; --bg3:#151d35; --card:#111827;
+    --border:#1e2d4a; --accent:#00d4aa; --accent2:#0ea5e9;
+    --up:#22c55e; --down:#ef4444;
+    --text:#e2e8f0; --text2:#94a3b8; --text3:#64748b;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:'Noto Sans KR',sans-serif; font-size:14px; line-height:1.6; }
+
+  nav { background:var(--bg2); border-bottom:1px solid var(--border); padding:0 24px; display:flex; align-items:center; height:56px; gap:24px; position:sticky; top:0; z-index:100; }
+  .logo { font-size:18px; font-weight:700; color:var(--accent); letter-spacing:-0.5px; text-decoration:none; }
+  .logo span { color:var(--text); }
+  .nav-links { display:flex; gap:16px; }
+  nav a { color:var(--text2); text-decoration:none; font-size:13px; transition:color 0.2s; white-space:nowrap; }
+  nav a:hover, nav a.active { color:var(--accent); }
+  .nav-right { margin-left:auto; }
+  .search-bar { background:var(--bg3); border:1px solid var(--border); border-radius:8px; padding:6px 14px; color:var(--text); font-size:13px; font-family:inherit; width:200px; outline:none; transition:border-color 0.2s; }
+  .search-bar:focus { border-color:var(--accent); }
+
+  .page-header { background:var(--bg2); border-bottom:1px solid var(--border); padding:32px 24px; }
+  .page-header-inner { max-width:1100px; margin:0 auto; }
+  .page-header h1 { font-size:26px; font-weight:700; margin-bottom:8px; }
+  .page-header h1 em { color:var(--accent); font-style:normal; }
+  .page-header p { color:var(--text2); font-size:14px; }
+
+  .main { max-width:1100px; margin:0 auto; padding:28px 24px; display:grid; grid-template-columns:1fr 300px; gap:24px; }
+  @media(max-width:800px) { .main { grid-template-columns:1fr; } }
+
+  .news-tabs { display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
+  .tab-btn { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:8px 16px; color:var(--text2); font-size:13px; font-family:inherit; cursor:pointer; transition:all 0.2s; font-weight:500; }
+  .tab-btn.active { background:var(--accent); border-color:var(--accent); color:var(--bg); }
+  .tab-btn:hover:not(.active) { border-color:var(--accent); color:var(--text); }
+
+  .section-title { font-size:15px; font-weight:700; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+  .section-title::before { content:''; width:3px; height:16px; background:var(--accent); border-radius:2px; display:block; }
+  .badge { background:var(--accent); color:var(--bg); font-size:10px; font-weight:700; padding:2px 7px; border-radius:10px; }
+
+  .featured-card { background:var(--card); border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:24px; cursor:pointer; transition:border-color 0.2s; }
+  .featured-card:hover { border-color:var(--accent); }
+  .featured-img { width:100%; height:180px; background:linear-gradient(135deg, #1e2d4a 0%, #0f1629 100%); display:flex; align-items:center; justify-content:center; font-size:48px; }
+  .featured-body { padding:20px; }
+  .featured-cat { font-size:11px; font-weight:700; color:var(--accent); letter-spacing:0.5px; margin-bottom:8px; }
+  .featured-title { font-size:16px; font-weight:700; margin-bottom:8px; line-height:1.5; }
+  .featured-summary { font-size:13px; color:var(--text2); line-height:1.7; margin-bottom:12px; }
+  .featured-meta { font-size:12px; color:var(--text3); display:flex; gap:12px; }
+
+  .news-list { display:flex; flex-direction:column; gap:1px; background:var(--border); border-radius:12px; overflow:hidden; }
+  .news-item { background:var(--card); padding:16px 18px; cursor:pointer; transition:background 0.15s; display:flex; gap:14px; align-items:flex-start; }
+  .news-item:hover { background:var(--bg3); }
+  .news-cat { font-size:10px; font-weight:700; padding:3px 8px; border-radius:6px; white-space:nowrap; flex-shrink:0; margin-top:2px; }
+  .cat-market { background:#0ea5e920; color:#38bdf8; border:1px solid #0ea5e940; }
+  .cat-company { background:#00d4aa20; color:#00d4aa; border:1px solid #00d4aa40; }
+  .cat-global { background:#7c3aed20; color:#a78bfa; border:1px solid #7c3aed40; }
+  .cat-economy { background:#f59e0b20; color:#fbbf24; border:1px solid #f59e0b40; }
+  .cat-tech { background:#ef444420; color:#f87171; border:1px solid #ef444440; }
+  .news-body { flex:1; min-width:0; }
+  .news-title { font-size:14px; font-weight:500; margin-bottom:4px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; }
+  .news-meta { font-size:12px; color:var(--text3); display:flex; gap:10px; }
+  .news-press { color:var(--accent2); }
+  .news-thumb { width:72px; height:54px; border-radius:6px; background:var(--bg3); display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0; }
+
+  .sidebar { display:flex; flex-direction:column; gap:20px; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+  .card-title { font-size:13px; font-weight:700; margin-bottom:14px; color:var(--text2); }
+  .mini-row { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border); font-size:13px; }
+  .mini-row:last-child { border-bottom:none; }
+
+  .keyword-tags { display:flex; flex-wrap:wrap; gap:8px; }
+  .keyword-tag { background:var(--bg3); border:1px solid var(--border); border-radius:20px; padding:5px 12px; font-size:12px; color:var(--text2); cursor:pointer; transition:all 0.2s; }
+  .keyword-tag:hover { border-color:var(--accent); color:var(--accent); }
+
+  footer { border-top:1px solid var(--border); padding:24px; text-align:center; color:var(--text3); font-size:12px; margin-top:48px; }
+
+  @media(max-width:600px) {
+    nav { padding:0 16px; gap:12px; }
+    .nav-links { display:none; }
+    .page-header h1 { font-size:20px; }
+    .main { padding:20px 16px; }
+    .news-thumb { display:none; }
+    .featured-img { height:120px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">주식<span>인포</span></a>
+  <div class="nav-links">
+    <a href="/stocks.html">국내주식</a>
+    <a href="/etf.html">ETF</a>
+    <a href="/news.html" class="active">뉴스</a>
+    <a href="/dart.html">공시</a>
+    <a href="/heatmap.html">히트맵</a>
+    <a href="/ipo.html">IPO</a>
+    <a href="/calendar.html">경제캘린더</a>
+  </div>
+  <div class="nav-right">
+    <input class="search-bar" type="text" placeholder="종목 검색..." id="searchInput">
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <h1><em>오늘의 뉴스</em> — 주식·증시·경제</h1>
+    <p>국내외 주식 시장, 기업 뉴스, 경제 이슈를 실시간으로 모아드립니다</p>
+  </div>
+</div>
+
+<div class="main">
+  <div class="content">
+    <div class="news-tabs">
+      <button class="tab-btn active" onclick="filterNews('all',this)">전체</button>
+      <button class="tab-btn" onclick="filterNews('market',this)">증시</button>
+      <button class="tab-btn" onclick="filterNews('company',this)">기업</button>
+      <button class="tab-btn" onclick="filterNews('global',this)">해외</button>
+      <button class="tab-btn" onclick="filterNews('economy',this)">경제</button>
+      <button class="tab-btn" onclick="filterNews('tech',this)">산업/기술</button>
+    </div>
+
+    <div class="featured-card" id="featuredNews">
+      <div class="featured-img">📰</div>
+      <div class="featured-body">
+        <div class="featured-cat">TODAY TOP STORY</div>
+        <div class="featured-title">KOSPI, 반도체·2차전지 동반 강세에 2,620선 돌파…외국인 순매수 지속</div>
+        <div class="featured-summary">코스피지수가 6거래일 연속 상승하며 2,620선을 돌파했다. 삼성전자, SK하이닉스 등 반도체 대형주와 에코프로비엠, 포스코퓨처엠 등 2차전지주가 동반 강세를 보이며 지수 상승을 견인했다. 외국인은 6일 연속 순매수를 기록하며 수급을 뒷받침하고 있다.</div>
+        <div class="featured-meta">
+          <span>한국경제</span>
+          <span>2025.05.06 09:32</span>
+          <span style="color:var(--accent)">📈 증시</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title">오늘의 주요 뉴스 <span class="badge">NEW</span></div>
+    <div class="news-list" id="newsList"></div>
+  </div>
+
+  <div class="sidebar">
+    <div class="card">
+      <div class="card-title">🔥 실시간 인기 뉴스</div>
+      <div id="hotNews"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">🏷 주요 키워드</div>
+      <div class="keyword-tags" id="keywords"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">📊 언론사별 뉴스</div>
+      <div id="pressList"></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>주식인포 · 뉴스 데이터는 각 언론사의 저작권을 존중합니다.</p>
+  <p style="margin-top:6px">본 사이트의 뉴스는 투자 참고용이며 투자 결정의 책임은 본인에게 있습니다.</p>
+</footer>
+
+<script>
+const newsData = [
+  { id:1, cat:'market', catName:'증시', emoji:'📈', title:'KOSPI 2,620선 돌파…반도체·2차전지 동반 강세', summary:'코스피가 6거래일 연속 상승, 반도체·이차전지 주도', press:'한국경제', time:'09:32', hot:true },
+  { id:2, cat:'company', catName:'기업', emoji:'🏢', title:'삼성전자, 1분기 영업이익 6.6조…전년 대비 931% 증가', summary:'메모리 반도체 가격 회복에 어닝 서프라이즈', press:'머니투데이', time:'09:15', hot:true },
+  { id:3, cat:'global', catName:'해외', emoji:'🌐', title:'미 연준, 기준금리 동결…파월 "9월 인하 검토 가능"', summary:'FOMC 금리 5.25~5.50% 동결, 연내 인하 시사', press:'연합뉴스', time:'08:50', hot:true },
+  { id:4, cat:'economy', catName:'경제', emoji:'💹', title:'원달러 환율, 1,370원대로 하락…수출 기업 수혜 기대', summary:'달러 약세 영향으로 원화 강세 전환', press:'조선비즈', time:'08:40' },
+  { id:5, cat:'tech', catName:'산업', emoji:'⚙️', title:'SK하이닉스, HBM4 개발 완료…엔비디아에 공급 확대', summary:'4분기 HBM4 양산 목표, 엔비디아와 장기 공급 계약 체결', press:'전자신문', time:'08:22', hot:true },
+  { id:6, cat:'company', catName:'기업', emoji:'🏢', title:'카카오, 콘텐츠 사업 구조조정 본격화…적자 자회사 매각', summary:'픽코마, 카카오엔터 일부 사업부 매각 협상 중', press:'이데일리', time:'08:10' },
+  { id:7, cat:'global', catName:'해외', emoji:'🌐', title:'나스닥, 애플·마이크로소프트 강세에 1.2% 상승 마감', summary:'AI 수요 증가 기대감에 기술주 전반 상승', press:'한국경제', time:'07:55' },
+  { id:8, cat:'economy', catName:'경제', emoji:'💹', title:'4월 소비자물가 2.9% 상승…근원인플레 둔화 추세', summary:'에너지·식품 가격 안정, 서비스 물가는 여전히 높아', press:'서울경제', time:'07:30' },
+  { id:9, cat:'market', catName:'증시', emoji:'📈', title:'코스닥 바이오주 급등…HLB, FDA 허가 기대에 상한가', summary:'신약 허가 기대감에 HLB·유한양행 등 동반 강세', press:'파이낸셜뉴스', time:'07:15' },
+  { id:10, cat:'tech', catName:'산업', emoji:'⚙️', title:'현대차, 2025년 전기차 50만대 목표 상향…글로벌 수주 급증', summary:'아이오닉9 출시 앞두고 수주 잔고 20만대 돌파', press:'매일경제', time:'07:00' },
+  { id:11, cat:'company', catName:'기업', emoji:'🏢', title:'NAVER, AI 검색 점유율 80% 돌파…카카오와 격차 확대', summary:'클로바X 기반 AI 검색 사용자 수 역대 최고', press:'디지털데일리', time:'06:45' },
+  { id:12, cat:'global', catName:'해외', emoji:'🌐', title:'중국 CSI300 지수, 경기부양책 기대에 1.8% 강세', summary:'중국 인민은행 추가 금리 인하 시사', press:'연합인포맥스', time:'06:30' },
+];
+
+const catClass = { market:'cat-market', company:'cat-company', global:'cat-global', economy:'cat-economy', tech:'cat-tech' };
+let currentFilter = 'all';
+
+function filterNews(cat, btn) {
+  currentFilter = cat;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderNews();
+}
+
+function renderNews() {
+  const filtered = currentFilter === 'all' ? newsData : newsData.filter(n => n.cat === currentFilter);
+  document.getElementById('newsList').innerHTML = filtered.map(n => `
+    <div class="news-item">
+      <span class="news-cat ${catClass[n.cat]}">${n.catName}</span>
+      <div class="news-body">
+        <div class="news-title">${n.title}</div>
+        <div class="news-meta">
+          <span class="news-press">${n.press}</span>
+          <span>${n.time}</span>
+        </div>
+      </div>
+      <div class="news-thumb">${n.emoji}</div>
+    </div>`).join('');
+}
+
+function renderSidebar() {
+  const hot = newsData.filter(n => n.hot);
+  document.getElementById('hotNews').innerHTML = hot.map((n,i) => `
+    <div class="mini-row" style="cursor:pointer">
+      <div style="display:flex;gap:10px;align-items:flex-start">
+        <span style="color:var(--accent);font-weight:700;font-family:'IBM Plex Mono',monospace;flex-shrink:0">${i+1}</span>
+        <span style="font-size:13px;line-height:1.4">${n.title.substring(0,28)}...</span>
+      </div>
+    </div>`).join('');
+
+  const keywords = ['삼성전자', 'HBM', '2차전지', '연준', '금리', 'AI반도체', '코스피', '에코프로', '엔비디아', 'HLB', '원달러', '전기차'];
+  document.getElementById('keywords').innerHTML = keywords.map(k => `<span class="keyword-tag">${k}</span>`).join('');
+
+  const press = [
+    { name:'한국경제', cnt:12 }, { name:'연합뉴스', cnt:9 }, { name:'머니투데이', cnt:7 },
+    { name:'조선비즈', cnt:6 }, { name:'매일경제', cnt:5 },
+  ];
+  document.getElementById('pressList').innerHTML = press.map(p => `
+    <div class="mini-row">
+      <span style="color:var(--text2)">${p.name}</span>
+      <span style="font-family:'IBM Plex Mono',monospace;color:var(--text3)">${p.cnt}건</span>
+    </div>`).join('');
+}
+
+document.getElementById('searchInput').addEventListener('keydown', e => {
+  if(e.key === 'Enter') { const q = e.target.value.trim(); if(q) location.href = '/stocks.html?q=' + encodeURIComponent(q); }
+});
+
+renderNews();
+renderSidebar();
+</script>
+</body>
+</html>

@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>주식 세금 계산기 - 양도소득세·배당소득세 계산 | 주식인포</title>
+<meta name="description" content="주식 양도소득세, 배당소득세, 금융투자소득세를 무료로 계산하세요. 국내주식·해외주식·ETF 세금 자동 계산.">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9578749307688434" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a; --bg2: #0f1629; --bg3: #151d35; --card: #111827;
+    --border: #1e2d4a; --accent: #00d4aa; --accent2: #0ea5e9;
+    --up: #22c55e; --down: #ef4444;
+    --text: #e2e8f0; --text2: #94a3b8; --text3: #64748b;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:'Noto Sans KR',sans-serif; font-size:14px; line-height:1.6; }
+
+  nav { background:var(--bg2); border-bottom:1px solid var(--border); padding:0 24px; display:flex; align-items:center; height:56px; gap:24px; position:sticky; top:0; z-index:100; flex-wrap:wrap; }
+  .logo { font-size:18px; font-weight:700; color:var(--accent); letter-spacing:-0.5px; text-decoration:none; white-space:nowrap; }
+  .logo span { color:var(--text); }
+  .nav-links { display:flex; gap:16px; flex-wrap:wrap; }
+  nav a { color:var(--text2); text-decoration:none; font-size:13px; transition:color 0.2s; white-space:nowrap; }
+  nav a:hover, nav a.active { color:var(--accent); }
+  .nav-right { margin-left:auto; }
+  .search-bar { background:var(--bg3); border:1px solid var(--border); border-radius:8px; padding:6px 14px; color:var(--text); font-size:13px; font-family:inherit; width:200px; outline:none; transition:border-color 0.2s; }
+  .search-bar:focus { border-color:var(--accent); }
+
+  .page-header { background:var(--bg2); border-bottom:1px solid var(--border); padding:32px 24px; }
+  .page-header-inner { max-width:900px; margin:0 auto; }
+  .page-header h1 { font-size:26px; font-weight:700; margin-bottom:8px; }
+  .page-header h1 em { color:var(--accent); font-style:normal; }
+  .page-header p { color:var(--text2); font-size:14px; }
+
+  .main { max-width:900px; margin:0 auto; padding:32px 24px; }
+
+  .tabs { display:flex; gap:8px; margin-bottom:24px; flex-wrap:wrap; }
+  .tab-btn { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:9px 20px; color:var(--text2); font-size:13px; font-family:inherit; cursor:pointer; transition:all 0.2s; font-weight:500; }
+  .tab-btn.active { background:var(--accent); border-color:var(--accent); color:var(--bg); }
+  .tab-btn:hover:not(.active) { border-color:var(--accent); color:var(--text); }
+
+  .tab-panel { display:none; }
+  .tab-panel.active { display:block; }
+
+  .calc-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  @media(max-width:680px) { .calc-grid { grid-template-columns:1fr; } }
+
+  .calc-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:24px; }
+  .calc-card h3 { font-size:15px; font-weight:700; margin-bottom:20px; display:flex; align-items:center; gap:8px; }
+  .calc-card h3::before { content:''; width:3px; height:16px; background:var(--accent); border-radius:2px; display:block; }
+
+  .field { margin-bottom:16px; }
+  .field label { display:block; font-size:12px; color:var(--text3); margin-bottom:6px; letter-spacing:0.3px; }
+  .field input, .field select { width:100%; background:var(--bg3); border:1px solid var(--border); border-radius:8px; padding:10px 14px; color:var(--text); font-size:14px; font-family:inherit; outline:none; transition:border-color 0.2s; }
+  .field input:focus, .field select:focus { border-color:var(--accent); }
+  .field select option { background:var(--bg3); }
+
+  .calc-btn { width:100%; background:var(--accent); color:var(--bg); border:none; border-radius:8px; padding:12px; font-size:14px; font-weight:700; font-family:inherit; cursor:pointer; transition:opacity 0.2s; margin-top:4px; }
+  .calc-btn:hover { opacity:0.85; }
+
+  .result-card { background:var(--bg3); border:1px solid var(--border); border-radius:12px; padding:24px; margin-top:24px; }
+  .result-card h3 { font-size:14px; font-weight:700; color:var(--text2); margin-bottom:16px; }
+  .result-row { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--border); font-size:13px; }
+  .result-row:last-child { border-bottom:none; }
+  .result-label { color:var(--text2); }
+  .result-val { font-family:'IBM Plex Mono',monospace; font-weight:500; }
+  .result-total { font-size:16px; color:var(--accent); font-weight:700; }
+  .result-note { font-size:11px; color:var(--text3); margin-top:12px; line-height:1.7; }
+
+  .info-box { background:var(--bg3); border:1px solid var(--border); border-radius:12px; padding:20px; margin-top:24px; }
+  .info-box h3 { font-size:14px; font-weight:700; margin-bottom:12px; color:var(--accent2); }
+  .info-list { list-style:none; }
+  .info-list li { font-size:13px; color:var(--text2); padding:6px 0; border-bottom:1px solid var(--border); display:flex; gap:10px; }
+  .info-list li:last-child { border-bottom:none; }
+  .info-list li::before { content:'•'; color:var(--accent); flex-shrink:0; }
+
+  footer { border-top:1px solid var(--border); padding:24px; text-align:center; color:var(--text3); font-size:12px; margin-top:48px; }
+
+  @media(max-width:600px) {
+    .page-header h1 { font-size:20px; }
+    .main { padding:20px 16px; }
+    nav { gap:12px; padding:0 16px; }
+    .nav-links { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">주식<span>인포</span></a>
+  <div class="nav-links">
+    <a href="/stocks.html">국내주식</a>
+    <a href="/etf.html">ETF</a>
+    <a href="/news.html">뉴스</a>
+    <a href="/tax-calc.html" class="active">세금계산기</a>
+    <a href="/heatmap.html">히트맵</a>
+    <a href="/ipo.html">IPO</a>
+    <a href="/calendar.html">경제캘린더</a>
+  </div>
+  <div class="nav-right">
+    <input class="search-bar" type="text" placeholder="종목 검색..." id="searchInput">
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <h1>주식 <em>세금 계산기</em></h1>
+    <p>양도소득세 · 배당소득세 · 해외주식 세금을 간편하게 계산하세요</p>
+  </div>
+</div>
+
+<div class="main">
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('domestic')">국내주식 양도세</button>
+    <button class="tab-btn" onclick="switchTab('overseas')">해외주식 양도세</button>
+    <button class="tab-btn" onclick="switchTab('dividend')">배당소득세</button>
+    <button class="tab-btn" onclick="switchTab('etf')">ETF 세금</button>
+  </div>
+
+  <!-- 국내주식 -->
+  <div class="tab-panel active" id="tab-domestic">
+    <div class="calc-grid">
+      <div class="calc-card">
+        <h3>국내주식 양도소득세</h3>
+        <div class="field">
+          <label>투자자 구분</label>
+          <select id="d-type">
+            <option value="small">소액주주 (일반)</option>
+            <option value="major">대주주 (1% 이상 또는 10억 이상)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>매도 금액 (원)</label>
+          <input type="number" id="d-sell" placeholder="예: 5000000" value="">
+        </div>
+        <div class="field">
+          <label>매수 금액 (원)</label>
+          <input type="number" id="d-buy" placeholder="예: 3000000" value="">
+        </div>
+        <div class="field">
+          <label>거래비용 (수수료 + 세금, 원)</label>
+          <input type="number" id="d-fee" placeholder="예: 15000" value="">
+        </div>
+        <button class="calc-btn" onclick="calcDomestic()">세금 계산하기</button>
+      </div>
+
+      <div class="calc-card">
+        <h3>계산 결과</h3>
+        <div id="d-result">
+          <div style="text-align:center;padding:40px 0;color:var(--text3)">
+            <div style="font-size:32px;margin-bottom:12px">🧮</div>
+            <div>좌측에서 금액을 입력하고<br>계산 버튼을 눌러주세요</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h3>국내주식 세금 안내</h3>
+      <ul class="info-list">
+        <li>소액주주의 상장주식 거래 시 양도소득세는 비과세입니다.</li>
+        <li>대주주(지분율 1% 이상 또는 보유금액 10억 원 이상)는 양도소득세 과세 대상입니다.</li>
+        <li>대주주 양도소득세율: 중소기업 10%, 일반 20~25% (3억 초과 시 25%)</li>
+        <li>증권거래세: 코스피 0.18%, 코스닥 0.18% (2024년 기준)</li>
+        <li>기본공제: 연 250만 원 공제 (대주주 해당 시)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 해외주식 -->
+  <div class="tab-panel" id="tab-overseas">
+    <div class="calc-grid">
+      <div class="calc-card">
+        <h3>해외주식 양도소득세</h3>
+        <div class="field">
+          <label>매도 금액 (원화 환산)</label>
+          <input type="number" id="o-sell" placeholder="예: 10000000" value="">
+        </div>
+        <div class="field">
+          <label>매수 금액 (원화 환산)</label>
+          <input type="number" id="o-buy" placeholder="예: 7000000" value="">
+        </div>
+        <div class="field">
+          <label>현지 납부 세금 (원화 환산)</label>
+          <input type="number" id="o-local-tax" placeholder="예: 0" value="">
+        </div>
+        <div class="field">
+          <label>거래수수료 (원)</label>
+          <input type="number" id="o-fee" placeholder="예: 20000" value="">
+        </div>
+        <button class="calc-btn" onclick="calcOverseas()">세금 계산하기</button>
+      </div>
+
+      <div class="calc-card">
+        <h3>계산 결과</h3>
+        <div id="o-result">
+          <div style="text-align:center;padding:40px 0;color:var(--text3)">
+            <div style="font-size:32px;margin-bottom:12px">🌐</div>
+            <div>해외주식 양도차익에<br>22% 세율이 적용됩니다</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h3>해외주식 세금 안내</h3>
+      <ul class="info-list">
+        <li>해외주식 양도소득세율: 22% (지방소득세 포함)</li>
+        <li>기본공제: 연 250만 원 (1년 단위로 공제)</li>
+        <li>현지 납부 세금은 외국납부세액공제로 차감됩니다.</li>
+        <li>확정신고: 매년 5월 (전년도 1월~12월 거래분)</li>
+        <li>손익통산: 동일 과세기간 내 해외주식 간 손익 합산 가능</li>
+        <li>환율: 매도·매수 시점의 기준환율 적용</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 배당소득세 -->
+  <div class="tab-panel" id="tab-dividend">
+    <div class="calc-grid">
+      <div class="calc-card">
+        <h3>배당소득세 계산</h3>
+        <div class="field">
+          <label>배당금 수령액 (원)</label>
+          <input type="number" id="div-amount" placeholder="예: 1000000" value="">
+        </div>
+        <div class="field">
+          <label>주식 종류</label>
+          <select id="div-type">
+            <option value="domestic">국내주식</option>
+            <option value="overseas">해외주식</option>
+            <option value="reit">리츠(REITs)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>금융소득 종합과세 여부</label>
+          <select id="div-global">
+            <option value="no">아니오 (2,000만원 이하)</option>
+            <option value="yes">예 (2,000만원 초과)</option>
+          </select>
+        </div>
+        <div class="field" id="div-income-field" style="display:none">
+          <label>타 소득 합계 (원, 종합과세 시)</label>
+          <input type="number" id="div-income" placeholder="예: 50000000" value="">
+        </div>
+        <button class="calc-btn" onclick="calcDividend()">세금 계산하기</button>
+      </div>
+
+      <div class="calc-card">
+        <h3>계산 결과</h3>
+        <div id="div-result">
+          <div style="text-align:center;padding:40px 0;color:var(--text3)">
+            <div style="font-size:32px;margin-bottom:12px">💰</div>
+            <div>배당금과 종류를 선택하고<br>계산 버튼을 눌러주세요</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h3>배당소득세 안내</h3>
+      <ul class="info-list">
+        <li>국내주식 배당: 원천징수 15.4% (소득세 14% + 지방소득세 1.4%)</li>
+        <li>금융소득(이자+배당) 합계 2,000만 원 초과 시 종합과세 대상</li>
+        <li>해외주식 배당: 현지 세율 원천징수, 국내 세율과 차이분 추가 납부</li>
+        <li>리츠(REITs): 배당소득세 동일 적용, 분리과세 선택 가능</li>
+        <li>종합과세 시 다른 소득과 합산하여 6~45% 누진세율 적용</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ETF 세금 -->
+  <div class="tab-panel" id="tab-etf">
+    <div class="calc-grid">
+      <div class="calc-card">
+        <h3>ETF 세금 계산</h3>
+        <div class="field">
+          <label>ETF 종류</label>
+          <select id="etf-type">
+            <option value="stock-kospi">국내주식형 (코스피/코스닥)</option>
+            <option value="bond">채권형 ETF</option>
+            <option value="overseas-etf">해외주식형 ETF</option>
+            <option value="leverage">레버리지/인버스 ETF</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>매도 금액 (원)</label>
+          <input type="number" id="etf-sell" placeholder="예: 5000000" value="">
+        </div>
+        <div class="field">
+          <label>매수 금액 (원)</label>
+          <input type="number" id="etf-buy" placeholder="예: 3500000" value="">
+        </div>
+        <div class="field">
+          <label>분배금 수령액 (원)</label>
+          <input type="number" id="etf-dist" placeholder="예: 50000" value="">
+        </div>
+        <button class="calc-btn" onclick="calcETF()">세금 계산하기</button>
+      </div>
+
+      <div class="calc-card">
+        <h3>계산 결과</h3>
+        <div id="etf-result">
+          <div style="text-align:center;padding:40px 0;color:var(--text3)">
+            <div style="font-size:32px;margin-bottom:12px">🗂</div>
+            <div>ETF 종류와 금액을 입력하고<br>계산 버튼을 눌러주세요</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h3>ETF 세금 안내</h3>
+      <ul class="info-list">
+        <li>국내주식형 ETF: 매매차익 비과세, 분배금 배당소득세 15.4%</li>
+        <li>채권형·혼합형 ETF: 매매차익과 분배금 모두 배당소득세 15.4%</li>
+        <li>해외주식형 ETF: 매매차익 배당소득세 15.4%, 분배금 15.4%</li>
+        <li>레버리지/인버스 ETF: 국내주식 기초자산이라도 매매차익 과세</li>
+        <li>증권거래세: ETF는 증권거래세 면제</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>주식인포 · 세금 계산 결과는 참고용이며 실제 납부액은 세무사 상담을 권장합니다.</p>
+  <p style="margin-top:6px">세금 정보는 2024년 기준이며 법령 개정 시 변경될 수 있습니다.</p>
+</footer>
+
+<script>
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => {
+    const names = ['domestic','overseas','dividend','etf'];
+    b.classList.toggle('active', names[i] === name);
+  });
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+}
+
+function fmt(n) { return Math.round(n).toLocaleString('ko-KR'); }
+
+function renderResult(id, rows, note) {
+  document.getElementById(id).innerHTML = `
+    <div class="result-card">
+      <h3>세금 계산 결과</h3>
+      ${rows.map(r => `<div class="result-row"><span class="result-label">${r.label}</span><span class="result-val ${r.cls||''}">${r.val}</span></div>`).join('')}
+      ${note ? `<div class="result-note">${note}</div>` : ''}
+    </div>`;
+}
+
+function calcDomestic() {
+  const type = document.getElementById('d-type').value;
+  const sell = +document.getElementById('d-sell').value || 0;
+  const buy = +document.getElementById('d-buy').value || 0;
+  const fee = +document.getElementById('d-fee').value || 0;
+  const profit = sell - buy - fee;
+  const tradeRate = sell * 0.0018;
+
+  if (type === 'small') {
+    renderResult('d-result', [
+      { label:'매도 금액', val: fmt(sell) + ' 원' },
+      { label:'매수 금액', val: fmt(buy) + ' 원' },
+      { label:'거래비용', val: fmt(fee) + ' 원' },
+      { label:'양도차익', val: fmt(profit) + ' 원', cls: profit>=0?'up':'down' },
+      { label:'양도소득세', val: '0 원 (비과세)', cls:'up' },
+      { label:'증권거래세 (0.18%)', val: fmt(tradeRate) + ' 원' },
+      { label:'실현 수익', val: fmt(profit - tradeRate) + ' 원', cls:'result-total' },
+    ], '소액주주의 상장주식 매매차익은 양도소득세 비과세입니다. 증권거래세만 납부합니다.');
+  } else {
+    const taxBase = Math.max(0, profit - 2500000);
+    const taxRate = taxBase > 300000000 ? 0.25 : 0.20;
+    const tax = taxBase * taxRate * 1.1;
+    renderResult('d-result', [
+      { label:'매도 금액', val: fmt(sell) + ' 원' },
+      { label:'매수 금액', val: fmt(buy) + ' 원' },
+      { label:'거래비용', val: fmt(fee) + ' 원' },
+      { label:'양도차익', val: fmt(profit) + ' 원', cls: profit>=0?'up':'down' },
+      { label:'기본공제', val: '2,500,000 원' },
+      { label:'과세표준', val: fmt(taxBase) + ' 원' },
+      { label:'세율', val: (taxRate*100) + '%' },
+      { label:'양도소득세 (지방세 포함)', val: fmt(tax) + ' 원', cls:'down' },
+      { label:'증권거래세', val: fmt(tradeRate) + ' 원' },
+      { label:'세후 수익', val: fmt(profit - tax - tradeRate) + ' 원', cls:'result-total' },
+    ], '대주주 양도소득세 세율: 3억 이하 20%, 3억 초과 25% (지방소득세 10% 추가)');
+  }
+}
+
+function calcOverseas() {
+  const sell = +document.getElementById('o-sell').value || 0;
+  const buy = +document.getElementById('o-buy').value || 0;
+  const localTax = +document.getElementById('o-local-tax').value || 0;
+  const fee = +document.getElementById('o-fee').value || 0;
+  const profit = sell - buy - fee;
+  const taxBase = Math.max(0, profit - 2500000);
+  const grossTax = taxBase * 0.22;
+  const netTax = Math.max(0, grossTax - localTax);
+  renderResult('o-result', [
+    { label:'매도 금액 (원화)', val: fmt(sell) + ' 원' },
+    { label:'매수 금액 (원화)', val: fmt(buy) + ' 원' },
+    { label:'수수료', val: fmt(fee) + ' 원' },
+    { label:'양도차익', val: fmt(profit) + ' 원', cls: profit>=0?'up':'down' },
+    { label:'기본공제', val: '2,500,000 원' },
+    { label:'과세표준', val: fmt(taxBase) + ' 원' },
+    { label:'산출 세액 (22%)', val: fmt(grossTax) + ' 원' },
+    { label:'외국납부세액공제', val: '- ' + fmt(localTax) + ' 원', cls:'up' },
+    { label:'최종 납부세액', val: fmt(netTax) + ' 원', cls:'down' },
+    { label:'세후 수익', val: fmt(profit - netTax) + ' 원', cls:'result-total' },
+  ], '확정신고: 매년 5월. 환율은 매도·매수 시점의 기준환율을 적용하세요.');
+}
+
+function calcDividend() {
+  const amount = +document.getElementById('div-amount').value || 0;
+  const type = document.getElementById('div-type').value;
+  const isGlobal = document.getElementById('div-global').value === 'yes';
+  let rate = 0.154;
+  if (type === 'overseas') rate = 0.154;
+  const tax = amount * rate;
+  const netAmount = amount - tax;
+  renderResult('div-result', [
+    { label:'배당금 수령액', val: fmt(amount) + ' 원' },
+    { label:'원천징수율', val: (rate*100).toFixed(1) + '%' },
+    { label:'원천징수 세액', val: fmt(tax) + ' 원', cls:'down' },
+    { label:'실수령액', val: fmt(netAmount) + ' 원', cls:'result-total' },
+    { label:'종합과세 여부', val: isGlobal ? '해당 (신고 필요)' : '해당 없음', cls: isGlobal?'down':'up' },
+  ], isGlobal ? '금융소득 2,000만 원 초과 시 전체 금융소득을 종합과세로 신고해야 합니다.' : '금융소득이 연 2,000만 원 이하이면 분리과세로 종결됩니다.');
+}
+
+function calcETF() {
+  const type = document.getElementById('etf-type').value;
+  const sell = +document.getElementById('etf-sell').value || 0;
+  const buy = +document.getElementById('etf-buy').value || 0;
+  const dist = +document.getElementById('etf-dist').value || 0;
+  const profit = sell - buy;
+  const distTax = dist * 0.154;
+
+  let gainTax = 0, gainNote = '비과세';
+  if (type !== 'stock-kospi') {
+    gainTax = Math.max(0, profit) * 0.154;
+    gainNote = (profit * 0.154).toFixed(0) + ' 원 (15.4%)';
+  }
+  const totalTax = gainTax + distTax;
+  renderResult('etf-result', [
+    { label:'매매차익', val: fmt(profit) + ' 원', cls: profit>=0?'up':'down' },
+    { label:'매매차익 세금', val: gainNote, cls: gainTax>0?'down':'up' },
+    { label:'분배금', val: fmt(dist) + ' 원' },
+    { label:'분배금 배당소득세 (15.4%)', val: fmt(distTax) + ' 원', cls:'down' },
+    { label:'총 세금', val: fmt(totalTax) + ' 원', cls:'down' },
+    { label:'세후 수익', val: fmt(profit + dist - totalTax) + ' 원', cls:'result-total' },
+  ], '국내주식형 ETF 매매차익은 비과세이나, 분배금은 15.4% 배당소득세가 부과됩니다.');
+}
+
+document.getElementById('div-global').addEventListener('change', function() {
+  document.getElementById('div-income-field').style.display = this.value === 'yes' ? 'block' : 'none';
+});
+
+document.getElementById('searchInput').addEventListener('keydown', e => {
+  if(e.key === 'Enter') { const q = e.target.value.trim(); if(q) location.href = '/stocks.html?q=' + encodeURIComponent(q); }
+});
+</script>
+</body>
+</html>
