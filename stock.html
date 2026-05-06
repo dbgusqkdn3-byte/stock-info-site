@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">종목 상세 정보 - 주식인포</title>
+<meta name="description" id="pageDesc" content="주식 상세 정보">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #0a0e1a; --bg2: #0f1629; --bg3: #151d35; --card: #111827;
+    --border: #1e2d4a; --accent: #00d4aa; --accent2: #0ea5e9;
+    --up: #22c55e; --down: #ef4444;
+    --text: #e2e8f0; --text2: #94a3b8; --text3: #64748b;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:'Noto Sans KR',sans-serif; font-size:14px; }
+  nav { background:var(--bg2); border-bottom:1px solid var(--border); padding:0 24px; display:flex; align-items:center; height:56px; gap:32px; position:sticky; top:0; z-index:100; }
+  .logo { font-size:18px; font-weight:700; color:var(--accent); text-decoration:none; }
+  .logo span { color:var(--text); }
+  nav a { color:var(--text2); text-decoration:none; font-size:13px; }
+  .breadcrumb { color:var(--text3); font-size:12px; padding:14px 24px; max-width:1100px; margin:0 auto; }
+  .breadcrumb a { color:var(--text3); text-decoration:none; }
+  .breadcrumb a:hover { color:var(--accent); }
+
+  .main { max-width:1100px; margin:0 auto; padding:0 24px 48px; }
+
+  /* STOCK HEADER */
+  .stock-header { background:var(--bg2); border:1px solid var(--border); border-radius:14px; padding:24px 28px; margin-bottom:20px; display:flex; align-items:flex-start; gap:24px; flex-wrap:wrap; }
+  .stock-identity { flex:1; min-width:200px; }
+  .stock-name-big { font-size:26px; font-weight:700; margin-bottom:4px; }
+  .stock-meta { display:flex; gap:10px; align-items:center; margin-bottom:16px; }
+  .code-badge { background:var(--bg3); border:1px solid var(--border); border-radius:6px; padding:3px 10px; font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text2); }
+  .market-badge { background:var(--accent2); color:var(--bg); font-size:11px; font-weight:700; padding:2px 8px; border-radius:10px; }
+  .price-big { font-family:'IBM Plex Mono',monospace; font-size:36px; font-weight:500; }
+  .price-change { font-size:15px; margin-top:4px; font-family:'IBM Plex Mono',monospace; }
+  .stock-stats { display:flex; gap:0; flex-wrap:wrap; border-left:1px solid var(--border); padding-left:24px; }
+  .stat-item { padding:4px 20px 4px 0; min-width:120px; }
+  .stat-label { font-size:11px; color:var(--text3); margin-bottom:3px; }
+  .stat-val { font-family:'IBM Plex Mono',monospace; font-size:14px; font-weight:500; }
+
+  /* TABS */
+  .tabs { display:flex; gap:0; border-bottom:1px solid var(--border); margin-bottom:20px; }
+  .tab { padding:10px 20px; font-size:13px; color:var(--text3); cursor:pointer; border-bottom:2px solid transparent; transition:all 0.2s; }
+  .tab.active { color:var(--accent); border-bottom-color:var(--accent); font-weight:500; }
+  .tab:hover { color:var(--text); }
+
+  /* GRID */
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
+  .grid3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-bottom:16px; }
+  @media(max-width:700px) { .grid2,.grid3 { grid-template-columns:1fr; } .stock-stats { border-left:none; padding-left:0; border-top:1px solid var(--border); padding-top:16px; } }
+
+  .card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; }
+  .card-title { font-size:13px; font-weight:700; color:var(--text2); margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+  .card-title::before { content:''; width:2px; height:14px; background:var(--accent); border-radius:1px; }
+
+  /* FINANCIAL TABLE */
+  .fin-table { width:100%; border-collapse:collapse; font-size:13px; }
+  .fin-table th { text-align:left; color:var(--text3); font-weight:400; font-size:11px; padding:6px 0; border-bottom:1px solid var(--border); }
+  .fin-table td { padding:9px 0; border-bottom:1px solid var(--border); font-family:'IBM Plex Mono',monospace; }
+  .fin-table td:first-child { font-family:'Noto Sans KR',sans-serif; color:var(--text2); }
+  .fin-table tr:last-child td { border-bottom:none; }
+  .fin-table td:not(:first-child) { text-align:right; }
+
+  /* CHART CONTAINER */
+  .chart-wrap { position:relative; height:220px; }
+
+  /* INDICATOR ROW */
+  .indicator-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
+  .indicator { background:var(--bg3); border:1px solid var(--border); border-radius:8px; padding:10px 14px; flex:1; min-width:100px; }
+  .ind-label { font-size:11px; color:var(--text3); margin-bottom:4px; }
+  .ind-val { font-family:'IBM Plex Mono',monospace; font-size:16px; font-weight:500; }
+  .ind-sub { font-size:11px; color:var(--text3); margin-top:2px; }
+
+  .up { color:var(--up); } .down { color:var(--down); }
+  .related-link { display:block; padding:9px 0; border-bottom:1px solid var(--border); color:var(--text2); text-decoration:none; font-size:13px; transition:color 0.15s; }
+  .related-link:last-child { border-bottom:none; }
+  .related-link:hover { color:var(--accent); }
+  footer { border-top:1px solid var(--border); padding:24px; text-align:center; color:var(--text3); font-size:12px; margin-top:48px; }
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">주식<span>인포</span></a>
+  <a href="/stocks.html">국내주식</a>
+  <a href="/etf.html">ETF</a>
+  <a href="/dividend.html">배당주</a>
+  <a href="/compare.html">종목비교</a>
+</nav>
+
+<div class="breadcrumb">
+  <a href="/">홈</a> &rsaquo; <a href="/stocks.html">국내주식</a> &rsaquo; <span id="breadName">종목</span>
+</div>
+
+<div class="main">
+  <div class="stock-header">
+    <div class="stock-identity">
+      <div class="stock-name-big" id="stockNameBig">삼성전자</div>
+      <div class="stock-meta">
+        <span class="code-badge" id="stockCodeBadge">005930</span>
+        <span class="market-badge" id="marketBadge">KOSPI</span>
+        <span style="font-size:11px;color:var(--text3)" id="sectorBadge">전기전자</span>
+      </div>
+      <div class="price-big up" id="priceBig">74,800</div>
+      <div class="price-change up" id="priceChange">▲ 360원 (+0.48%) · 2026.05.06 15:30</div>
+    </div>
+    <div class="stock-stats">
+      <div class="stat-item"><div class="stat-label">시가총액</div><div class="stat-val" id="statCap">446조</div></div>
+      <div class="stat-item"><div class="stat-label">거래량</div><div class="stat-val" id="statVol">18,234,521</div></div>
+      <div class="stat-item"><div class="stat-label">52주 최고</div><div class="stat-val up" id="stat52H">88,800</div></div>
+      <div class="stat-item"><div class="stat-label">52주 최저</div><div class="stat-val down" id="stat52L">49,900</div></div>
+      <div class="stat-item"><div class="stat-label">PER</div><div class="stat-val" id="statPER">14.2</div></div>
+      <div class="stat-item"><div class="stat-label">배당수익률</div><div class="stat-val" id="statDiv">2.84%</div></div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('chart')">차트</div>
+    <div class="tab" onclick="switchTab('finance')">재무제표</div>
+    <div class="tab" onclick="switchTab('dividend')">배당 이력</div>
+  </div>
+
+  <div id="tabChart">
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-title">주가 추이 (최근 1년)</div>
+      <div class="chart-wrap"><canvas id="priceChart"></canvas></div>
+    </div>
+    <div class="indicator-row">
+      <div class="indicator"><div class="ind-label">PER (주가수익비율)</div><div class="ind-val" id="perVal">14.2</div><div class="ind-sub">업종 평균 18.4</div></div>
+      <div class="indicator"><div class="ind-label">PBR (주가순자산비율)</div><div class="ind-val">1.34</div><div class="ind-sub">업종 평균 1.89</div></div>
+      <div class="indicator"><div class="ind-label">ROE (자기자본이익률)</div><div class="ind-val up">9.4%</div><div class="ind-sub">전년 대비 +2.1%p</div></div>
+      <div class="indicator"><div class="ind-label">부채비율</div><div class="ind-val">27.3%</div><div class="ind-sub">안정적 수준</div></div>
+    </div>
+  </div>
+
+  <div id="tabFinance" style="display:none">
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">손익계산서 (억원)</div>
+        <table class="fin-table">
+          <thead><tr><th>구분</th><th>2022</th><th>2023</th><th>2024</th></tr></thead>
+          <tbody>
+            <tr><td>매출액</td><td>3,022,314</td><td>2,589,355</td><td>3,008,130</td></tr>
+            <tr><td>영업이익</td><td>433,766</td><td>65,670</td><td>322,439</td></tr>
+            <tr><td>당기순이익</td><td>554,647</td><td>154,872</td><td>341,961</td></tr>
+            <tr><td>영업이익률</td><td>14.3%</td><td>2.5%</td><td class="up">10.7%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <div class="card-title">재무상태표 (억원)</div>
+        <table class="fin-table">
+          <thead><tr><th>구분</th><th>2022</th><th>2023</th><th>2024</th></tr></thead>
+          <tbody>
+            <tr><td>자산총계</td><td>4,482,153</td><td>4,554,800</td><td>4,913,400</td></tr>
+            <tr><td>부채총계</td><td>923,671</td><td>929,400</td><td>1,012,300</td></tr>
+            <tr><td>자본총계</td><td>3,558,482</td><td>3,625,400</td><td>3,901,100</td></tr>
+            <tr><td>부채비율</td><td>25.9%</td><td>25.6%</td><td>25.9%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">분기별 실적 (억원)</div>
+      <div class="chart-wrap"><canvas id="finChart"></canvas></div>
+    </div>
+  </div>
+
+  <div id="tabDividend" style="display:none">
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">배당 현황</div>
+        <table class="fin-table">
+          <thead><tr><th>연도</th><th>배당금(원)</th><th>배당수익률</th><th>지급일</th></tr></thead>
+          <tbody>
+            <tr><td>2024</td><td>2,124</td><td class="up">2.84%</td><td>2025.04.18</td></tr>
+            <tr><td>2023</td><td>1,444</td><td>1.73%</td><td>2024.04.19</td></tr>
+            <tr><td>2022</td><td>2,124</td><td>2.58%</td><td>2023.04.21</td></tr>
+            <tr><td>2021</td><td>2,994</td><td>3.21%</td><td>2022.04.22</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <div class="card-title">관련 배당주 ETF</div>
+        <a href="/etf.html?code=KODEX200" class="related-link">KODEX 200 (069500)</a>
+        <a href="/etf.html?code=TIGER200" class="related-link">TIGER 200 (102110)</a>
+        <a href="/etf.html?code=KODEXDIV" class="related-link">KODEX 배당성장 (298200)</a>
+        <a href="/etf.html?code=ARIRANG" class="related-link">ARIRANG 고배당주 (161510)</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <div class="card-title">같은 업종 종목</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap" id="relatedStocks"></div>
+  </div>
+</div>
+
+<footer>
+  <p>주식인포 · 데이터 출처: 한국거래소(KRX), 금융감독원(DART)</p>
+  <p style="margin-top:6px">본 사이트의 정보는 투자 참고용이며, 투자 결정에 대한 책임은 본인에게 있습니다.</p>
+</footer>
+
+<script>
+const params = new URLSearchParams(location.search);
+const code = params.get('code') || '005930';
+const name = decodeURIComponent(params.get('name') || '삼성전자');
+
+document.title = `${name} (${code}) 주가 · 재무제표 · 배당 - 주식인포`;
+document.getElementById('pageDesc').content = `${name} ${code} 실시간 주가, 재무제표, 배당금 이력, PER, PBR 정보`;
+document.getElementById('breadName').textContent = name;
+document.getElementById('stockNameBig').textContent = name;
+document.getElementById('stockCodeBadge').textContent = code;
+
+function switchTab(t) {
+  ['chart','finance','dividend'].forEach(id => {
+    document.getElementById('tab'+id.charAt(0).toUpperCase()+id.slice(1)).style.display = id===t?'block':'none';
+  });
+  document.querySelectorAll('.tab').forEach((el,i) => el.classList.toggle('active', ['chart','finance','dividend'][i]===t));
+}
+
+const months = ['25.06','25.07','25.08','25.09','25.10','25.11','25.12','26.01','26.02','26.03','26.04','26.05'];
+const prices = [62000,65400,68200,71000,69500,73200,75800,72100,74900,76300,73800,74800];
+
+new Chart(document.getElementById('priceChart'), {
+  type:'line',
+  data:{
+    labels:months,
+    datasets:[{
+      label:'주가(원)', data:prices,
+      borderColor:'#00d4aa', backgroundColor:'rgba(0,212,170,0.08)',
+      borderWidth:2, pointRadius:3, pointBackgroundColor:'#00d4aa', fill:true, tension:0.3
+    }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{ display:false } },
+    scales:{
+      x:{ grid:{ color:'rgba(255,255,255,0.05)' }, ticks:{ color:'#64748b', font:{size:11} } },
+      y:{ grid:{ color:'rgba(255,255,255,0.05)' }, ticks:{ color:'#64748b', font:{size:11}, callback:v=>v.toLocaleString()+'원' } }
+    }
+  }
+});
+
+new Chart(document.getElementById('finChart'), {
+  type:'bar',
+  data:{
+    labels:['2024 Q1','2024 Q2','2024 Q3','2024 Q4'],
+    datasets:[
+      { label:'매출액', data:[710000,740000,791000,767000], backgroundColor:'rgba(14,165,233,0.5)', borderColor:'#0ea5e9', borderWidth:1 },
+      { label:'영업이익', data:[65200,101500,91800,64000], backgroundColor:'rgba(0,212,170,0.5)', borderColor:'#00d4aa', borderWidth:1 }
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{ labels:{ color:'#94a3b8', font:{size:11} } } },
+    scales:{
+      x:{ grid:{ color:'rgba(255,255,255,0.05)' }, ticks:{ color:'#64748b' } },
+      y:{ grid:{ color:'rgba(255,255,255,0.05)' }, ticks:{ color:'#64748b', callback:v=>v.toLocaleString() } }
+    }
+  }
+});
+
+const related = ['SK하이닉스','LG전자','삼성SDI','삼성전기','SK스퀘어'];
+document.getElementById('relatedStocks').innerHTML = related.map(n =>
+  `<a href="/stock.html?name=${encodeURIComponent(n)}" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 14px;color:var(--text2);text-decoration:none;font-size:13px;transition:border-color 0.2s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">${n}</a>`
+).join('');
+</script>
+</body>
+</html>

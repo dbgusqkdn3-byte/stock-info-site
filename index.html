@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>주식인포 - 한국 주식 종합 정보</title>
+<meta name="description" content="KOSPI, KOSDAQ 전 종목 주가, 재무제표, 배당금, ETF 정보를 한눈에. 무료 한국 주식 정보 플랫폼.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --bg2: #0f1629;
+    --bg3: #151d35;
+    --card: #111827;
+    --border: #1e2d4a;
+    --accent: #00d4aa;
+    --accent2: #0ea5e9;
+    --up: #22c55e;
+    --down: #ef4444;
+    --text: #e2e8f0;
+    --text2: #94a3b8;
+    --text3: #64748b;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Noto Sans KR', sans-serif; font-size: 14px; line-height: 1.6; }
+
+  /* NAV */
+  nav { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; align-items: center; height: 56px; gap: 32px; position: sticky; top: 0; z-index: 100; }
+  .logo { font-size: 18px; font-weight: 700; color: var(--accent); letter-spacing: -0.5px; text-decoration: none; }
+  .logo span { color: var(--text); }
+  nav a { color: var(--text2); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+  nav a:hover { color: var(--text); }
+  .nav-right { margin-left: auto; display: flex; gap: 12px; }
+  .search-bar { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 6px 14px; color: var(--text); font-size: 13px; font-family: inherit; width: 220px; outline: none; transition: border-color 0.2s; }
+  .search-bar::placeholder { color: var(--text3); }
+  .search-bar:focus { border-color: var(--accent); }
+
+  /* HERO */
+  .hero { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 48px 24px 40px; }
+  .hero-inner { max-width: 1100px; margin: 0 auto; }
+  .hero h1 { font-size: 32px; font-weight: 700; line-height: 1.2; margin-bottom: 12px; }
+  .hero h1 em { color: var(--accent); font-style: normal; }
+  .hero p { color: var(--text2); font-size: 15px; margin-bottom: 28px; }
+  .hero-stats { display: flex; gap: 32px; flex-wrap: wrap; }
+  .hero-stat { background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 14px 20px; min-width: 160px; }
+  .hero-stat .label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; }
+  .hero-stat .value { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .hero-stat .change { font-size: 12px; margin-top: 4px; }
+  .up { color: var(--up); }
+  .down { color: var(--down); }
+
+  /* MAIN */
+  .main { max-width: 1100px; margin: 0 auto; padding: 32px 24px; display: grid; grid-template-columns: 1fr 320px; gap: 24px; }
+  @media (max-width: 800px) { .main { grid-template-columns: 1fr; } }
+
+  /* SECTION */
+  .section-title { font-size: 15px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .section-title::before { content: ''; width: 3px; height: 16px; background: var(--accent); border-radius: 2px; display: block; }
+  .badge { background: var(--accent); color: var(--bg); font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 10px; }
+
+  /* TABLE */
+  .table-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; }
+  thead th { background: var(--bg3); padding: 10px 14px; text-align: left; font-size: 11px; color: var(--text3); font-weight: 500; letter-spacing: 0.5px; border-bottom: 1px solid var(--border); }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; cursor: pointer; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--bg3); }
+  tbody td { padding: 11px 14px; font-size: 13px; }
+  .stock-name { font-weight: 500; color: var(--text); }
+  .stock-code { color: var(--text3); font-size: 11px; font-family: 'IBM Plex Mono', monospace; }
+  .price-col { font-family: 'IBM Plex Mono', monospace; font-weight: 500; text-align: right; }
+  .change-col { text-align: right; font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
+  .vol-col { text-align: right; color: var(--text2); font-size: 12px; font-family: 'IBM Plex Mono', monospace; }
+
+  /* SIDEBAR */
+  .sidebar { display: flex; flex-direction: column; gap: 20px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
+  .card-title { font-size: 13px; font-weight: 700; margin-bottom: 14px; color: var(--text2); }
+  .mini-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .mini-row:last-child { border-bottom: none; }
+  .mini-name { color: var(--text); }
+  .mini-val { font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
+
+  /* CATEGORY GRID */
+  .category-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 28px; }
+  @media (max-width: 600px) { .category-grid { grid-template-columns: repeat(2, 1fr); } }
+  .cat-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; cursor: pointer; transition: border-color 0.2s, background 0.2s; text-decoration: none; display: block; }
+  .cat-card:hover { border-color: var(--accent); background: var(--bg3); }
+  .cat-icon { font-size: 22px; margin-bottom: 8px; }
+  .cat-name { font-size: 13px; font-weight: 700; color: var(--text); }
+  .cat-desc { font-size: 11px; color: var(--text3); margin-top: 3px; }
+  .cat-count { font-size: 10px; color: var(--accent); margin-top: 6px; font-family: 'IBM Plex Mono', monospace; }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border); padding: 24px; text-align: center; color: var(--text3); font-size: 12px; margin-top: 48px; }
+
+  /* TICKER TAPE */
+  .ticker { background: var(--bg3); border-bottom: 1px solid var(--border); padding: 8px 0; overflow: hidden; white-space: nowrap; }
+  .ticker-inner { display: inline-flex; gap: 40px; animation: scroll 30s linear infinite; }
+  .ticker-item { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--text2); }
+  .ticker-item span { margin-left: 6px; }
+  @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+  /* LOADING SHIMMER */
+  @keyframes shimmer { 0% { opacity: 0.4; } 50% { opacity: 0.8; } 100% { opacity: 0.4; } }
+  .shimmer { animation: shimmer 1.5s infinite; background: var(--bg3); border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">주식<span>인포</span></a>
+  <a href="/stocks.html">국내주식</a>
+  <a href="/etf.html">ETF</a>
+  <a href="/dividend.html">배당주</a>
+  <a href="/compare.html">종목비교</a>
+  <div class="nav-right">
+    <input class="search-bar" type="text" placeholder="종목명 또는 코드 검색..." id="searchInput">
+  </div>
+</nav>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-inner" id="tickerInner">
+    <span class="ticker-item">삼성전자 <span class="up">▲ 74,800</span></span>
+    <span class="ticker-item">SK하이닉스 <span class="up">▲ 168,500</span></span>
+    <span class="ticker-item">LG에너지솔루션 <span class="down">▼ 412,000</span></span>
+    <span class="ticker-item">삼성바이오로직스 <span class="up">▲ 952,000</span></span>
+    <span class="ticker-item">현대차 <span class="up">▲ 234,000</span></span>
+    <span class="ticker-item">NAVER <span class="down">▼ 181,500</span></span>
+    <span class="ticker-item">카카오 <span class="down">▼ 43,200</span></span>
+    <span class="ticker-item">셀트리온 <span class="up">▲ 178,900</span></span>
+    <span class="ticker-item">KOSPI <span class="up">▲ 2,584.32</span></span>
+    <span class="ticker-item">KOSDAQ <span class="up">▲ 743.21</span></span>
+    <span class="ticker-item">삼성전자 <span class="up">▲ 74,800</span></span>
+    <span class="ticker-item">SK하이닉스 <span class="up">▲ 168,500</span></span>
+    <span class="ticker-item">LG에너지솔루션 <span class="down">▼ 412,000</span></span>
+    <span class="ticker-item">삼성바이오로직스 <span class="up">▲ 952,000</span></span>
+    <span class="ticker-item">현대차 <span class="up">▲ 234,000</span></span>
+    <span class="ticker-item">NAVER <span class="down">▼ 181,500</span></span>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="hero-inner">
+    <h1>한국 주식 <em>전종목</em> 정보를<br>한 곳에서</h1>
+    <p>KOSPI · KOSDAQ 2,700개 종목 · ETF · 배당 · 재무제표 · 종목 비교</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="label">KOSPI</div>
+        <div class="value up" id="kospi">2,584.32</div>
+        <div class="change up" id="kospiChg">▲ 12.45 (+0.48%)</div>
+      </div>
+      <div class="hero-stat">
+        <div class="label">KOSDAQ</div>
+        <div class="value up" id="kosdaq">743.21</div>
+        <div class="change up" id="kosdaqChg">▲ 3.87 (+0.52%)</div>
+      </div>
+      <div class="hero-stat">
+        <div class="label">원/달러</div>
+        <div class="value down" id="usdkrw">1,378.50</div>
+        <div class="change down" id="usdChg">▼ 2.30 (-0.17%)</div>
+      </div>
+      <div class="hero-stat">
+        <div class="label">등록 종목</div>
+        <div class="value" style="color:var(--accent2)">2,741</div>
+        <div class="change" style="color:var(--text3)">실시간 업데이트</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="content">
+
+    <div class="category-grid">
+      <a href="/stocks.html" class="cat-card">
+        <div class="cat-icon">📈</div>
+        <div class="cat-name">국내 주식</div>
+        <div class="cat-desc">KOSPI · KOSDAQ 전종목</div>
+        <div class="cat-count">2,741개 종목</div>
+      </a>
+      <a href="/etf.html" class="cat-card">
+        <div class="cat-icon">🗂</div>
+        <div class="cat-name">ETF</div>
+        <div class="cat-desc">구성종목 · 수익률 분석</div>
+        <div class="cat-count">742개 ETF</div>
+      </a>
+      <a href="/dividend.html" class="cat-card">
+        <div class="cat-icon">💰</div>
+        <div class="cat-name">배당주</div>
+        <div class="cat-desc">배당일 · 배당률 · 이력</div>
+        <div class="cat-count">배당 캘린더</div>
+      </a>
+      <a href="/compare.html" class="cat-card">
+        <div class="cat-icon">⚖️</div>
+        <div class="cat-name">종목 비교</div>
+        <div class="cat-desc">재무 · 주가 · 수익률</div>
+        <div class="cat-count">A vs B 비교</div>
+      </a>
+    </div>
+
+    <div class="section-title">시가총액 상위 종목 <span class="badge">LIVE</span></div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>순위</th>
+            <th>종목명</th>
+            <th style="text-align:right">현재가</th>
+            <th style="text-align:right">등락률</th>
+            <th style="text-align:right">거래량</th>
+            <th style="text-align:right">시가총액</th>
+          </tr>
+        </thead>
+        <tbody id="stockTable">
+          <tr><td colspan="6" style="text-align:center;padding:20px;color:var(--text3)">데이터 로딩 중...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:24px" class="section-title">인기 검색 종목</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>순위</th><th>종목명</th><th style="text-align:right">현재가</th><th style="text-align:right">등락률</th></tr>
+        </thead>
+        <tbody id="popularTable"></tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="sidebar">
+    <div class="card">
+      <div class="card-title">📊 업종별 등락</div>
+      <div id="sectorList"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">🔥 오늘의 급등주</div>
+      <div id="hotList"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">📅 이번 달 배당 일정</div>
+      <div id="dividendList"></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>주식인포 · 데이터 출처: 한국거래소(KRX), 금융감독원(DART)</p>
+  <p style="margin-top:6px">본 사이트의 정보는 투자 참고용이며, 투자 결정에 대한 책임은 본인에게 있습니다.</p>
+</footer>
+
+<script>
+const stocks = [
+  { rank:1, name:'삼성전자', code:'005930', price:74800, change:0.48, vol:'18,234,521', cap:'446조' },
+  { rank:2, name:'SK하이닉스', code:'000660', price:168500, change:1.23, vol:'4,823,100', cap:'122조' },
+  { rank:3, name:'LG에너지솔루션', code:'373220', price:412000, change:-0.72, vol:'312,440', cap:'96조' },
+  { rank:4, name:'삼성바이오로직스', code:'207940', price:952000, change:0.85, vol:'124,332', cap:'67조' },
+  { rank:5, name:'현대차', code:'005380', price:234000, change:0.43, vol:'892,100', cap:'50조' },
+  { rank:6, name:'NAVER', code:'035420', price:181500, change:-1.08, vol:'1,234,500', cap:'29조' },
+  { rank:7, name:'셀트리온', code:'068270', price:178900, change:2.11, vol:'2,341,200', cap:'24조' },
+  { rank:8, name:'카카오', code:'035720', price:43200, change:-0.46, vol:'5,123,400', cap:'19조' },
+];
+
+const popular = [
+  { rank:1, name:'삼성전자', code:'005930', price:74800, change:0.48 },
+  { rank:2, name:'카카오', code:'035720', price:43200, change:-0.46 },
+  { rank:3, name:'NAVER', code:'035420', price:181500, change:-1.08 },
+  { rank:4, name:'현대차', code:'005380', price:234000, change:0.43 },
+  { rank:5, name:'SK하이닉스', code:'000660', price:168500, change:1.23 },
+];
+
+const sectors = [
+  { name:'반도체', change:1.42 }, { name:'배터리', change:-0.38 },
+  { name:'바이오', change:2.14 }, { name:'자동차', change:0.67 },
+  { name:'인터넷', change:-0.91 }, { name:'금융', change:0.33 },
+];
+
+const hot = [
+  { name:'에코프로', code:'086520', change:14.82 },
+  { name:'포스코DX', code:'022100', change:11.34 },
+  { name:'레인보우로보틱스', code:'277810', change:9.87 },
+];
+
+const dividends = [
+  { name:'삼성전자', date:'5/20', amount:'361원' },
+  { name:'KODEX 배당성장', date:'5/25', amount:'ETF' },
+  { name:'KT&G', date:'5/28', amount:'1,200원' },
+];
+
+function fmt(n) { return n.toLocaleString('ko-KR'); }
+
+function renderStockTable() {
+  document.getElementById('stockTable').innerHTML = stocks.map(s => `
+    <tr onclick="location.href='/stock.html?code=${s.code}&name=${encodeURIComponent(s.name)}'">
+      <td style="color:var(--text3);font-size:12px">${s.rank}</td>
+      <td><div class="stock-name">${s.name}</div><div class="stock-code">${s.code}</div></td>
+      <td class="price-col">${fmt(s.price)}<span style="font-size:11px;color:var(--text3)"> 원</span></td>
+      <td class="change-col ${s.change>=0?'up':'down'}">${s.change>=0?'▲':'▼'} ${Math.abs(s.change).toFixed(2)}%</td>
+      <td class="vol-col">${s.vol}</td>
+      <td class="vol-col">${s.cap}</td>
+    </tr>`).join('');
+}
+
+function renderPopular() {
+  document.getElementById('popularTable').innerHTML = popular.map(s => `
+    <tr onclick="location.href='/stock.html?code=${s.code}&name=${encodeURIComponent(s.name)}'">
+      <td style="color:var(--accent);font-size:12px;font-weight:700">${s.rank}</td>
+      <td><div class="stock-name">${s.name}</div><div class="stock-code">${s.code}</div></td>
+      <td class="price-col">${fmt(s.price)}</td>
+      <td class="change-col ${s.change>=0?'up':'down'}">${s.change>=0?'▲':'▼'} ${Math.abs(s.change).toFixed(2)}%</td>
+    </tr>`).join('');
+}
+
+function renderSectors() {
+  document.getElementById('sectorList').innerHTML = sectors.map(s => `
+    <div class="mini-row">
+      <span class="mini-name">${s.name}</span>
+      <span class="mini-val ${s.change>=0?'up':'down'}">${s.change>=0?'▲':'▼'} ${Math.abs(s.change).toFixed(2)}%</span>
+    </div>`).join('');
+}
+
+function renderHot() {
+  document.getElementById('hotList').innerHTML = hot.map(s => `
+    <div class="mini-row">
+      <span class="mini-name">${s.name}</span>
+      <span class="mini-val up">▲ ${s.change.toFixed(2)}%</span>
+    </div>`).join('');
+}
+
+function renderDividends() {
+  document.getElementById('dividendList').innerHTML = dividends.map(d => `
+    <div class="mini-row">
+      <div><div class="mini-name">${d.name}</div><div style="font-size:11px;color:var(--text3)">${d.date}</div></div>
+      <span class="mini-val" style="color:var(--accent2)">${d.amount}</span>
+    </div>`).join('');
+}
+
+document.getElementById('searchInput').addEventListener('keydown', e => {
+  if(e.key === 'Enter') {
+    const q = e.target.value.trim();
+    if(q) location.href = '/stocks.html?q=' + encodeURIComponent(q);
+  }
+});
+
+renderStockTable(); renderPopular(); renderSectors(); renderHot(); renderDividends();
+</script>
+</body>
+</html>
