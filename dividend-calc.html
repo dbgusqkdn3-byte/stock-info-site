@@ -16,10 +16,11 @@
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:14px;}
-  nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;height:56px;gap:32px;position:sticky;top:0;z-index:100;}
-  .logo{font-size:18px;font-weight:700;color:var(--accent);text-decoration:none;}
+  nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;min-height:56px;gap:18px;position:sticky;top:0;z-index:100;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;}
+  nav::-webkit-scrollbar{display:none;}
+  .logo{font-size:18px;font-weight:700;color:var(--accent);text-decoration:none;flex-shrink:0;}
   .logo span{color:var(--text);}
-  nav a{color:var(--text2);text-decoration:none;font-size:13px;}
+  nav a{color:var(--text2);text-decoration:none;font-size:13px;white-space:nowrap;flex-shrink:0;}
   nav a:hover{color:var(--text);}
 
   .hero{background:var(--bg2);border-bottom:1px solid var(--border);padding:36px 24px;}
@@ -75,6 +76,25 @@
   .btn:hover{opacity:0.85;}
 
   footer{border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--text3);font-size:12px;margin-top:48px;}
+
+  .custom-input-row{display:flex;gap:10px;margin-top:8px;flex-wrap:wrap;}
+  .custom-input-row input{flex:1;min-width:120px;}
+  .custom-input-row .btn{flex-shrink:0;}
+
+  @media(max-width:600px){
+    .hero{padding:20px 16px;}
+    .hero h1{font-size:20px;}
+    .main{padding:20px 16px;}
+    .card{padding:16px;}
+    .stock-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));}
+    .custom-input-row{flex-direction:column;}
+    .custom-input-row input{width:100%!important;min-width:unset;}
+    .result-val{font-size:18px;}
+    .goal-row{flex-direction:column;align-items:flex-start;}
+    .goal-input{width:100%;}
+    .div-table th,.div-table td{padding:8px 4px;font-size:12px;}
+    .col-div-hide{display:none;}
+  }
 </style>
 </head>
 <body>
@@ -82,8 +102,13 @@
   <a href="/" class="logo">주식<span>인포</span></a>
   <a href="/stocks.html">국내주식</a>
   <a href="/etf.html">ETF</a>
+  <a href="/theme.html">테마주</a>
+  <a href="/hot.html">급등주</a>
   <a href="/dividend-calc.html" style="color:var(--accent)">배당계산기</a>
   <a href="/compare.html">종목비교</a>
+  <a href="/news.html">뉴스</a>
+  <a href="/dart.html">공시</a>
+  <a href="/tax-calc.html">세금계산기</a>
 </nav>
 
 <div class="hero">
@@ -98,10 +123,10 @@
   <div class="card">
     <div class="card-title">종목 선택</div>
     <div class="stock-grid" id="stockGrid"></div>
-    <div style="display:flex;gap:10px;margin-top:8px">
-      <input id="customName" placeholder="종목명 직접 입력" style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:9px 14px;color:var(--text);font-size:13px;font-family:inherit;outline:none;">
-      <input id="customPrice" placeholder="현재가(원)" style="width:130px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:9px 14px;color:var(--text);font-size:13px;font-family:'IBM Plex Mono',monospace;outline:none;">
-      <input id="customDiv" placeholder="주당 배당금(원)" style="width:150px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:9px 14px;color:var(--text);font-size:13px;font-family:'IBM Plex Mono',monospace;outline:none;">
+    <div class="custom-input-row">
+      <input id="customName" placeholder="종목명 직접 입력" style="flex:2;min-width:120px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:9px 14px;color:var(--text);font-size:13px;font-family:inherit;outline:none;">
+      <input id="customPrice" placeholder="현재가(원)" style="flex:1;min-width:100px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:9px 14px;color:var(--text);font-size:13px;font-family:'IBM Plex Mono',monospace;outline:none;">
+      <input id="customDiv" placeholder="주당 배당금(원)" style="flex:1;min-width:110px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:9px 14px;color:var(--text);font-size:13px;font-family:'IBM Plex Mono',monospace;outline:none;">
       <button class="btn" onclick="applyCustom()">적용</button>
     </div>
   </div>
@@ -152,7 +177,7 @@
   <div class="card">
     <div class="card-title">배당 이력</div>
     <table class="div-table">
-      <thead><tr><th>연도</th><th>주당 배당금</th><th>배당수익률</th><th>지급일</th><th id="sharesHead">100주 수령액</th></tr></thead>
+      <thead><tr><th>연도</th><th>주당 배당금</th><th class="col-div-hide">배당수익률</th><th class="col-div-hide">지급일</th><th id="sharesHead">100주 수령액</th></tr></thead>
       <tbody id="divHistory"></tbody>
     </table>
   </div>

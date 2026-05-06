@@ -27,13 +27,14 @@
   body { background: var(--bg); color: var(--text); font-family: 'Noto Sans KR', sans-serif; font-size: 14px; line-height: 1.6; }
 
   /* NAV */
-  nav { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; align-items: center; height: 56px; gap: 32px; position: sticky; top: 0; z-index: 100; }
-  .logo { font-size: 18px; font-weight: 700; color: var(--accent); letter-spacing: -0.5px; text-decoration: none; }
+  nav { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; align-items: center; min-height: 56px; gap: 24px; position: sticky; top: 0; z-index: 100; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  nav::-webkit-scrollbar { display: none; }
+  .logo { font-size: 18px; font-weight: 700; color: var(--accent); letter-spacing: -0.5px; text-decoration: none; flex-shrink: 0; }
   .logo span { color: var(--text); }
-  nav a { color: var(--text2); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+  nav a { color: var(--text2); text-decoration: none; font-size: 13px; transition: color 0.2s; white-space: nowrap; flex-shrink: 0; }
   nav a:hover { color: var(--text); }
-  .nav-right { margin-left: auto; display: flex; gap: 12px; }
-  .search-bar { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 6px 14px; color: var(--text); font-size: 13px; font-family: inherit; width: 220px; outline: none; transition: border-color 0.2s; }
+  .nav-right { margin-left: auto; display: flex; gap: 12px; flex-shrink: 0; }
+  .search-bar { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 6px 14px; color: var(--text); font-size: 13px; font-family: inherit; width: 200px; outline: none; transition: border-color 0.2s; }
   .search-bar::placeholder { color: var(--text3); }
   .search-bar:focus { border-color: var(--accent); }
 
@@ -106,6 +107,24 @@
   /* LOADING SHIMMER */
   @keyframes shimmer { 0% { opacity: 0.4; } 50% { opacity: 0.8; } 100% { opacity: 0.4; } }
   .shimmer { animation: shimmer 1.5s infinite; background: var(--bg3); border-radius: 4px; }
+
+  /* MOBILE */
+  @media (max-width: 600px) {
+    .hero { padding: 24px 16px; }
+    .hero h1 { font-size: 22px; }
+    .hero p { font-size: 13px; }
+    .hero-stats { gap: 10px; }
+    .hero-stat { min-width: calc(50% - 5px); padding: 12px 14px; flex: 1; }
+    .hero-stat .value { font-size: 17px; }
+    .main { padding: 16px; gap: 16px; }
+    .search-bar { width: 120px; }
+    .vol-col, .change-col { font-size: 11px; }
+    tbody td { padding: 9px 10px; }
+    thead th { padding: 9px 10px; }
+  }
+  @media (max-width: 400px) {
+    .search-bar { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -114,8 +133,11 @@
   <a href="/" class="logo">주식<span>인포</span></a>
   <a href="/stocks.html">국내주식</a>
   <a href="/etf.html">ETF</a>
-  <a href="/dividend.html">배당주</a>
+  <a href="/dividend-calc.html">배당계산기</a>
   <a href="/compare.html">종목비교</a>
+  <a href="/news.html">뉴스</a>
+  <a href="/dart.html">공시</a>
+  <a href="/tax-calc.html">세금계산기</a>
   <div class="nav-right">
     <input class="search-bar" type="text" placeholder="종목명 또는 코드 검색..." id="searchInput">
   </div>
@@ -187,7 +209,7 @@
         <div class="cat-desc">구성종목 · 수익률 분석</div>
         <div class="cat-count">742개 ETF</div>
       </a>
-      <a href="/dividend.html" class="cat-card">
+      <a href="/dividend-calc.html" class="cat-card">
         <div class="cat-icon">💰</div>
         <div class="cat-name">배당주</div>
         <div class="cat-desc">배당일 · 배당률 · 이력</div>

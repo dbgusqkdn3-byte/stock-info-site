@@ -11,10 +11,11 @@
   :root{--bg:#0a0e1a;--bg2:#0f1629;--bg3:#151d35;--card:#111827;--border:#1e2d4a;--accent:#00d4aa;--accent2:#0ea5e9;--up:#22c55e;--down:#ef4444;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;}
   *{margin:0;padding:0;box-sizing:border-box;}
   body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:14px;}
-  nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;height:56px;gap:24px;position:sticky;top:0;z-index:100;}
-  .logo{font-size:18px;font-weight:700;color:var(--accent);text-decoration:none;}
+  nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;min-height:56px;gap:18px;position:sticky;top:0;z-index:100;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;}
+  nav::-webkit-scrollbar{display:none;}
+  .logo{font-size:18px;font-weight:700;color:var(--accent);text-decoration:none;flex-shrink:0;}
   .logo span{color:var(--text);}
-  nav a{color:var(--text2);text-decoration:none;font-size:13px;}
+  nav a{color:var(--text2);text-decoration:none;font-size:13px;white-space:nowrap;flex-shrink:0;}
   nav a:hover{color:var(--text);}
 
   .hero{background:var(--bg2);border-bottom:1px solid var(--border);padding:28px 24px;}
@@ -58,6 +59,25 @@
   .no-result{text-align:center;padding:48px;color:var(--text3);}
 
   footer{border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--text3);font-size:12px;margin-top:48px;}
+
+  @media(max-width:700px){
+    .hero{padding:20px 16px;}
+    .hero h1{font-size:18px;margin-bottom:12px;}
+    .search-row{gap:8px;}
+    .search-row .filter{flex:1;min-width:calc(50% - 4px);}
+    .search-input{min-width:100%;}
+    .main{padding:16px;}
+    .stats-row{gap:8px;}
+    .stat-pill{padding:6px 12px;font-size:12px;}
+    tbody td{padding:9px 10px;font-size:12px;}
+    thead th{padding:9px 10px;}
+    .table-wrap{overflow-x:auto;}
+  }
+  @media(max-width:560px){
+    .col-mob-hide{display:none!important;}
+    .sname{font-size:13px;}
+    .scode{font-size:10px;}
+  }
 </style>
 </head>
 <body>
@@ -69,6 +89,9 @@
   <a href="/etf.html">ETF</a>
   <a href="/dividend-calc.html">배당계산기</a>
   <a href="/compare.html">종목비교</a>
+  <a href="/news.html">뉴스</a>
+  <a href="/dart.html">공시</a>
+  <a href="/tax-calc.html">세금계산기</a>
 </nav>
 
 <div class="hero">
@@ -110,13 +133,13 @@
       <thead>
         <tr>
           <th>종목명</th>
-          <th>시장</th>
-          <th>업종</th>
+          <th class="col-mob-hide">시장</th>
+          <th class="col-mob-hide">업종</th>
           <th style="text-align:right">현재가</th>
           <th style="text-align:right">등락률</th>
-          <th style="text-align:right">거래량</th>
+          <th style="text-align:right" class="col-mob-hide">거래량</th>
           <th style="text-align:right">시가총액</th>
-          <th style="text-align:right">PER</th>
+          <th style="text-align:right" class="col-mob-hide">PER</th>
         </tr>
       </thead>
       <tbody id="stockTable"></tbody>
@@ -215,13 +238,13 @@ function renderTable() {
   document.getElementById('stockTable').innerHTML = page.map((s,i) => `
     <tr onclick="location.href='/stock.html?code=${s.code}&name=${encodeURIComponent(s.name)}'">
       <td><div class="sname">${s.name}</div><div class="scode">${s.code}</div></td>
-      <td><span class="market-badge ${s.market.toLowerCase()}">${s.market}</span></td>
-      <td style="color:var(--text3);font-size:12px">${s.sector}</td>
+      <td class="col-mob-hide"><span class="market-badge ${s.market.toLowerCase()}">${s.market}</span></td>
+      <td class="col-mob-hide" style="color:var(--text3);font-size:12px">${s.sector}</td>
       <td style="text-align:right" class="mono">${fmt(s.price)}<span style="font-size:11px;color:var(--text3)">원</span></td>
       <td style="text-align:right" class="mono ${s.change>=0?'up':'down'}">${s.change>=0?'▲':'▼'} ${Math.abs(s.change).toFixed(2)}%</td>
-      <td style="text-align:right;color:var(--text2)" class="mono">${fmt(s.vol)}</td>
+      <td style="text-align:right;color:var(--text2)" class="mono col-mob-hide">${fmt(s.vol)}</td>
       <td style="text-align:right" class="mono">${s.cap}조</td>
-      <td style="text-align:right;color:var(--text2)" class="mono">${s.per||'-'}</td>
+      <td style="text-align:right;color:var(--text2)" class="mono col-mob-hide">${s.per||'-'}</td>
     </tr>`).join('');
 }
 
