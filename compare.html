@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">주식 종목 비교 - 주식인포</title>
+<meta name="description" id="pageDesc" content="두 종목의 주가, 재무, 배당을 한눈에 비교하세요.">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9578749307688434" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root{--bg:#0a0e1a;--bg2:#0f1629;--bg3:#151d35;--card:#111827;--border:#1e2d4a;--accent:#00d4aa;--accent2:#0ea5e9;--up:#22c55e;--down:#ef4444;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:14px;}
+  nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;height:56px;gap:32px;position:sticky;top:0;z-index:100;}
+  .logo{font-size:18px;font-weight:700;color:var(--accent);text-decoration:none;}
+  .logo span{color:var(--text);}
+  nav a{color:var(--text2);text-decoration:none;font-size:13px;}
+
+  .hero{background:var(--bg2);border-bottom:1px solid var(--border);padding:36px 24px;}
+  .hero-inner{max-width:1000px;margin:0 auto;}
+  .hero h1{font-size:26px;font-weight:700;margin-bottom:8px;}
+  .hero h1 em{color:var(--accent);font-style:normal;}
+  .hero p{color:var(--text2);}
+
+  .main{max-width:1000px;margin:0 auto;padding:32px 24px;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:20px;}
+  .card-title{font-size:15px;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:8px;}
+  .card-title::before{content:'';width:3px;height:16px;background:var(--accent);border-radius:2px;}
+
+  /* SELECTOR */
+  .selector-row{display:grid;grid-template-columns:1fr 60px 1fr;gap:16px;align-items:center;margin-bottom:16px;}
+  .vs-badge{text-align:center;font-size:18px;font-weight:700;color:var(--text3);}
+  .stock-select{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:12px 14px;color:var(--text);font-size:14px;font-family:'Noto Sans KR',sans-serif;outline:none;width:100%;cursor:pointer;transition:border-color 0.2s;}
+  .stock-select:focus{border-color:var(--accent);}
+
+  /* COMPARE HEADER */
+  .compare-header{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+  .stock-hero{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;}
+  .stock-hero .sname{font-size:20px;font-weight:700;margin-bottom:4px;}
+  .stock-hero .scode{font-size:12px;color:var(--text3);font-family:'IBM Plex Mono',monospace;margin-bottom:12px;}
+  .stock-hero .sprice{font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:500;}
+  .stock-hero .schange{font-size:13px;margin-top:4px;font-family:'IBM Plex Mono',monospace;}
+  .a-color{color:var(--accent);}
+  .b-color{color:var(--accent2);}
+
+  /* COMPARE TABLE */
+  .cmp-table{width:100%;border-collapse:collapse;}
+  .cmp-table th{text-align:center;padding:10px;font-size:12px;color:var(--text3);font-weight:400;border-bottom:1px solid var(--border);}
+  .cmp-table th:first-child{text-align:left;}
+  .cmp-table td{padding:12px 10px;border-bottom:1px solid var(--border);text-align:center;font-family:'IBM Plex Mono',monospace;font-size:13px;}
+  .cmp-table td:first-child{text-align:left;font-family:'Noto Sans KR',sans-serif;color:var(--text2);}
+  .cmp-table tr:last-child td{border-bottom:none;}
+  .winner{color:var(--up);font-weight:700;}
+  .loser{color:var(--text3);}
+
+  /* CHART */
+  .chart-wrap{position:relative;height:240px;}
+
+  /* POPULAR */
+  .popular-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;}
+  .pop-btn{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:12px 14px;cursor:pointer;transition:all 0.2s;text-decoration:none;display:block;}
+  .pop-btn:hover{border-color:var(--accent);}
+  .pop-btn .pair{font-size:13px;font-weight:500;color:var(--text);}
+  .pop-btn .desc{font-size:11px;color:var(--text3);margin-top:3px;}
+
+  .btn{background:var(--accent);color:var(--bg);border:none;border-radius:8px;padding:10px 24px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:opacity 0.2s;}
+  .btn:hover{opacity:0.85;}
+  footer{border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--text3);font-size:12px;margin-top:48px;}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">주식<span>인포</span></a>
+  <a href="/stocks.html">국내주식</a>
+  <a href="/etf.html">ETF</a>
+  <a href="/dividend-calc.html">배당계산기</a>
+  <a href="/compare.html" style="color:var(--accent)">종목비교</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <h1>⚖️ 종목 <em>비교</em></h1>
+    <p>두 종목의 주가, 재무지표, 배당을 한눈에 비교하세요.</p>
+  </div>
+</div>
+
+<div class="main">
+
+  <div class="card">
+    <div class="card-title">비교 종목 선택</div>
+    <div class="selector-row">
+      <select class="stock-select" id="stockA" onchange="compare()">
+        <option value="0">삼성전자</option>
+        <option value="1">SK하이닉스</option>
+        <option value="2">LG에너지솔루션</option>
+        <option value="3">현대차</option>
+        <option value="4">NAVER</option>
+        <option value="5">카카오</option>
+        <option value="6">셀트리온</option>
+        <option value="7">POSCO홀딩스</option>
+        <option value="8">KT&G</option>
+        <option value="9">기업은행</option>
+      </select>
+      <div class="vs-badge">VS</div>
+      <select class="stock-select" id="stockB" onchange="compare()">
+        <option value="1">SK하이닉스</option>
+        <option value="0">삼성전자</option>
+        <option value="2">LG에너지솔루션</option>
+        <option value="3">현대차</option>
+        <option value="4">NAVER</option>
+        <option value="5">카카오</option>
+        <option value="6">셀트리온</option>
+        <option value="7">POSCO홀딩스</option>
+        <option value="8">KT&G</option>
+        <option value="9">기업은행</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="compare-header" id="compareHeader"></div>
+
+  <div class="card">
+    <div class="card-title">주가 추이 비교 (1년)</div>
+    <div class="chart-wrap"><canvas id="priceChart"></canvas></div>
+    <div style="display:flex;gap:20px;margin-top:12px;justify-content:center">
+      <div style="display:flex;align-items:center;gap:6px"><div style="width:12px;height:2px;background:var(--accent)"></div><span style="font-size:12px;color:var(--text2)" id="legendA">삼성전자</span></div>
+      <div style="display:flex;align-items:center;gap:6px"><div style="width:12px;height:2px;background:var(--accent2)"></div><span style="font-size:12px;color:var(--text2)" id="legendB">SK하이닉스</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">재무지표 비교</div>
+    <table class="cmp-table">
+      <thead><tr><th>항목</th><th id="thA">삼성전자</th><th id="thB">SK하이닉스</th><th>우위</th></tr></thead>
+      <tbody id="cmpTable"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">인기 비교 조합</div>
+    <div class="popular-grid" id="popularGrid"></div>
+  </div>
+
+</div>
+
+<footer>
+  <p>주식인포 · 데이터 출처: 한국거래소(KRX), 금융감독원(DART) · 투자 참고용</p>
+</footer>
+
+<script>
+const stocks = [
+  {name:'삼성전자',code:'005930',price:74800,change:0.48,per:14.2,pbr:1.34,roe:9.4,debt:27.3,div:2.84,cap:'446조',revenue:'300조',profit:'32조',
+   prices:[62000,65400,68200,71000,69500,73200,75800,72100,74900,76300,73800,74800]},
+  {name:'SK하이닉스',code:'000660',price:168500,change:1.23,per:18.4,pbr:2.11,roe:14.2,debt:38.1,div:0.71,cap:'122조',revenue:'66조',profit:'23조',
+   prices:[98000,112000,124000,138000,132000,148000,162000,155000,169000,178000,165000,168500]},
+  {name:'LG에너지솔루션',code:'373220',price:412000,change:-0.72,per:32.1,pbr:3.42,roe:8.1,debt:142.3,div:0,cap:'96조',revenue:'33조',profit:'1.5조',
+   prices:[380000,395000,410000,432000,418000,425000,440000,415000,408000,420000,418000,412000]},
+  {name:'현대차',code:'005380',price:234000,change:0.43,per:5.8,pbr:0.72,roe:12.4,debt:195.2,div:2.14,cap:'50조',revenue:'162조',profit:'15조',
+   prices:[190000,202000,218000,228000,221000,235000,248000,238000,242000,251000,239000,234000]},
+  {name:'NAVER',code:'035420',price:181500,change:-1.08,per:22.3,pbr:1.84,roe:8.2,debt:52.1,div:0.55,cap:'29조',revenue:'9.6조',profit:'1.4조',
+   prices:[195000,188000,182000,175000,178000,184000,192000,186000,179000,183000,185000,181500]},
+  {name:'카카오',code:'035720',price:43200,change:-0.46,per:48.2,pbr:1.12,roe:2.3,debt:68.4,div:0.23,cap:'19조',revenue:'7.8조',profit:'0.4조',
+   prices:[55000,52000,49000,46000,44000,45000,47000,44000,43000,44500,43800,43200]},
+  {name:'셀트리온',code:'068270',price:178900,change:2.11,per:31.4,pbr:3.21,roe:10.2,debt:44.2,div:0,cap:'24조',revenue:'2.8조',profit:'0.8조',
+   prices:[148000,155000,162000,172000,168000,175000,182000,170000,176000,184000,181000,178900]},
+  {name:'POSCO홀딩스',code:'005490',price:312000,change:0.65,per:8.2,pbr:0.48,roe:5.8,debt:82.1,div:3.21,cap:'27조',revenue:'77조',profit:'3.3조',
+   prices:[285000,292000,305000,318000,308000,315000,325000,310000,318000,328000,315000,312000]},
+  {name:'KT&G',code:'033780',price:98500,change:0.31,per:12.1,pbr:1.42,roe:11.7,debt:38.2,div:4.87,cap:'13조',revenue:'6.1조',profit:'1.1조',
+   prices:[88000,90000,92000,95000,93000,96000,99000,97000,98000,100000,99000,98500]},
+  {name:'기업은행',code:'024110',price:14500,change:0.69,per:4.2,pbr:0.42,roe:9.8,debt:0,div:5.66,cap:'10조',revenue:'12조',profit:'2.4조',
+   prices:[12800,13200,13600,14000,13800,14200,14600,14300,14500,14800,14600,14500]},
+];
+
+const months = ['25.06','25.07','25.08','25.09','25.10','25.11','25.12','26.01','26.02','26.03','26.04','26.05'];
+let chart = null;
+
+const popular = [
+  {a:0,b:1,desc:'반도체 대장주 비교'},
+  {a:3,b:0,desc:'제조업 대표주자'},
+  {a:4,b:5,desc:'인터넷 플랫폼 양대산맥'},
+  {a:7,b:0,desc:'소재 vs 전자'},
+  {a:8,b:9,desc:'배당주 비교'},
+  {a:1,b:2,desc:'2차전지 관련주'},
+];
+
+function fmt(n){return n.toLocaleString('ko-KR');}
+
+function compare() {
+  const a = stocks[parseInt(document.getElementById('stockA').value)];
+  const b = stocks[parseInt(document.getElementById('stockB').value)];
+
+  document.title = `${a.name} vs ${b.name} 주식 비교 - 주식인포`;
+  document.getElementById('pageDesc').content = `${a.name}(${a.code})과 ${b.name}(${b.code})의 주가, PER, PBR, 배당수익률을 비교합니다.`;
+  document.getElementById('legendA').textContent = a.name;
+  document.getElementById('legendB').textContent = b.name;
+  document.getElementById('thA').textContent = a.name;
+  document.getElementById('thB').textContent = b.name;
+
+  document.getElementById('compareHeader').innerHTML = `
+    <div class="stock-hero">
+      <div class="sname a-color">${a.name}</div>
+      <div class="scode">${a.code}</div>
+      <div class="sprice">${fmt(a.price)}원</div>
+      <div class="schange ${a.change>=0?'a-color':'down'}">${a.change>=0?'▲':'▼'} ${Math.abs(a.change).toFixed(2)}%</div>
+    </div>
+    <div class="stock-hero">
+      <div class="sname b-color">${b.name}</div>
+      <div class="scode">${b.code}</div>
+      <div class="sprice">${fmt(b.price)}원</div>
+      <div class="schange ${b.change>=0?'b-color':'down'}">${b.change>=0?'▲':'▼'} ${Math.abs(b.change).toFixed(2)}%</div>
+    </div>`;
+
+  const metrics = [
+    {label:'시가총액',aVal:a.cap,bVal:b.cap,aNum:parseFloat(a.cap),bNum:parseFloat(b.cap),higher:true,unit:''},
+    {label:'PER (낮을수록 저평가)',aVal:a.per+'배',bVal:b.per+'배',aNum:a.per,bNum:b.per,higher:false,unit:'배'},
+    {label:'PBR',aVal:a.pbr+'배',bVal:b.pbr+'배',aNum:a.pbr,bNum:b.pbr,higher:false,unit:'배'},
+    {label:'ROE (높을수록 우수)',aVal:a.roe+'%',bVal:b.roe+'%',aNum:a.roe,bNum:b.roe,higher:true,unit:'%'},
+    {label:'부채비율 (낮을수록 안전)',aVal:a.debt+'%',bVal:b.debt+'%',aNum:a.debt,bNum:b.debt,higher:false,unit:'%'},
+    {label:'배당수익률',aVal:a.div+'%',bVal:b.div+'%',aNum:a.div,bNum:b.div,higher:true,unit:'%'},
+    {label:'연간 매출',aVal:a.revenue,bVal:b.revenue,aNum:parseFloat(a.revenue),bNum:parseFloat(b.revenue),higher:true,unit:''},
+    {label:'연간 영업이익',aVal:a.profit,bVal:b.profit,aNum:parseFloat(a.profit),bNum:parseFloat(b.profit),higher:true,unit:''},
+  ];
+
+  document.getElementById('cmpTable').innerHTML = metrics.map(m => {
+    const aWin = m.higher ? m.aNum > m.bNum : m.aNum < m.bNum;
+    const bWin = m.higher ? m.bNum > m.aNum : m.bNum < m.aNum;
+    return `<tr>
+      <td>${m.label}</td>
+      <td class="${aWin?'winner':bWin?'loser':''}">${m.aVal}</td>
+      <td class="${bWin?'winner':aWin?'loser':''}">${m.bVal}</td>
+      <td style="font-family:'Noto Sans KR',sans-serif;font-size:12px">${aWin?`<span style="color:var(--accent)">${a.name}</span>`:bWin?`<span style="color:var(--accent2)">${b.name}</span>`:'동등'}</td>
+    </tr>`;
+  }).join('');
+
+  const normalA = a.prices.map(p => +(p/a.prices[0]*100).toFixed(1));
+  const normalB = b.prices.map(p => +(p/b.prices[0]*100).toFixed(1));
+
+  if(chart) chart.destroy();
+  chart = new Chart(document.getElementById('priceChart'), {
+    type:'line',
+    data:{
+      labels:months,
+      datasets:[
+        {label:a.name,data:normalA,borderColor:'#00d4aa',backgroundColor:'rgba(0,212,170,0.06)',borderWidth:2,pointRadius:3,fill:true,tension:0.3},
+        {label:b.name,data:normalB,borderColor:'#0ea5e9',backgroundColor:'rgba(14,165,233,0.06)',borderWidth:2,pointRadius:3,fill:true,tension:0.3},
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw}% (기준가 대비)`}}},
+      scales:{
+        x:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#64748b',font:{size:11}}},
+        y:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#64748b',font:{size:11},callback:v=>v+'%'}}
+      }
+    }
+  });
+}
+
+document.getElementById('popularGrid').innerHTML = popular.map(p =>
+  `<a class="pop-btn" href="/compare.html?a=${p.a}&b=${p.b}" onclick="document.getElementById('stockA').value=${p.a};document.getElementById('stockB').value=${p.b};compare();return false;">
+    <div class="pair">${stocks[p.a].name} vs ${stocks[p.b].name}</div>
+    <div class="desc">${p.desc}</div>
+  </a>`
+).join('');
+
+const params = new URLSearchParams(location.search);
+if(params.get('a')) document.getElementById('stockA').value = params.get('a');
+if(params.get('b')) document.getElementById('stockB').value = params.get('b');
+compare();
+</script>
+</body>
+</html>
