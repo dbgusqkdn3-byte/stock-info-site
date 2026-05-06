@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>오늘의 급등주·52주 신고가 종목 | 주식인포</title>
+<meta name="description" content="오늘 급등주, 52주 신고가 종목, 외국인 순매수 상위 종목을 실시간으로 확인하세요.">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9578749307688434" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0e1a;--bg2:#0f1629;--bg3:#151d35;--card:#111827;--border:#1e2d4a;--accent:#00d4aa;--accent2:#0ea5e9;--up:#22c55e;--down:#ef4444;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:14px;}
+  nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;height:56px;gap:24px;position:sticky;top:0;z-index:100;}
+  .logo{font-size:18px;font-weight:700;color:var(--accent);text-decoration:none;}
+  .logo span{color:var(--text);}
+  nav a{color:var(--text2);text-decoration:none;font-size:13px;}
+
+  .hero{background:var(--bg2);border-bottom:1px solid var(--border);padding:36px 24px;}
+  .hero-inner{max-width:1100px;margin:0 auto;}
+  .hero h1{font-size:26px;font-weight:700;margin-bottom:8px;}
+  .hero h1 em{color:var(--accent);font-style:normal;}
+  .hero p{color:var(--text2);}
+  .date-badge{display:inline-block;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:4px 12px;font-size:12px;color:var(--text3);margin-top:10px;font-family:'IBM Plex Mono',monospace;}
+
+  .main{max-width:1100px;margin:0 auto;padding:32px 24px;display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  @media(max-width:760px){.main{grid-template-columns:1fr;}}
+
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+  .card-title{font-size:15px;font-weight:700;padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;}
+  .card-title::before{content:'';width:3px;height:16px;background:var(--accent);border-radius:2px;}
+  .card-title .badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;margin-left:4px;}
+  .badge-up{background:rgba(34,197,94,0.15);color:var(--up);}
+  .badge-hot{background:rgba(239,68,68,0.15);color:var(--down);}
+  .badge-foreign{background:rgba(14,165,233,0.15);color:var(--accent2);}
+
+  table{width:100%;border-collapse:collapse;}
+  thead th{background:var(--bg3);padding:9px 16px;text-align:left;font-size:11px;color:var(--text3);font-weight:500;border-bottom:1px solid var(--border);}
+  tbody tr{border-bottom:1px solid var(--border);transition:background 0.15s;cursor:pointer;}
+  tbody tr:last-child{border-bottom:none;}
+  tbody tr:hover{background:var(--bg3);}
+  tbody td{padding:11px 16px;font-size:13px;}
+  .rank{color:var(--text3);font-size:12px;width:24px;}
+  .rank.top{color:var(--down);font-weight:700;}
+  .sname{font-weight:500;}
+  .scode{font-size:11px;color:var(--text3);font-family:'IBM Plex Mono',monospace;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .up{color:var(--up);} .down{color:var(--down);}
+  .full-width{grid-column:1/-1;}
+
+  footer{border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--text3);font-size:12px;margin-top:0;grid-column:1/-1;}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">주식<span>인포</span></a>
+  <a href="/stocks.html">국내주식</a>
+  <a href="/theme.html">테마주</a>
+  <a href="/hot.html" style="color:var(--accent)">급등주</a>
+  <a href="/dividend-calc.html">배당계산기</a>
+  <a href="/compare.html">종목비교</a>
+  <a href="/etf.html">ETF</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <h1>🔥 오늘의 <em>급등주</em> · 신고가</h1>
+    <p>급등주, 52주 신고가, 외국인·기관 순매수 상위 종목을 확인하세요.</p>
+    <div class="date-badge">2026.05.06 장 마감 기준</div>
+  </div>
+</div>
+
+<div class="main">
+
+  <div class="card">
+    <div class="card-title">오늘의 급등주 <span class="badge badge-hot">KOSPI+KOSDAQ</span></div>
+    <table>
+      <thead><tr><th>순위</th><th>종목명</th><th style="text-align:right">현재가</th><th style="text-align:right">등락률</th></tr></thead>
+      <tbody id="hotTable"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">52주 신고가 <span class="badge badge-up">신규 돌파</span></div>
+    <table>
+      <thead><tr><th>순위</th><th>종목명</th><th style="text-align:right">현재가</th><th style="text-align:right">신고가</th></tr></thead>
+      <tbody id="highTable"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">외국인 순매수 Top 10 <span class="badge badge-foreign">외국인</span></div>
+    <table>
+      <thead><tr><th>순위</th><th>종목명</th><th style="text-align:right">현재가</th><th style="text-align:right">순매수</th></tr></thead>
+      <tbody id="foreignTable"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">기관 순매수 Top 10 <span class="badge badge-up">기관</span></div>
+    <table>
+      <thead><tr><th>순위</th><th>종목명</th><th style="text-align:right">현재가</th><th style="text-align:right">순매수</th></tr></thead>
+      <tbody id="instTable"></tbody>
+    </table>
+  </div>
+
+  <div class="card full-width">
+    <div class="card-title">거래량 급증 종목 <span class="badge badge-hot">전일 대비</span></div>
+    <table>
+      <thead><tr><th>순위</th><th>종목명</th><th style="text-align:right">현재가</th><th style="text-align:right">등락률</th><th style="text-align:right">거래량</th><th style="text-align:right">전일비</th></tr></thead>
+      <tbody id="volTable"></tbody>
+    </table>
+  </div>
+
+  <footer>주식인포 · 데이터 출처: 한국거래소(KRX) · 투자 참고용</footer>
+</div>
+
+<script>
+const hot = [
+  {rank:1,name:'에코프로',code:'086520',price:182000,change:14.82},
+  {rank:2,name:'포스코DX',code:'022100',price:48200,change:11.34},
+  {rank:3,name:'레인보우로보틱스',code:'277810',price:48200,change:9.87},
+  {rank:4,name:'알테오젠',code:'196170',price:312000,change:8.24},
+  {rank:5,name:'현대로템',code:'064350',price:68400,change:7.82},
+  {rank:6,name:'한화에어로스페이스',code:'012450',price:312000,change:6.44},
+  {rank:7,name:'두산에너빌리티',code:'034020',price:24800,change:5.92},
+  {rank:8,name:'HD현대일렉트릭',code:'267260',price:284000,change:5.44},
+  {rank:9,name:'LS ELECTRIC',code:'010120',price:142000,change:4.82},
+  {rank:10,name:'한미반도체',code:'042700',price:89400,change:4.21},
+];
+
+const highs = [
+  {rank:1,name:'한화에어로스페이스',code:'012450',price:312000,high:312000},
+  {rank:2,name:'HD현대일렉트릭',code:'267260',price:284000,high:284000},
+  {rank:3,name:'알테오젠',code:'196170',price:312000,high:312000},
+  {rank:4,name:'삼성바이오로직스',code:'207940',price:952000,high:952000},
+  {rank:5,name:'유한양행',code:'000100',price:98500,high:98500},
+  {rank:6,name:'LS ELECTRIC',code:'010120',price:142000,high:142000},
+  {rank:7,name:'현대로템',code:'064350',price:68400,high:68400},
+  {rank:8,name:'두산에너빌리티',code:'034020',price:24800,high:24800},
+  {rank:9,name:'풍산',code:'103140',price:58400,high:58400},
+  {rank:10,name:'LIG넥스원',code:'079550',price:198000,high:198000},
+];
+
+const foreign = [
+  {rank:1,name:'삼성전자',code:'005930',price:74800,buy:'2,341억'},
+  {rank:2,name:'SK하이닉스',code:'000660',price:168500,buy:'1,823억'},
+  {rank:3,name:'한화에어로스페이스',code:'012450',price:312000,buy:'984억'},
+  {rank:4,name:'NAVER',code:'035420',price:181500,buy:'742억'},
+  {rank:5,name:'현대차',code:'005380',price:234000,buy:'682억'},
+  {rank:6,name:'LG에너지솔루션',code:'373220',price:412000,buy:'541억'},
+  {rank:7,name:'삼성바이오로직스',code:'207940',price:952000,buy:'482억'},
+  {rank:8,name:'셀트리온',code:'068270',price:178900,buy:'421억'},
+  {rank:9,name:'HD현대일렉트릭',code:'267260',price:284000,buy:'384억'},
+  {rank:10,name:'카카오',code:'035720',price:43200,buy:'312억'},
+];
+
+const inst = [
+  {rank:1,name:'SK하이닉스',code:'000660',price:168500,buy:'1,242억'},
+  {rank:2,name:'삼성전자',code:'005930',price:74800,buy:'984억'},
+  {rank:3,name:'LG에너지솔루션',code:'373220',price:412000,buy:'842억'},
+  {rank:4,name:'현대차',code:'005380',price:234000,buy:'721억'},
+  {rank:5,name:'POSCO홀딩스',code:'005490',price:312000,buy:'582억'},
+  {rank:6,name:'알테오젠',code:'196170',price:312000,buy:'484억'},
+  {rank:7,name:'한미반도체',code:'042700',price:89400,buy:'421억'},
+  {rank:8,name:'기업은행',code:'024110',price:14500,buy:'384억'},
+  {rank:9,name:'KT&G',code:'033780',price:98500,buy:'312억'},
+  {rank:10,name:'유한양행',code:'000100',price:98500,buy:'284억'},
+];
+
+const vols = [
+  {rank:1,name:'에코프로',code:'086520',price:182000,change:14.82,vol:'18,234,521',volChg:'+842%'},
+  {rank:2,name:'레인보우로보틱스',code:'277810',price:48200,change:9.87,vol:'12,482,100',volChg:'+624%'},
+  {rank:3,name:'포스코DX',code:'022100',price:48200,change:11.34,vol:'9,841,200',volChg:'+512%'},
+  {rank:4,name:'알테오젠',code:'196170',price:312000,change:8.24,vol:'8,241,000',volChg:'+384%'},
+  {rank:5,name:'두산에너빌리티',code:'034020',price:24800,change:5.92,vol:'7,824,100',volChg:'+312%'},
+];
+
+function fmt(n){return n.toLocaleString('ko-KR');}
+function row(r,isTop){return `<td class="rank ${isTop?'top':''}">${r}</td>`;}
+
+document.getElementById('hotTable').innerHTML = hot.map(s=>`
+  <tr onclick="location.href='/stock.html?code=${s.code}&name=${encodeURIComponent(s.name)}'">
+    ${row(s.rank,s.rank<=3)}
+    <td><div class="sname">${s.name}</div><div class="scode">${s.code}</div></td>
+    <td style="text-align:right" class="mono">${fmt(s.price)}</td>
+    <td style="text-align:right" class="mono up">▲ ${s.change.toFixed(2)}%</td>
+  </tr>`).join('');
+
+document.getElementById('highTable').innerHTML = highs.map(s=>`
+  <tr onclick="location.href='/stock.html?code=${s.code}&name=${encodeURIComponent(s.name)}'">
+    ${row(s.rank,s.rank<=3)}
+    <td><div class="sname">${s.name}</div><div class="scode">${s.code}</div></td>
+    <td style="text-align:right" class="mono">${fmt(s.price)}</td>
+    <td style="text-align:right" class="mono up">▲ ${fmt(s.high)}</td>
+  </tr>`).join('');
+
+document.getElementById('foreignTable').innerHTML = foreign.map(s=>`
+  <tr onclick="location.href='/stock.html?code=${s.code}&name=${encodeURIComponent(s.name)}'">
+    ${row(s.rank,s.rank<=3)}
+    <td><div class="sname">${s.name}</div><div class="scode">${s.code}</div></td>
+    <td style="text-align:right" class="mono">${fmt(s.price)}</td>
+    <td style="text-align:right" class="mono" style="color:var(--accent2)">${s.buy}</td>
+  </tr>`).join('');
+
+document.getElementById('instTable').innerHTML = inst.map(s=>`
+  <tr onclick="location.href='/stock.html?code=${s.code}&name=${encodeURIComponent(s.name)}'">
+    ${row(s.rank,s.rank<=3)}
+    <td><div class="sname">${s.name}</div><div class="scode">${s.code}</div></td>
+    <td style="text-align:right" class="mono">${fmt(s.price)}</td>
+    <td style="text-align:right" class="mono up">${s.buy}</td>
+  </tr>`).join('');
+
+document.getElementById('volTable').innerHTML = vols.map(s=>`
+  <tr onclick="location.href='/stock.html?code=${s.code}&name=${encodeURIComponent(s.name)}'">
+    ${row(s.rank,s.rank<=3)}
+    <td><div class="sname">${s.name}</div><div class="scode">${s.code}</div></td>
+    <td style="text-align:right" class="mono">${fmt(s.price)}</td>
+    <td style="text-align:right" class="mono up">▲ ${s.change.toFixed(2)}%</td>
+    <td style="text-align:right" class="mono" style="color:var(--text2)">${s.vol}</td>
+    <td style="text-align:right" class="mono up">${s.volChg}</td>
+  </tr>`).join('');
+</script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>테마주 종목 - AI·반도체·2차전지·바이오 관련주 | 주식인포</title>
+<meta name="description" content="AI 관련주, 반도체 관련주, 2차전지 관련주, 바이오 관련주, 방산 관련주 등 테마별 주식 종목을 한눈에 확인하세요.">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9578749307688434" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0e1a;--bg2:#0f1629;--bg3:#151d35;--card:#111827;--border:#1e2d4a;--accent:#00d4aa;--accent2:#0ea5e9;--up:#22c55e;--down:#ef4444;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:14px;}
+  nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;height:56px;gap:24px;position:sticky;top:0;z-index:100;}
+  .logo{font-size:18px;font-weight:700;color:var(--accent);text-decoration:none;}
+  .logo span{color:var(--text);}
+  nav a{color:var(--text2);text-decoration:none;font-size:13px;}
+  nav a:hover{color:var(--text);}
+
+  .hero{background:var(--bg2);border-bottom:1px solid var(--border);padding:36px 24px;}
+  .hero-inner{max-width:1100px;margin:0 auto;}
+  .hero h1{font-size:26px;font-weight:700;margin-bottom:8px;}
+  .hero h1 em{color:var(--accent);font-style:normal;}
+  .hero p{color:var(--text2);}
+
+  .main{max-width:1100px;margin:0 auto;padding:32px 24px;}
+
+  .theme-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px;}
+  .theme-tab{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:8px 18px;font-size:13px;cursor:pointer;transition:all 0.2s;color:var(--text2);}
+  .theme-tab:hover,.theme-tab.active{background:var(--accent);border-color:var(--accent);color:var(--bg);font-weight:700;}
+
+  .theme-section{margin-bottom:40px;}
+  .theme-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+  .theme-icon{font-size:24px;}
+  .theme-title{font-size:18px;font-weight:700;}
+  .theme-desc{font-size:13px;color:var(--text3);margin-left:auto;}
+
+  .stock-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;}
+  .stock-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;cursor:pointer;transition:all 0.2s;text-decoration:none;display:block;}
+  .stock-card:hover{border-color:var(--accent);transform:translateY(-2px);}
+  .stock-card .name{font-size:14px;font-weight:700;margin-bottom:4px;}
+  .stock-card .code{font-size:11px;color:var(--text3);font-family:'IBM Plex Mono',monospace;margin-bottom:10px;}
+  .stock-card .price{font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:500;}
+  .stock-card .change{font-size:12px;margin-top:4px;font-family:'IBM Plex Mono',monospace;}
+  .stock-card .reason{font-size:11px;color:var(--text3);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);line-height:1.5;}
+  .up{color:var(--up);} .down{color:var(--down);}
+
+  .hot-badge{background:var(--down);color:#fff;font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;margin-left:6px;}
+  .new-badge{background:var(--accent);color:var(--bg);font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;margin-left:6px;}
+
+  footer{border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--text3);font-size:12px;margin-top:48px;}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">주식<span>인포</span></a>
+  <a href="/stocks.html">국내주식</a>
+  <a href="/theme.html" style="color:var(--accent)">테마주</a>
+  <a href="/dividend-calc.html">배당계산기</a>
+  <a href="/compare.html">종목비교</a>
+  <a href="/etf.html">ETF</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <h1>🎯 <em>테마주</em> 종목</h1>
+    <p>AI·반도체·2차전지·바이오 등 테마별 관련 종목을 한눈에 확인하세요.</p>
+  </div>
+</div>
+
+<div class="main">
+  <div class="theme-tabs">
+    <div class="theme-tab active" onclick="filterTheme('all')">전체</div>
+    <div class="theme-tab" onclick="filterTheme('ai')">🤖 AI·로봇</div>
+    <div class="theme-tab" onclick="filterTheme('semi')">💾 반도체</div>
+    <div class="theme-tab" onclick="filterTheme('battery')">🔋 2차전지</div>
+    <div class="theme-tab" onclick="filterTheme('bio')">💊 바이오</div>
+    <div class="theme-tab" onclick="filterTheme('defense')">🛡 방산</div>
+    <div class="theme-tab" onclick="filterTheme('ev')">🚗 전기차</div>
+  </div>
+
+  <div id="themeContainer"></div>
+</div>
+
+<footer>
+  <p>주식인포 · 테마주 정보는 참고용이며 투자 추천이 아닙니다.</p>
+</footer>
+
+<script>
+const themes = [
+  {id:'ai', icon:'🤖', title:'AI·로봇 관련주', desc:'인공지능·자동화 수혜주', stocks:[
+    {name:'삼성전자', code:'005930', price:74800, change:0.48, reason:'HBM 메모리 AI 서버 공급'},
+    {name:'SK하이닉스', code:'000660', price:168500, change:1.23, reason:'HBM3E 엔비디아 독점 공급', hot:true},
+    {name:'레인보우로보틱스', code:'277810', price:48200, change:9.87, reason:'삼성전자 로봇 협력사', hot:true},
+    {name:'NAVER', code:'035420', price:181500, change:-1.08, reason:'하이퍼클로바X AI 서비스'},
+    {name:'카카오', code:'035720', price:43200, change:-0.46, reason:'카나나 AI 어시스턴트'},
+    {name:'한미반도체', code:'042700', price:89400, change:3.21, reason:'HBM 패키징 장비 1위', hot:true},
+  ]},
+  {id:'semi', icon:'💾', title:'반도체 관련주', desc:'메모리·시스템·소재·장비', stocks:[
+    {name:'삼성전자', code:'005930', price:74800, change:0.48, reason:'세계 1위 메모리 반도체'},
+    {name:'SK하이닉스', code:'000660', price:168500, change:1.23, reason:'HBM 세계 1위'},
+    {name:'한미반도체', code:'042700', price:89400, change:3.21, reason:'TC본더 장비 독점'},
+    {name:'HPSP', code:'403870', price:52300, change:2.14, reason:'고압 수소 어닐링 장비'},
+    {name:'원익IPS', code:'240810', price:34200, change:0.88, reason:'반도체 증착 장비'},
+    {name:'리노공업', code:'058470', price:214000, change:1.42, reason:'반도체 테스트 소켓'},
+  ]},
+  {id:'battery', icon:'🔋', title:'2차전지 관련주', desc:'배터리·소재·장비·부품', stocks:[
+    {name:'LG에너지솔루션', code:'373220', price:412000, change:-0.72, reason:'국내 배터리 1위'},
+    {name:'삼성SDI', code:'006400', price:298000, change:-1.14, reason:'전고체 배터리 개발'},
+    {name:'에코프로비엠', code:'247540', price:182000, change:2.34, reason:'양극재 국내 1위', hot:true},
+    {name:'포스코퓨처엠', code:'003670', price:234000, change:0.43, reason:'음극재·양극재 생산'},
+    {name:'엘앤에프', code:'066970', price:98000, change:-0.51, reason:'하이니켈 양극재'},
+    {name:'솔브레인', code:'357780', price:287000, change:1.08, reason:'배터리 전해질 소재'},
+  ]},
+  {id:'bio', icon:'💊', title:'바이오·제약 관련주', desc:'신약·CMO·진단·의료기기', stocks:[
+    {name:'삼성바이오로직스', code:'207940', price:952000, change:0.85, reason:'세계 1위 CMO'},
+    {name:'셀트리온', code:'068270', price:178900, change:2.11, reason:'바이오시밀러 글로벌 수출'},
+    {name:'유한양행', code:'000100', price:98500, change:1.44, reason:'레이저티닙 FDA 허가', hot:true},
+    {name:'한미약품', code:'128940', price:342000, change:0.67, reason:'비만치료제 글로벌 기술수출'},
+    {name:'알테오젠', code:'196170', price:312000, change:3.82, reason:'SC플랫폼 기술수출', hot:true},
+    {name:'HLB', code:'028300', price:87000, change:-1.23, reason:'리보세라닙 FDA 심사'},
+  ]},
+  {id:'defense', icon:'🛡', title:'방산 관련주', desc:'K방산 수출 수혜주', stocks:[
+    {name:'한화에어로스페이스', code:'012450', price:312000, change:2.88, reason:'K9 자주포 유럽 수출', hot:true},
+    {name:'현대로템', code:'064350', price:68400, change:4.12, reason:'K2 전차 폴란드 수출', hot:true},
+    {name:'LIG넥스원', code:'079550', price:198000, change:1.54, reason:'미사일·유도무기 수출'},
+    {name:'한국항공우주', code:'047810', price:74200, change:0.98, reason:'FA-50 경공격기 수출'},
+    {name:'풍산', code:'103140', price:58400, change:1.23, reason:'탄약 수출 급증'},
+    {name:'빅텍', code:'065450', price:18400, change:3.44, reason:'군용 전원장치 공급'},
+  ]},
+  {id:'ev', icon:'🚗', title:'전기차 관련주', desc:'EV·충전·인프라 관련', stocks:[
+    {name:'현대차', code:'005380', price:234000, change:0.43, reason:'아이오닉 시리즈 글로벌 판매'},
+    {name:'기아', code:'000270', price:98400, change:0.81, reason:'EV6·EV9 해외 수출'},
+    {name:'LS ELECTRIC', code:'010120', price:142000, change:1.24, reason:'전기차 충전 인프라'},
+    {name:'에스트래픽', code:'234300', price:18700, change:2.14, reason:'전기차 충전 서비스'},
+    {name:'대원전선', code:'006340', price:4820, change:1.47, reason:'전기차용 케이블'},
+    {name:'삼화콘덴서', code:'001820', price:38200, change:0.92, reason:'전기차 부품 공급'},
+  ]},
+];
+
+let currentTheme = 'all';
+
+function filterTheme(id) {
+  currentTheme = id;
+  document.querySelectorAll('.theme-tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  render();
+}
+
+function fmt(n){return n.toLocaleString('ko-KR');}
+
+function render() {
+  const filtered = currentTheme === 'all' ? themes : themes.filter(t => t.id === currentTheme);
+  document.getElementById('themeContainer').innerHTML = filtered.map(theme => `
+    <div class="theme-section" id="theme-${theme.id}">
+      <div class="theme-header">
+        <span class="theme-icon">${theme.icon}</span>
+        <span class="theme-title">${theme.title}</span>
+        <span class="theme-desc">${theme.desc}</span>
+      </div>
+      <div class="stock-grid">
+        ${theme.stocks.map(s => `
+          <a href="/stock.html?code=${s.code}&name=${encodeURIComponent(s.name)}" class="stock-card">
+            <div class="name">${s.name}${s.hot?'<span class="hot-badge">HOT</span>':''}</div>
+            <div class="code">${s.code}</div>
+            <div class="price">${fmt(s.price)}원</div>
+            <div class="change ${s.change>=0?'up':'down'}">${s.change>=0?'▲':'▼'} ${Math.abs(s.change).toFixed(2)}%</div>
+            <div class="reason">${s.reason}</div>
+          </a>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+render();
+</script>
+</body>
+</html>

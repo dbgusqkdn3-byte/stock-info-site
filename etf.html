@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ETF 정보 - 국내 ETF 수익률·구성종목 비교 | 주식인포</title>
+<meta name="description" content="KODEX, TIGER, ARIRANG 등 국내 ETF 수익률, 구성종목, 운용보수를 한눈에 비교하세요. 테마별·자산군별 ETF 정보 제공.">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9578749307688434" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0e1a;--bg2:#0f1629;--bg3:#151d35;--card:#111827;--border:#1e2d4a;--accent:#00d4aa;--accent2:#0ea5e9;--up:#22c55e;--down:#ef4444;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:14px;}
+  nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;height:56px;gap:24px;position:sticky;top:0;z-index:100;}
+  .logo{font-size:18px;font-weight:700;color:var(--accent);text-decoration:none;}
+  .logo span{color:var(--text);}
+  nav a{color:var(--text2);text-decoration:none;font-size:13px;}
+
+  .hero{background:var(--bg2);border-bottom:1px solid var(--border);padding:36px 24px;}
+  .hero-inner{max-width:1100px;margin:0 auto;}
+  .hero h1{font-size:26px;font-weight:700;margin-bottom:8px;}
+  .hero h1 em{color:var(--accent);font-style:normal;}
+  .hero p{color:var(--text2);}
+
+  .main{max-width:1100px;margin:0 auto;padding:32px 24px;}
+
+  .filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+  .filter-btn{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:7px 16px;font-size:12px;cursor:pointer;transition:all 0.2s;color:var(--text2);}
+  .filter-btn.active,.filter-btn:hover{background:var(--accent);border-color:var(--accent);color:var(--bg);font-weight:700;}
+
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:20px;}
+  .card-title{font-size:15px;font-weight:700;padding:18px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;}
+  .card-title::before{content:'';width:3px;height:16px;background:var(--accent);border-radius:2px;}
+
+  table{width:100%;border-collapse:collapse;}
+  thead th{background:var(--bg3);padding:10px 16px;text-align:left;font-size:11px;color:var(--text3);font-weight:500;border-bottom:1px solid var(--border);}
+  tbody tr{border-bottom:1px solid var(--border);transition:background 0.15s;cursor:pointer;}
+  tbody tr:last-child{border-bottom:none;}
+  tbody tr:hover{background:var(--bg3);}
+  tbody td{padding:12px 16px;font-size:13px;}
+  .etf-name{font-weight:700;}
+  .etf-code{font-size:11px;color:var(--text3);font-family:'IBM Plex Mono',monospace;margin-top:2px;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .up{color:var(--up);} .down{color:var(--down);}
+  .tag{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:2px 7px;font-size:10px;color:var(--text3);}
+
+  .etf-detail{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;display:none;}
+  .etf-detail.show{display:block;}
+  .detail-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;}
+  @media(max-width:600px){.detail-grid{grid-template-columns:repeat(2,1fr);}}
+  .detail-item{background:var(--bg);border-radius:8px;padding:12px;}
+  .detail-label{font-size:11px;color:var(--text3);margin-bottom:4px;}
+  .detail-val{font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:500;}
+  .holdings-list{display:flex;gap:8px;flex-wrap:wrap;}
+  .holding-tag{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:12px;}
+  .holding-pct{color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:11px;margin-left:4px;}
+
+  footer{border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--text3);font-size:12px;margin-top:48px;}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">주식<span>인포</span></a>
+  <a href="/stocks.html">국내주식</a>
+  <a href="/theme.html">테마주</a>
+  <a href="/dividend-calc.html">배당계산기</a>
+  <a href="/compare.html">종목비교</a>
+  <a href="/etf.html" style="color:var(--accent)">ETF</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <h1>🗂 <em>ETF</em> 정보</h1>
+    <p>국내 주요 ETF 수익률·구성종목·운용보수를 한눈에 비교하세요.</p>
+  </div>
+</div>
+
+<div class="main">
+  <div class="filter-row">
+    <div class="filter-btn active" onclick="filterETF('all',this)">전체</div>
+    <div class="filter-btn" onclick="filterETF('index',this)">지수추종</div>
+    <div class="filter-btn" onclick="filterETF('sector',this)">섹터</div>
+    <div class="filter-btn" onclick="filterETF('dividend',this)">배당</div>
+    <div class="filter-btn" onclick="filterETF('bond',this)">채권</div>
+    <div class="filter-btn" onclick="filterETF('global',this)">해외</div>
+  </div>
+
+  <div id="etfDetail" class="etf-detail"></div>
+
+  <div class="card">
+    <div class="card-title">ETF 목록</div>
+    <table>
+      <thead>
+        <tr>
+          <th>ETF명</th>
+          <th>유형</th>
+          <th style="text-align:right">현재가</th>
+          <th style="text-align:right">등락률</th>
+          <th style="text-align:right">1개월 수익</th>
+          <th style="text-align:right">연간 수익</th>
+          <th style="text-align:right">운용보수</th>
+          <th style="text-align:right">순자산</th>
+        </tr>
+      </thead>
+      <tbody id="etfTable"></tbody>
+    </table>
+  </div>
+</div>
+
+<footer>
+  <p>주식인포 · ETF 정보는 참고용이며 투자 결정에 대한 책임은 본인에게 있습니다.</p>
+</footer>
+
+<script>
+const etfs = [
+  {name:'KODEX 200', code:'069500', type:'index', price:36240, change:0.48, ret1m:2.14, ret1y:8.32, fee:0.15, aum:'6.2조',
+   holdings:[{name:'삼성전자',pct:28.4},{name:'SK하이닉스',pct:8.2},{name:'LG에너지솔루션',pct:4.1},{name:'현대차',pct:3.8},{name:'NAVER',pct:2.9}]},
+  {name:'TIGER 200', code:'102110', type:'index', price:36180, change:0.46, ret1m:2.11, ret1y:8.28, fee:0.05, aum:'3.8조',
+   holdings:[{name:'삼성전자',pct:28.4},{name:'SK하이닉스',pct:8.2},{name:'LG에너지솔루션',pct:4.1},{name:'현대차',pct:3.8},{name:'NAVER',pct:2.9}]},
+  {name:'KODEX 반도체', code:'091160', type:'sector', price:48200, change:1.82, ret1m:8.42, ret1y:24.1, fee:0.45, aum:'1.4조',
+   holdings:[{name:'삼성전자',pct:32.1},{name:'SK하이닉스',pct:24.8},{name:'한미반도체',pct:8.2},{name:'HPSP',pct:4.1},{name:'원익IPS',pct:3.2}]},
+  {name:'TIGER 2차전지TOP10', code:'305720', type:'sector', price:12840, change:-0.54, ret1m:-3.21, ret1y:-18.4, fee:0.40, aum:'0.8조',
+   holdings:[{name:'LG에너지솔루션',pct:22.1},{name:'삼성SDI',pct:18.4},{name:'에코프로비엠',pct:14.2},{name:'포스코퓨처엠',pct:11.8},{name:'엘앤에프',pct:8.4}]},
+  {name:'KODEX 배당성장', code:'298200', type:'dividend', price:14820, change:0.34, ret1m:1.82, ret1y:12.4, fee:0.30, aum:'0.5조',
+   holdings:[{name:'삼성전자',pct:18.2},{name:'현대차',pct:8.4},{name:'POSCO홀딩스',pct:6.8},{name:'KT&G',pct:5.4},{name:'기업은행',pct:4.2}]},
+  {name:'ARIRANG 고배당주', code:'161510', type:'dividend', price:18240, change:0.22, ret1m:1.44, ret1y:14.8, fee:0.23, aum:'0.3조',
+   holdings:[{name:'기업은행',pct:8.4},{name:'KT&G',pct:7.8},{name:'POSCO홀딩스',pct:7.2},{name:'현대차',pct:6.8},{name:'SK텔레콤',pct:5.4}]},
+  {name:'KODEX 국고채3년', code:'114260', type:'bond', price:104820, change:0.08, ret1m:0.42, ret1y:3.84, fee:0.07, aum:'2.1조',
+   holdings:[{name:'국고채 3년',pct:98.2},{name:'현금',pct:1.8}]},
+  {name:'TIGER 미국S&P500', code:'360750', type:'global', price:18420, change:0.82, ret1m:3.84, ret1y:18.2, fee:0.07, aum:'4.8조',
+   holdings:[{name:'Apple',pct:7.2},{name:'Microsoft',pct:6.8},{name:'NVIDIA',pct:6.1},{name:'Amazon',pct:3.8},{name:'Alphabet',pct:3.4}]},
+  {name:'TIGER 나스닥100', code:'133690', type:'global', price:102400, change:1.14, ret1m:4.82, ret1y:22.4, fee:0.07, aum:'3.2조',
+   holdings:[{name:'Microsoft',pct:9.1},{name:'Apple',pct:8.8},{name:'NVIDIA',pct:8.2},{name:'Amazon',pct:5.4},{name:'Meta',pct:4.8}]},
+  {name:'KODEX 미국나스닥100TR', code:'379800', type:'global', price:18840, change:1.12, ret1m:4.78, ret1y:22.1, fee:0.05, aum:'2.4조',
+   holdings:[{name:'Microsoft',pct:9.1},{name:'Apple',pct:8.8},{name:'NVIDIA',pct:8.2},{name:'Amazon',pct:5.4},{name:'Meta',pct:4.8}]},
+];
+
+let showDetail = null;
+
+function filterETF(type, el) {
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  renderTable(type);
+}
+
+function fmt(n){return n.toLocaleString('ko-KR');}
+
+function renderTable(type='all') {
+  const filtered = type==='all' ? etfs : etfs.filter(e=>e.type===type);
+  document.getElementById('etfTable').innerHTML = filtered.map(e => `
+    <tr onclick="toggleDetail('${e.code}')">
+      <td><div class="etf-name">${e.name}</div><div class="etf-code">${e.code}</div></td>
+      <td><span class="tag">${{index:'지수',sector:'섹터',dividend:'배당',bond:'채권',global:'해외'}[e.type]}</span></td>
+      <td style="text-align:right" class="mono">${fmt(e.price)}원</td>
+      <td style="text-align:right" class="mono ${e.change>=0?'up':'down'}">${e.change>=0?'▲':'▼'} ${Math.abs(e.change).toFixed(2)}%</td>
+      <td style="text-align:right" class="mono ${e.ret1m>=0?'up':'down'}">${e.ret1m>=0?'+':''}${e.ret1m.toFixed(2)}%</td>
+      <td style="text-align:right" class="mono ${e.ret1y>=0?'up':'down'}">${e.ret1y>=0?'+':''}${e.ret1y.toFixed(2)}%</td>
+      <td style="text-align:right" class="mono" style="color:var(--text3)">${e.fee}%</td>
+      <td style="text-align:right" class="mono">${e.aum}</td>
+    </tr>`).join('');
+}
+
+function toggleDetail(code) {
+  const etf = etfs.find(e=>e.code===code);
+  const detail = document.getElementById('etfDetail');
+  if(showDetail===code){detail.classList.remove('show');showDetail=null;return;}
+  showDetail=code;
+  detail.innerHTML = `
+    <div style="font-size:16px;font-weight:700;margin-bottom:14px">${etf.name} (${etf.code}) 상세정보</div>
+    <div class="detail-grid">
+      <div class="detail-item"><div class="detail-label">현재가</div><div class="detail-val">${fmt(etf.price)}원</div></div>
+      <div class="detail-item"><div class="detail-label">연간 수익률</div><div class="detail-val ${etf.ret1y>=0?'up':'down'}">${etf.ret1y>=0?'+':''}${etf.ret1y}%</div></div>
+      <div class="detail-item"><div class="detail-label">운용보수</div><div class="detail-val">${etf.fee}%</div></div>
+      <div class="detail-item"><div class="detail-label">순자산</div><div class="detail-val">${etf.aum}</div></div>
+    </div>
+    <div style="font-size:13px;color:var(--text3);margin-bottom:10px">주요 구성종목</div>
+    <div class="holdings-list">
+      ${etf.holdings.map(h=>`<div class="holding-tag">${h.name}<span class="holding-pct">${h.pct}%</span></div>`).join('')}
+    </div>`;
+  detail.classList.add('show');
+  detail.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+renderTable();
+</script>
+</body>
+</html>
