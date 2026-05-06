@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>국내 주식 전종목 - KOSPI·KOSDAQ 주가 검색 | 주식인포</title>
+<meta name="description" content="KOSPI·KOSDAQ 전종목 주가를 검색하고 필터링하세요. 시가총액, 등락률, 업종별 정렬 지원.">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9578749307688434" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0e1a;--bg2:#0f1629;--bg3:#151d35;--card:#111827;--border:#1e2d4a;--accent:#00d4aa;--accent2:#0ea5e9;--up:#22c55e;--down:#ef4444;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:14px;}
+  nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;height:56px;gap:24px;position:sticky;top:0;z-index:100;}
+  .logo{font-size:18px;font-weight:700;color:var(--accent);text-decoration:none;}
+  .logo span{color:var(--text);}
+  nav a{color:var(--text2);text-decoration:none;font-size:13px;}
+  nav a:hover{color:var(--text);}
+
+  .hero{background:var(--bg2);border-bottom:1px solid var(--border);padding:28px 24px;}
+  .hero-inner{max-width:1100px;margin:0 auto;}
+  .hero h1{font-size:22px;font-weight:700;margin-bottom:16px;}
+  .hero h1 em{color:var(--accent);font-style:normal;}
+
+  .search-row{display:flex;gap:10px;flex-wrap:wrap;}
+  .search-input{flex:1;min-width:200px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 16px;color:var(--text);font-size:14px;font-family:inherit;outline:none;transition:border-color 0.2s;}
+  .search-input:focus{border-color:var(--accent);}
+  .search-input::placeholder{color:var(--text3);}
+  select.filter{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;font-family:inherit;outline:none;cursor:pointer;}
+
+  .main{max-width:1100px;margin:0 auto;padding:24px;}
+
+  .stats-row{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;}
+  .stat-pill{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:8px 16px;font-size:13px;display:flex;gap:8px;align-items:center;}
+  .stat-pill span{color:var(--text3);font-size:12px;}
+
+  .table-wrap{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+  table{width:100%;border-collapse:collapse;}
+  thead th{background:var(--bg3);padding:11px 16px;text-align:left;font-size:11px;color:var(--text3);font-weight:500;border-bottom:1px solid var(--border);cursor:pointer;user-select:none;white-space:nowrap;}
+  thead th:hover{color:var(--text);}
+  thead th.sorted{color:var(--accent);}
+  tbody tr{border-bottom:1px solid var(--border);transition:background 0.15s;cursor:pointer;}
+  tbody tr:last-child{border-bottom:none;}
+  tbody tr:hover{background:var(--bg3);}
+  tbody td{padding:11px 16px;font-size:13px;}
+  .sname{font-weight:500;color:var(--text);}
+  .scode{font-size:11px;color:var(--text3);font-family:'IBM Plex Mono',monospace;margin-top:2px;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .up{color:var(--up);} .down{color:var(--down);}
+  .market-badge{font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;}
+  .kospi{background:rgba(14,165,233,0.15);color:var(--accent2);}
+  .kosdaq{background:rgba(0,212,170,0.15);color:var(--accent);}
+
+  .pagination{display:flex;gap:6px;justify-content:center;margin-top:20px;}
+  .page-btn{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:12px;cursor:pointer;color:var(--text2);transition:all 0.2s;}
+  .page-btn:hover,.page-btn.active{background:var(--accent);border-color:var(--accent);color:var(--bg);font-weight:700;}
+
+  .no-result{text-align:center;padding:48px;color:var(--text3);}
+
+  footer{border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--text3);font-size:12px;margin-top:48px;}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">주식<span>인포</span></a>
+  <a href="/stocks.html" style="color:var(--accent)">국내주식</a>
+  <a href="/theme.html">테마주</a>
+  <a href="/hot.html">급등주</a>
+  <a href="/etf.html">ETF</a>
+  <a href="/dividend-calc.html">배당계산기</a>
+  <a href="/compare.html">종목비교</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <h1>📈 국내 주식 <em>전종목</em></h1>
+    <div class="search-row">
+      <input class="search-input" type="text" id="searchInput" placeholder="종목명 또는 종목코드 검색..." oninput="filterAndRender()">
+      <select class="filter" id="marketFilter" onchange="filterAndRender()">
+        <option value="all">전체 시장</option>
+        <option value="KOSPI">KOSPI</option>
+        <option value="KOSDAQ">KOSDAQ</option>
+      </select>
+      <select class="filter" id="sectorFilter" onchange="filterAndRender()">
+        <option value="all">전체 업종</option>
+        <option value="전기전자">전기전자</option>
+        <option value="화학">화학</option>
+        <option value="바이오">바이오·제약</option>
+        <option value="자동차">자동차</option>
+        <option value="금융">금융·은행</option>
+        <option value="인터넷">인터넷·소프트웨어</option>
+        <option value="철강">철강·소재</option>
+        <option value="건설">건설·부동산</option>
+      </select>
+      <select class="filter" id="sortFilter" onchange="filterAndRender()">
+        <option value="cap">시가총액순</option>
+        <option value="change_desc">등락률 높은순</option>
+        <option value="change_asc">등락률 낮은순</option>
+        <option value="price_desc">주가 높은순</option>
+        <option value="vol">거래량순</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="stats-row" id="statsRow"></div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>종목명</th>
+          <th>시장</th>
+          <th>업종</th>
+          <th style="text-align:right">현재가</th>
+          <th style="text-align:right">등락률</th>
+          <th style="text-align:right">거래량</th>
+          <th style="text-align:right">시가총액</th>
+          <th style="text-align:right">PER</th>
+        </tr>
+      </thead>
+      <tbody id="stockTable"></tbody>
+    </table>
+  </div>
+  <div class="pagination" id="pagination"></div>
+</div>
+
+<footer>주식인포 · 데이터 출처: 한국거래소(KRX) · 투자 참고용</footer>
+
+<script>
+const stocks = [
+  {name:'삼성전자',code:'005930',market:'KOSPI',sector:'전기전자',price:74800,change:0.48,vol:18234521,cap:446,per:14.2},
+  {name:'SK하이닉스',code:'000660',market:'KOSPI',sector:'전기전자',price:168500,change:1.23,vol:4823100,cap:122,per:18.4},
+  {name:'LG에너지솔루션',code:'373220',market:'KOSPI',sector:'화학',price:412000,change:-0.72,vol:312440,cap:96,per:32.1},
+  {name:'삼성바이오로직스',code:'207940',market:'KOSPI',sector:'바이오',price:952000,change:0.85,vol:124332,cap:67,per:41.2},
+  {name:'현대차',code:'005380',market:'KOSPI',sector:'자동차',price:234000,change:0.43,vol:892100,cap:50,per:5.8},
+  {name:'NAVER',code:'035420',market:'KOSPI',sector:'인터넷',price:181500,change:-1.08,vol:1234500,cap:29,per:22.3},
+  {name:'셀트리온',code:'068270',market:'KOSPI',sector:'바이오',price:178900,change:2.11,vol:2341200,cap:24,per:31.4},
+  {name:'카카오',code:'035720',market:'KOSPI',sector:'인터넷',price:43200,change:-0.46,vol:5123400,cap:19,per:48.2},
+  {name:'POSCO홀딩스',code:'005490',market:'KOSPI',sector:'철강',price:312000,change:0.65,vol:482100,cap:27,per:8.2},
+  {name:'삼성SDI',code:'006400',market:'KOSPI',sector:'전기전자',price:298000,change:-1.14,vol:341200,cap:20,per:28.4},
+  {name:'LG화학',code:'051910',market:'KOSPI',sector:'화학',price:312000,change:-0.32,vol:281000,cap:22,per:18.4},
+  {name:'기아',code:'000270',market:'KOSPI',sector:'자동차',price:98400,change:0.81,vol:1482000,cap:40,per:4.8},
+  {name:'KB금융',code:'105560',market:'KOSPI',sector:'금융',price:82400,change:0.61,vol:892000,cap:33,per:7.2},
+  {name:'신한지주',code:'055550',market:'KOSPI',sector:'금융',price:48200,change:0.42,vol:1241000,cap:23,per:6.8},
+  {name:'한화에어로스페이스',code:'012450',market:'KOSPI',sector:'자동차',price:312000,change:2.88,vol:584000,cap:26,per:22.1},
+  {name:'HD현대일렉트릭',code:'267260',market:'KOSPI',sector:'전기전자',price:284000,change:5.44,vol:412000,cap:12,per:28.4},
+  {name:'한미반도체',code:'042700',market:'KOSPI',sector:'전기전자',price:89400,change:3.21,vol:2841000,cap:8,per:24.1},
+  {name:'알테오젠',code:'196170',market:'KOSDAQ',sector:'바이오',price:312000,change:8.24,vol:1824000,cap:18,per:0},
+  {name:'에코프로비엠',code:'247540',market:'KOSDAQ',sector:'화학',price:182000,change:2.34,vol:1241000,cap:14,per:42.1},
+  {name:'레인보우로보틱스',code:'277810',market:'KOSDAQ',sector:'전기전자',price:48200,change:9.87,vol:12482100,cap:3,per:0},
+  {name:'HLB',code:'028300',market:'KOSDAQ',sector:'바이오',price:87000,change:-1.23,vol:3824000,cap:7,per:0},
+  {name:'에코프로',code:'086520',market:'KOSDAQ',sector:'화학',price:182000,change:14.82,vol:18234521,cap:13,per:0},
+  {name:'포스코DX',code:'022100',market:'KOSDAQ',sector:'인터넷',price:48200,change:11.34,vol:9841200,cap:4,per:48.2},
+  {name:'유한양행',code:'000100',market:'KOSPI',sector:'바이오',price:98500,change:1.44,vol:824000,cap:7,per:0},
+  {name:'한미약품',code:'128940',market:'KOSPI',sector:'바이오',price:342000,change:0.67,vol:124000,cap:4,per:0},
+  {name:'현대로템',code:'064350',market:'KOSPI',sector:'자동차',price:68400,change:4.12,vol:2841000,cap:7,per:18.4},
+  {name:'기업은행',code:'024110',market:'KOSPI',sector:'금융',price:14500,change:0.69,vol:4821000,cap:10,per:4.2},
+  {name:'KT&G',code:'033780',market:'KOSPI',sector:'화학',price:98500,change:0.31,vol:482000,cap:13,per:12.1},
+  {name:'LIG넥스원',code:'079550',market:'KOSPI',sector:'자동차',price:198000,change:1.54,vol:284000,cap:5,per:18.2},
+  {name:'두산에너빌리티',code:'034020',market:'KOSPI',sector:'건설',price:24800,change:5.92,vol:7824100,cap:9,per:0},
+];
+
+const PAGE_SIZE = 15;
+let currentPage = 1;
+let filtered = [...stocks];
+
+function fmt(n){return n.toLocaleString('ko-KR');}
+
+function filterAndRender() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const market = document.getElementById('marketFilter').value;
+  const sector = document.getElementById('sectorFilter').value;
+  const sort = document.getElementById('sortFilter').value;
+
+  filtered = stocks.filter(s => {
+    const matchQ = !q || s.name.includes(q) || s.code.includes(q);
+    const matchM = market==='all' || s.market===market;
+    const matchS = sector==='all' || s.sector===sector;
+    return matchQ && matchM && matchS;
+  });
+
+  filtered.sort((a,b) => {
+    if(sort==='cap') return b.cap-a.cap;
+    if(sort==='change_desc') return b.change-a.change;
+    if(sort==='change_asc') return a.change-b.change;
+    if(sort==='price_desc') return b.price-a.price;
+    if(sort==='vol') return b.vol-a.vol;
+    return 0;
+  });
+
+  currentPage = 1;
+  renderStats();
+  renderTable();
+  renderPagination();
+}
+
+function renderStats() {
+  const up = filtered.filter(s=>s.change>0).length;
+  const down = filtered.filter(s=>s.change<0).length;
+  document.getElementById('statsRow').innerHTML = `
+    <div class="stat-pill"><span>전체</span> <strong>${filtered.length}종목</strong></div>
+    <div class="stat-pill"><span>상승</span> <strong style="color:var(--up)">${up}</strong></div>
+    <div class="stat-pill"><span>하락</span> <strong style="color:var(--down)">${down}</strong></div>
+    <div class="stat-pill"><span>보합</span> <strong>${filtered.length-up-down}</strong></div>`;
+}
+
+function renderTable() {
+  const start = (currentPage-1)*PAGE_SIZE;
+  const page = filtered.slice(start, start+PAGE_SIZE);
+  if(!page.length){
+    document.getElementById('stockTable').innerHTML=`<tr><td colspan="8" class="no-result">검색 결과가 없습니다.</td></tr>`;
+    return;
+  }
+  document.getElementById('stockTable').innerHTML = page.map((s,i) => `
+    <tr onclick="location.href='/stock.html?code=${s.code}&name=${encodeURIComponent(s.name)}'">
+      <td><div class="sname">${s.name}</div><div class="scode">${s.code}</div></td>
+      <td><span class="market-badge ${s.market.toLowerCase()}">${s.market}</span></td>
+      <td style="color:var(--text3);font-size:12px">${s.sector}</td>
+      <td style="text-align:right" class="mono">${fmt(s.price)}<span style="font-size:11px;color:var(--text3)">원</span></td>
+      <td style="text-align:right" class="mono ${s.change>=0?'up':'down'}">${s.change>=0?'▲':'▼'} ${Math.abs(s.change).toFixed(2)}%</td>
+      <td style="text-align:right;color:var(--text2)" class="mono">${fmt(s.vol)}</td>
+      <td style="text-align:right" class="mono">${s.cap}조</td>
+      <td style="text-align:right;color:var(--text2)" class="mono">${s.per||'-'}</td>
+    </tr>`).join('');
+}
+
+function renderPagination() {
+  const total = Math.ceil(filtered.length/PAGE_SIZE);
+  if(total<=1){document.getElementById('pagination').innerHTML='';return;}
+  let html = '';
+  for(let i=1;i<=total;i++){
+    html+=`<div class="page-btn ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</div>`;
+  }
+  document.getElementById('pagination').innerHTML = html;
+}
+
+function goPage(p){currentPage=p;renderTable();renderPagination();window.scrollTo(0,0);}
+
+const params = new URLSearchParams(location.search);
+if(params.get('q')) document.getElementById('searchInput').value = params.get('q');
+
+filterAndRender();
+</script>
+</body>
+</html>

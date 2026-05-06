@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>주식 용어 사전 - PER·PBR·ROE·배당수익률 완벽 정리 | 주식인포</title>
+<meta name="description" content="PER, PBR, ROE, EPS, 배당수익률, 시가총액 등 주식 투자 필수 용어를 쉽게 설명합니다. 초보 투자자를 위한 주식 용어 사전.">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9578749307688434" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0e1a;--bg2:#0f1629;--bg3:#151d35;--card:#111827;--border:#1e2d4a;--accent:#00d4aa;--accent2:#0ea5e9;--up:#22c55e;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:14px;}
+  nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;height:56px;gap:24px;position:sticky;top:0;z-index:100;}
+  .logo{font-size:18px;font-weight:700;color:var(--accent);text-decoration:none;}
+  .logo span{color:var(--text);}
+  nav a{color:var(--text2);text-decoration:none;font-size:13px;}
+
+  .hero{background:var(--bg2);border-bottom:1px solid var(--border);padding:36px 24px;}
+  .hero-inner{max-width:900px;margin:0 auto;}
+  .hero h1{font-size:26px;font-weight:700;margin-bottom:12px;}
+  .hero h1 em{color:var(--accent);font-style:normal;}
+  .search-input{width:100%;max-width:480px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 16px;color:var(--text);font-size:14px;font-family:inherit;outline:none;transition:border-color 0.2s;}
+  .search-input:focus{border-color:var(--accent);}
+  .search-input::placeholder{color:var(--text3);}
+
+  .main{max-width:900px;margin:0 auto;padding:32px 24px;}
+
+  .cat-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px;}
+  .cat-tab{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:7px 16px;font-size:12px;cursor:pointer;transition:all 0.2s;color:var(--text2);}
+  .cat-tab.active,.cat-tab:hover{background:var(--accent);border-color:var(--accent);color:var(--bg);font-weight:700;}
+
+  .term-list{display:flex;flex-direction:column;gap:12px;}
+  .term-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color 0.2s;cursor:pointer;}
+  .term-card:hover{border-color:var(--accent);}
+  .term-header{padding:16px 20px;display:flex;align-items:center;gap:12px;}
+  .term-abbr{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;color:var(--accent);white-space:nowrap;}
+  .term-name{font-size:15px;font-weight:700;}
+  .term-short{font-size:13px;color:var(--text2);margin-left:auto;text-align:right;}
+  .term-body{padding:0 20px 20px;display:none;border-top:1px solid var(--border);margin-top:0;padding-top:16px;}
+  .term-body.open{display:block;}
+  .term-desc{color:var(--text2);line-height:1.8;margin-bottom:12px;}
+  .formula{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px 16px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--accent);margin-bottom:12px;}
+  .example{background:rgba(0,212,170,0.06);border:1px solid rgba(0,212,170,0.2);border-radius:8px;padding:12px 16px;font-size:13px;line-height:1.8;}
+  .example strong{color:var(--accent);}
+  .good-bad{display:flex;gap:10px;margin-top:10px;}
+  .good{background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);border-radius:6px;padding:8px 12px;font-size:12px;flex:1;}
+  .bad{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);border-radius:6px;padding:8px 12px;font-size:12px;flex:1;}
+  .good-label{color:var(--up);font-weight:700;margin-bottom:4px;}
+  .bad-label{color:#ef4444;font-weight:700;margin-bottom:4px;}
+
+  footer{border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--text3);font-size:12px;margin-top:48px;}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">주식<span>인포</span></a>
+  <a href="/stocks.html">국내주식</a>
+  <a href="/theme.html">테마주</a>
+  <a href="/hot.html">급등주</a>
+  <a href="/etf.html">ETF</a>
+  <a href="/dividend-calc.html">배당계산기</a>
+  <a href="/glossary.html" style="color:var(--accent)">용어사전</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <h1>📖 주식 <em>용어 사전</em></h1>
+    <input class="search-input" type="text" id="searchInput" placeholder="용어 검색 (예: PER, 배당, 시가총액...)" oninput="filterTerms()">
+  </div>
+</div>
+
+<div class="main">
+  <div class="cat-tabs">
+    <div class="cat-tab active" onclick="filterCat('all',this)">전체</div>
+    <div class="cat-tab" onclick="filterCat('valuation',this)">📊 밸류에이션</div>
+    <div class="cat-tab" onclick="filterCat('profit',this)">💰 수익성</div>
+    <div class="cat-tab" onclick="filterCat('dividend',this)">📅 배당</div>
+    <div class="cat-tab" onclick="filterCat('market',this)">📈 시장</div>
+    <div class="cat-tab" onclick="filterCat('technical',this)">📉 기술적</div>
+  </div>
+
+  <div class="term-list" id="termList"></div>
+</div>
+
+<footer>주식인포 · 용어 설명은 교육 목적이며 투자 조언이 아닙니다.</footer>
+
+<script>
+const terms = [
+  {abbr:'PER', name:'주가수익비율', cat:'valuation', short:'주가 ÷ EPS',
+   desc:'주가가 주당 순이익의 몇 배인지 나타내는 지표입니다. 기업의 수익 대비 주가가 얼마나 비싼지 또는 저렴한지 판단하는 데 가장 많이 쓰입니다.',
+   formula:'PER = 현재 주가 ÷ 주당 순이익(EPS)',
+   example:'삼성전자 주가 74,800원, EPS 5,268원이면 PER = <strong>74,800 ÷ 5,268 = 14.2배</strong>',
+   good:'낮을수록 저평가 (같은 업종 평균 대비)', bad:'높을수록 고평가 (성장주는 예외)'},
+
+  {abbr:'PBR', name:'주가순자산비율', cat:'valuation', short:'주가 ÷ 순자산',
+   desc:'주가가 기업의 순자산(장부가치)의 몇 배인지 나타냅니다. 1배 이하면 이론상 회사를 청산해도 주가보다 많은 자산을 돌려받을 수 있다는 의미입니다.',
+   formula:'PBR = 현재 주가 ÷ 주당 순자산(BPS)',
+   example:'주가 50,000원, BPS 40,000원이면 PBR = <strong>1.25배</strong>',
+   good:'1배 이하: 자산 대비 저평가', bad:'높을수록 자산 대비 고평가'},
+
+  {abbr:'ROE', name:'자기자본이익률', cat:'profit', short:'순이익 ÷ 자기자본',
+   desc:'기업이 자기자본으로 얼마나 효율적으로 이익을 창출하는지 나타냅니다. 주주가 투자한 돈으로 얼마를 벌었는지 보여주는 수익성 지표입니다.',
+   formula:'ROE = 당기순이익 ÷ 자기자본 × 100',
+   example:'순이익 1조, 자기자본 10조면 ROE = <strong>10%</strong>',
+   good:'15% 이상: 우수한 수익성', bad:'5% 이하: 자본 효율성 낮음'},
+
+  {abbr:'EPS', name:'주당순이익', cat:'profit', short:'순이익 ÷ 발행주식수',
+   desc:'기업이 1주당 얼마의 순이익을 벌었는지 나타냅니다. EPS가 높을수록 기업의 수익성이 좋고, 주가 평가의 기준이 됩니다.',
+   formula:'EPS = 당기순이익 ÷ 총 발행 주식 수',
+   example:'순이익 1조원, 발행주식 1억주면 EPS = <strong>10,000원</strong>',
+   good:'높을수록 수익성 우수', bad:'마이너스면 적자 기업'},
+
+  {abbr:'배당수익률', name:'배당수익률', cat:'dividend', short:'배당금 ÷ 주가',
+   desc:'현재 주가 대비 연간 배당금의 비율입니다. 은행 예금 이자처럼 주식을 보유하는 것만으로 받을 수 있는 수익률을 나타냅니다.',
+   formula:'배당수익률 = 주당 연간 배당금 ÷ 현재 주가 × 100',
+   example:'삼성전자 배당금 2,124원, 주가 74,800원이면 <strong>2.84%</strong>',
+   good:'3% 이상: 은행 예금보다 유리', bad:'0%: 배당 미지급 기업'},
+
+  {abbr:'시가총액', name:'시가총액', cat:'market', short:'주가 × 발행주식수',
+   desc:'회사의 전체 가치를 주가로 나타낸 것입니다. 주가에 발행된 주식 수를 곱해 구합니다. 기업 규모를 비교하는 가장 기본적인 지표입니다.',
+   formula:'시가총액 = 현재 주가 × 총 발행 주식 수',
+   example:'삼성전자 주가 74,800원 × 주식 수 59.7억주 = <strong>약 446조원</strong>',
+   good:'대형주: 10조↑ / 중형주: 1~10조', bad:'소형주: 1조 미만 (변동성 큼)'},
+
+  {abbr:'52주 신고가', name:'52주 최고가', cat:'technical', short:'최근 1년 최고 주가',
+   desc:'최근 52주(1년) 동안 기록한 가장 높은 주가입니다. 현재 주가가 52주 신고가를 돌파하면 강력한 상승 모멘텀의 신호로 해석되는 경우가 많습니다.',
+   formula:'52주 중 가장 높은 종가',
+   example:'삼성전자 52주 신고가 88,800원, 현재가 74,800원이면 <strong>신고가 대비 -15.8%</strong>',
+   good:'신고가 돌파: 강력한 상승 신호', bad:'신고가와 격차 클수록 회복 필요'},
+
+  {abbr:'거래량', name:'거래량', cat:'technical', short:'하루 거래된 주식 수',
+   desc:'하루 동안 사고팔린 주식의 수량입니다. 거래량이 평소보다 급증하면 주가의 큰 변동이 예상되거나 중요한 재료가 있다는 신호일 수 있습니다.',
+   formula:'당일 총 거래 주식 수',
+   example:'삼성전자 평균 거래량 1000만주 → 갑자기 5000만주면 <strong>이상 신호</strong>',
+   good:'평소 대비 5배↑: 강한 모멘텀', bad:'거래량 없는 급등: 신뢰도 낮음'},
+
+  {abbr:'부채비율', name:'부채비율', cat:'profit', short:'부채 ÷ 자기자본',
+   desc:'기업이 자기자본 대비 얼마나 많은 빚을 지고 있는지 나타냅니다. 낮을수록 재무가 안전하고, 높을수록 이자 부담이 커서 위험할 수 있습니다.',
+   formula:'부채비율 = 총부채 ÷ 자기자본 × 100',
+   example:'부채 100억, 자기자본 200억이면 부채비율 <strong>50%</strong>',
+   good:'100% 이하: 안전한 수준', bad:'200% 이상: 재무 위험 신호'},
+
+  {abbr:'영업이익률', name:'영업이익률', cat:'profit', short:'영업이익 ÷ 매출액',
+   desc:'매출에서 실제 영업 활동으로 얼마나 이익을 냈는지 나타냅니다. 기업의 본업 경쟁력을 가장 잘 보여주는 지표입니다.',
+   formula:'영업이익률 = 영업이익 ÷ 매출액 × 100',
+   example:'매출 100조, 영업이익 10조면 영업이익률 <strong>10%</strong>',
+   good:'10% 이상: 우수한 수익 구조', bad:'마이너스: 본업에서 적자'},
+
+  {abbr:'외국인 지분율', name:'외국인 보유비율', cat:'market', short:'외국인 보유주식 비율',
+   desc:'전체 발행주식 중 외국인이 보유한 비율입니다. 외국인 지분율이 높고 증가할수록 글로벌 투자자들의 신뢰가 높다는 의미입니다.',
+   formula:'외국인 지분율 = 외국인 보유주식 ÷ 총 발행주식 × 100',
+   example:'삼성전자 외국인 지분율 <strong>약 52%</strong>로 국내 최고 수준',
+   good:'50% 이상: 글로벌 신뢰 높음', bad:'지속 감소: 외국인 매도세'},
+
+  {abbr:'공매도', name:'공매도', cat:'technical', short:'없는 주식을 빌려서 파는 행위',
+   desc:'주식을 보유하지 않은 상태에서 빌려서 팔고, 나중에 더 낮은 가격에 사서 갚아 이익을 내는 투자 방식입니다. 주가 하락을 예상할 때 사용합니다.',
+   formula:'공매도 이익 = 매도가 - 매수가(환매수)',
+   example:'100원에 공매도 → 80원에 환매수 시 <strong>주당 20원 이익</strong>',
+   good:'주가 하락 시 수익', bad:'주가 상승 시 손실 무한대'},
+];
+
+let currentCat = 'all';
+let openCard = null;
+
+function filterCat(cat, el) {
+  currentCat = cat;
+  document.querySelectorAll('.cat-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  renderTerms();
+}
+
+function filterTerms() { renderTerms(); }
+
+function renderTerms() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const filtered = terms.filter(t => {
+    const matchCat = currentCat==='all' || t.cat===currentCat;
+    const matchQ = !q || t.abbr.toLowerCase().includes(q) || t.name.includes(q) || t.desc.includes(q);
+    return matchCat && matchQ;
+  });
+
+  if(!filtered.length) {
+    document.getElementById('termList').innerHTML = '<div style="text-align:center;padding:48px;color:var(--text3)">검색 결과가 없습니다.</div>';
+    return;
+  }
+
+  document.getElementById('termList').innerHTML = filtered.map(t => `
+    <div class="term-card" id="card-${t.abbr}" onclick="toggleCard('${t.abbr}')">
+      <div class="term-header">
+        <span class="term-abbr">${t.abbr}</span>
+        <span class="term-name">${t.name}</span>
+        <span class="term-short">${t.short}</span>
+      </div>
+      <div class="term-body" id="body-${t.abbr}">
+        <p class="term-desc">${t.desc}</p>
+        <div class="formula">📐 ${t.formula}</div>
+        <div class="example">💡 예시: ${t.example}</div>
+        <div class="good-bad">
+          <div class="good"><div class="good-label">✓ 좋은 신호</div>${t.good}</div>
+          <div class="bad"><div class="bad-label">✗ 주의 신호</div>${t.bad}</div>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function toggleCard(abbr) {
+  const body = document.getElementById('body-'+abbr);
+  if(openCard && openCard !== abbr) {
+    const prev = document.getElementById('body-'+openCard);
+    if(prev) prev.classList.remove('open');
+  }
+  body.classList.toggle('open');
+  openCard = body.classList.contains('open') ? abbr : null;
+}
+
+renderTerms();
+</script>
+</body>
+</html>
