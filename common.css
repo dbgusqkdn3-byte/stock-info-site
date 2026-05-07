@@ -154,11 +154,14 @@ footer { background: #f5f6f8 !important; }
   font-family: 'Noto Sans KR', sans-serif;
   padding: 6px 2px 4px;
   transition: color 0.15s;
+  min-width: 0;
 }
 .bn-item.active { color: #1261c4; }
 .bn-item:hover  { color: #1261c4; }
 .bn-icon  { font-size: 20px; line-height: 1.1; }
-.bn-label { font-size: 10px; }
+.bn-label { font-size: 10px; white-space: nowrap; }
+/* 탭바 아이템 강제 표시 (nav > a 셀렉터 충돌 방지) */
+.bottom-nav .bn-item { display: flex !important; }
 
 /* ─────────────────────────────
    더보기 슬라이드 패널
@@ -228,27 +231,80 @@ footer { background: #f5f6f8 !important; }
   body { padding-bottom: 62px; }
   .bottom-nav { display: flex; }
 
-  /* 상단 nav: 로고 + 검색창만 (링크 숨김) */
-  nav {
+  /* 상단 nav만 적용 (bottom-nav 제외) */
+  nav:not(.bottom-nav) {
     flex-wrap: nowrap !important;
-    overflow: hidden !important;
+    overflow: visible !important;
     padding: 0 14px !important;
     gap: 0 !important;
     min-height: 50px !important;
     align-items: center !important;
   }
-  nav .logo { flex: 1 !important; }
-  nav > a:not(.logo),
-  nav .nav-links { display: none !important; }
-  nav .nav-right {
+  nav:not(.bottom-nav) .logo {
+    flex: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    min-width: 0 !important;
+  }
+  nav:not(.bottom-nav) > a:not(.logo),
+  nav:not(.bottom-nav) .nav-links { display: none !important; }
+  nav:not(.bottom-nav) .nav-right {
     display: flex !important;
     margin-left: 0 !important;
+    flex-shrink: 0 !important;
   }
-  .search-bar { width: 140px !important; }
+  .search-bar { width: 130px !important; }
   .hamburger  { display: none !important; }
 
   /* nav-open 드롭다운 비활성화 */
-  nav.nav-open > a:not(.logo),
-  nav.nav-open .nav-links { display: none !important; }
-  nav.nav-open .nav-right { display: flex !important; }
+  nav:not(.bottom-nav).nav-open > a:not(.logo),
+  nav:not(.bottom-nav).nav-open .nav-links { display: none !important; }
+  nav:not(.bottom-nav).nav-open .nav-right { display: flex !important; }
+}
+
+/* ─────────────────────────────
+   480px 이하: 로고 강제 표시 + 검색 아이콘
+   ───────────────────────────── */
+@media (max-width: 480px) {
+  nav:not(.bottom-nav) {
+    padding: 0 12px !important;
+    min-height: 46px !important;
+  }
+  nav:not(.bottom-nav) .logo {
+    font-size: 16px !important;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  /* 검색 입력창 → 아이콘 버튼으로 축소, 탭 시 확장 */
+  .search-bar {
+    width: 36px !important;
+    height: 34px !important;
+    padding: 0 !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: 17px !important;
+    background-color: #f0f2f5 !important;
+    border-color: transparent !important;
+    border-radius: 50% !important;
+    color: transparent !important;
+    cursor: pointer !important;
+    transition: width 0.22s ease, border-radius 0.22s ease, background-color 0.22s ease !important;
+  }
+  .search-bar::placeholder { color: transparent !important; }
+  .search-bar:focus {
+    width: 150px !important;
+    height: auto !important;
+    padding: 7px 10px 7px 34px !important;
+    border-radius: 18px !important;
+    background-position: 10px center !important;
+    background-color: #ffffff !important;
+    border-color: #1261c4 !important;
+    color: #333333 !important;
+    outline: none !important;
+  }
+  .search-bar:focus::placeholder { color: #aaaaaa !important; }
 }
