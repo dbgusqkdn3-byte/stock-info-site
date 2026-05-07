@@ -1,0 +1,254 @@
+/* ─────────────────────────────────────────────
+   common.css · 주식인포 공통 테마 (네이버증권 스타일)
+   ───────────────────────────────────────────── */
+
+/* ===== CSS 변수 재정의 (화이트 테마) ===== */
+:root {
+  --bg:     #f5f6f8;
+  --bg2:    #ffffff;
+  --bg3:    #eef0f3;
+  --card:   #ffffff;
+  --border: #e0e2e8;
+  --accent: #1261c4;
+  --accent2:#0b4d9e;
+  --up:     #d14343;
+  --down:   #1261c4;
+  --text:   #333333;
+  --text2:  #666666;
+  --text3:  #999999;
+}
+
+/* ===== 기본 ===== */
+body { background: var(--bg) !important; color: var(--text) !important; }
+
+/* ===== NAV (PC) ===== */
+nav {
+  background: #ffffff !important;
+  border-bottom: 1px solid var(--border) !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06) !important;
+}
+nav .logo { color: var(--accent) !important; }
+nav .logo span { color: #333333 !important; }
+nav a:not(.logo) { color: #444444 !important; }
+nav a:not(.logo):hover { color: var(--accent) !important; }
+
+/* ===== HERO / PAGE HEADER ===== */
+.hero h1 em, .page-header h1 em { color: var(--accent) !important; }
+
+/* ===== UP / DOWN ===== */
+.up   { color: var(--up)   !important; }
+.down { color: var(--down) !important; }
+
+/* ===== TABLES ===== */
+tbody td { color: var(--text) !important; }
+.stock-name, .sname, .etf-name { color: #222222 !important; font-weight: 500 !important; }
+.stock-code, .scode, .etf-code { color: #999999 !important; }
+
+/* ===== SECTION / CARD TITLE BARS ===== */
+.section-title::before { background: var(--accent) !important; }
+.card-title::before    { background: var(--accent) !important; }
+
+/* ===== BADGE (공통) ===== */
+.badge { background: var(--accent) !important; color: #ffffff !important; }
+
+/* ===== HARDCODED COLOR FIXES ===== */
+/* 뉴스 featured 이미지 */
+.featured-img {
+  background: linear-gradient(135deg, #dde8f6 0%, #eef2fa 100%) !important;
+  color: #888888 !important;
+}
+
+/* 배지 색상 (모두 새 팔레트로) */
+.badge-hot     { background: rgba(209,67,67,0.10) !important; color: var(--up)    !important; border-color: rgba(209,67,67,0.25) !important; }
+.badge-up      { background: rgba(209,67,67,0.08) !important; color: var(--up)    !important; border-color: rgba(209,67,67,0.20) !important; }
+.badge-foreign { background: rgba(18,97,196,0.08) !important; color: var(--accent)!important; border-color: rgba(18,97,196,0.20) !important; }
+.badge-main    { background: rgba(124,58,237,0.08) !important; color: #7c3aed    !important; border-color: rgba(124,58,237,0.20) !important; }
+.badge-qrt     { background: rgba(18,97,196,0.08) !important; color: var(--accent)!important; border-color: rgba(18,97,196,0.20) !important; }
+.badge-major   { background: rgba(209,67,67,0.08) !important; color: var(--up)    !important; border-color: rgba(209,67,67,0.20) !important; }
+.badge-div     { background: rgba(18,97,196,0.08) !important; color: var(--accent)!important; border-color: rgba(18,97,196,0.20) !important; }
+.badge-own     { background: rgba(245,158,11,0.10) !important; color: #d97706    !important; border-color: rgba(245,158,11,0.25) !important; }
+.badge-other   { background: rgba(100,116,139,0.10) !important; color: #555555   !important; border-color: rgba(100,116,139,0.20) !important; }
+
+/* 뉴스 카테고리 */
+.cat-market  { background: rgba(18,97,196,0.08)  !important; color: var(--accent)!important; border-color: rgba(18,97,196,0.20) !important; }
+.cat-company { background: rgba(18,97,196,0.08)  !important; color: var(--accent)!important; border-color: rgba(18,97,196,0.20) !important; }
+.cat-global  { background: rgba(124,58,237,0.08) !important; color: #7c3aed     !important; border-color: rgba(124,58,237,0.20) !important; }
+.cat-economy { background: rgba(245,158,11,0.10) !important; color: #d97706     !important; border-color: rgba(245,158,11,0.25) !important; }
+.cat-tech    { background: rgba(209,67,67,0.08)  !important; color: var(--up)   !important; border-color: rgba(209,67,67,0.20) !important; }
+
+/* 시장 배지 */
+.market-badge        { background: var(--accent) !important; color: #ffffff !important; }
+.market-badge.kospi  { background: rgba(18,97,196,0.10) !important; color: var(--accent) !important; }
+.market-badge.kosdaq { background: rgba(209,67,67,0.10) !important; color: var(--up)     !important; }
+
+/* 테마주 배지 */
+.hot-badge { background: var(--up)     !important; color: #ffffff !important; }
+.new-badge { background: var(--accent) !important; color: #ffffff !important; }
+
+/* 종목 비교 */
+.a-color { color: var(--up)     !important; }
+.b-color { color: var(--accent) !important; }
+.winner  { color: var(--up)     !important; }
+.loser   { color: #999999       !important; }
+
+/* 계산기 */
+.result-val            { color: var(--accent)  !important; }
+.result-big .value     { color: var(--up)      !important; }
+.goal-result           { background: rgba(18,97,196,0.06) !important; border-color: var(--accent) !important; }
+.goal-result strong    { color: var(--accent) !important; font-family: 'IBM Plex Mono', monospace; }
+
+/* 용어 사전 */
+.term-abbr { color: var(--accent) !important; background: rgba(18,97,196,0.08) !important; border-color: rgba(18,97,196,0.20) !important; }
+.formula   { color: var(--accent) !important; background: rgba(18,97,196,0.05) !important; border-color: rgba(18,97,196,0.15) !important; }
+.good { background: rgba(209,67,67,0.05) !important; border-color: rgba(209,67,67,0.15) !important; }
+.bad  { background: rgba(18,97,196,0.05) !important; border-color: rgba(18,97,196,0.15) !important; }
+.good-label { color: var(--up)     !important; }
+.bad-label  { color: var(--accent) !important; }
+
+/* 증권사 */
+.best-badge { background: var(--accent) !important; color: #ffffff !important; }
+.fee-val    { color: var(--up) !important; }
+.cta-btn.secondary { background: transparent !important; border-color: var(--accent) !important; color: var(--accent) !important; }
+
+/* 통계 */
+.stat-num { color: var(--accent) !important; }
+
+/* 뉴스/공시 */
+.news-press    { color: var(--accent2) !important; }
+.dart-company  { color: var(--accent2) !important; }
+
+/* 주식 상세 */
+.code-badge { background: #f5f6f8 !important; border-color: #e0e2e8 !important; color: #666666 !important; }
+
+/* 하단 고정 푸터 배경 */
+footer { background: #f5f6f8 !important; }
+
+/* ─────────────────────────────
+   하단 탭바 (모바일 전용)
+   ───────────────────────────── */
+.bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 58px;
+  background: #ffffff;
+  border-top: 1px solid #e0e2e8;
+  z-index: 300;
+  flex-direction: row;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
+}
+.bn-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  text-decoration: none;
+  color: #888888;
+  font-size: 10px;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Noto Sans KR', sans-serif;
+  padding: 6px 2px 4px;
+  transition: color 0.15s;
+}
+.bn-item.active { color: #1261c4; }
+.bn-item:hover  { color: #1261c4; }
+.bn-icon  { font-size: 20px; line-height: 1.1; }
+.bn-label { font-size: 10px; }
+
+/* ─────────────────────────────
+   더보기 슬라이드 패널
+   ───────────────────────────── */
+.more-menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+}
+.more-menu.open { display: block; }
+.more-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.40);
+}
+.more-panel {
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 78%;
+  max-width: 300px;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.26s cubic-bezier(0.4,0,0.2,1);
+}
+.more-menu.open .more-panel { transform: translateX(0); }
+.more-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid #e0e2e8;
+}
+.more-header .logo { font-size: 17px !important; }
+.more-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #888888;
+  padding: 4px 6px;
+  line-height: 1;
+}
+.more-links { padding: 4px 0; }
+.more-links a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 20px;
+  color: #333333;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  border-bottom: 1px solid #f0f1f4;
+  transition: background 0.12s, color 0.12s;
+}
+.more-links a:last-child { border-bottom: none; }
+.more-links a:hover { background: #f0f5ff; color: #1261c4; }
+
+/* ─────────────────────────────
+   모바일 nav 재정의 (탭바 전환)
+   ───────────────────────────── */
+@media (max-width: 768px) {
+  body { padding-bottom: 62px; }
+  .bottom-nav { display: flex; }
+
+  /* 상단 nav: 로고 + 검색창만 (링크 숨김) */
+  nav {
+    flex-wrap: nowrap !important;
+    overflow: hidden !important;
+    padding: 0 14px !important;
+    gap: 0 !important;
+    min-height: 50px !important;
+    align-items: center !important;
+  }
+  nav .logo { flex: 1 !important; }
+  nav > a:not(.logo),
+  nav .nav-links { display: none !important; }
+  nav .nav-right {
+    display: flex !important;
+    margin-left: 0 !important;
+  }
+  .search-bar { width: 140px !important; }
+  .hamburger  { display: none !important; }
+
+  /* nav-open 드롭다운 비활성화 */
+  nav.nav-open > a:not(.logo),
+  nav.nav-open .nav-links { display: none !important; }
+  nav.nav-open .nav-right { display: flex !important; }
+}
