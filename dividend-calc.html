@@ -45,14 +45,12 @@
 
   /* INPUT ROW */
   .input-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
-  @media(max-width:600px){.input-row{grid-template-columns:1fr;}}
   .input-group label{display:block;font-size:12px;color:var(--text3);margin-bottom:6px;}
   .input-group input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:15px;font-family:'IBM Plex Mono',monospace;outline:none;transition:border-color 0.2s;}
   .input-group input:focus{border-color:var(--accent);}
 
   /* RESULT */
   .result-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px;}
-  @media(max-width:500px){.result-grid{grid-template-columns:1fr;}}
   .result-card{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:16px;}
   .result-label{font-size:11px;color:var(--text3);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px;}
   .result-val{font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:500;color:var(--accent);}
@@ -81,21 +79,8 @@
   .custom-input-row input{flex:1;min-width:120px;}
   .custom-input-row .btn{flex-shrink:0;}
 
-  @media(max-width:600px){
-    .hero{padding:20px 16px;}
-    .hero h1{font-size:20px;}
-    .main{padding:20px 16px;}
-    .card{padding:16px;}
-    .stock-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));}
-    .custom-input-row{flex-direction:column;}
-    .custom-input-row input{width:100%!important;min-width:unset;}
-    .result-val{font-size:18px;}
-    .goal-row{flex-direction:column;align-items:flex-start;}
-    .goal-input{width:100%;}
-    .div-table th,.div-table td{padding:8px 4px;font-size:12px;}
-    .col-div-hide{display:none;}
-  }
 </style>
+<link rel="stylesheet" href="/mobile.css">
 </head>
 <body>
 <nav>
@@ -109,6 +94,7 @@
   <a href="/news.html">뉴스</a>
   <a href="/dart.html">공시</a>
   <a href="/tax-calc.html">세금계산기</a>
+  <button class="hamburger" onclick="this.closest('nav').classList.toggle('nav-open')" aria-label="메뉴">☰</button>
 </nav>
 
 <div class="hero">

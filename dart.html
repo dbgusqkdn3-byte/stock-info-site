@@ -35,7 +35,6 @@
   .page-header p { color:var(--text2); font-size:14px; }
 
   .main { max-width:1100px; margin:0 auto; padding:28px 24px; display:grid; grid-template-columns:1fr 300px; gap:24px; }
-  @media(max-width:800px) { .main { grid-template-columns:1fr; } }
 
   .filters { display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap; align-items:center; }
   .filter-select { background:var(--bg3); border:1px solid var(--border); border-radius:8px; padding:8px 14px; color:var(--text); font-size:13px; font-family:inherit; outline:none; cursor:pointer; }
@@ -83,14 +82,8 @@
 
   footer { border-top:1px solid var(--border); padding:24px; text-align:center; color:var(--text3); font-size:12px; margin-top:48px; }
 
-  @media(max-width:600px) {
-    nav { padding:0 16px; gap:12px; }
-    .nav-links { display:none; }
-    .page-header h1 { font-size:20px; }
-    .main { padding:20px 16px; }
-    .dart-title { white-space:normal; }
-  }
 </style>
+<link rel="stylesheet" href="/mobile.css">
 </head>
 <body>
 
@@ -108,6 +101,7 @@
   <div class="nav-right">
     <input class="search-bar" type="text" placeholder="종목 검색..." id="searchInput">
   </div>
+  <button class="hamburger" onclick="this.closest('nav').classList.toggle('nav-open')" aria-label="메뉴">☰</button>
 </nav>
 
 <div class="page-header">

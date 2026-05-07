@@ -69,6 +69,7 @@
   .btn:hover{opacity:0.85;}
   footer{border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--text3);font-size:12px;margin-top:48px;}
 </style>
+<link rel="stylesheet" href="/mobile.css">
 </head>
 <body>
 <nav>
@@ -82,6 +83,7 @@
   <a href="/news.html">뉴스</a>
   <a href="/dart.html">공시</a>
   <a href="/tax-calc.html">세금계산기</a>
+  <button class="hamburger" onclick="this.closest('nav').classList.toggle('nav-open')" aria-label="메뉴">☰</button>
 </nav>
 
 <div class="hero">

@@ -45,7 +45,6 @@
   .tab-panel.active { display:block; }
 
   .calc-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
-  @media(max-width:680px) { .calc-grid { grid-template-columns:1fr; } }
 
   .calc-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:24px; }
   .calc-card h3 { font-size:15px; font-weight:700; margin-bottom:20px; display:flex; align-items:center; gap:8px; }
@@ -78,13 +77,8 @@
 
   footer { border-top:1px solid var(--border); padding:24px; text-align:center; color:var(--text3); font-size:12px; margin-top:48px; }
 
-  @media(max-width:600px) {
-    .page-header h1 { font-size:20px; }
-    .main { padding:20px 16px; }
-    nav { gap:12px; padding:0 16px; }
-    .nav-links { display:none; }
-  }
 </style>
+<link rel="stylesheet" href="/mobile.css">
 </head>
 <body>
 
@@ -102,6 +96,7 @@
   <div class="nav-right">
     <input class="search-bar" type="text" placeholder="종목 검색..." id="searchInput">
   </div>
+  <button class="hamburger" onclick="this.closest('nav').classList.toggle('nav-open')" aria-label="메뉴">☰</button>
 </nav>
 
 <div class="page-header">

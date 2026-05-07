@@ -49,23 +49,8 @@ nav a{color:var(--text2);text-decoration:none;font-size:13px;white-space:nowrap;
 .bep-item{flex:1;min-width:140px;background:var(--bg);border-radius:10px;padding:14px;text-align:center;}
 .bep-label{font-size:11px;color:var(--text3);margin-bottom:6px;}
 .bep-val{font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:600;}
-@media(max-width:768px){
-  nav{gap:10px;padding:0 12px;overflow-x:auto;}
-  nav a{font-size:12px;white-space:nowrap;}
-  nav a:nth-child(n+5){display:none;}
-  .hero{padding:24px 16px;}
-  .hero h1{font-size:20px;}
-  .main{padding:20px 14px;}
-  .card{padding:16px;}
-  .input-grid{grid-template-columns:1fr 1fr!important;}
-  .result-big .value{font-size:24px;}
-  .bep-visual{grid-template-columns:1fr 1fr;}
-}
-@media(max-width:480px){
-  nav a:not(.logo){display:none;}
-  .input-grid{grid-template-columns:1fr!important;}
-}
 </style>
+<link rel="stylesheet" href="/mobile.css">
 </head>
 <body>
 <nav>
@@ -78,6 +63,7 @@ nav a{color:var(--text2);text-decoration:none;font-size:13px;white-space:nowrap;
   <a href="/news.html">뉴스</a>
   <a href="/dart.html">공시</a>
   <a href="/tax-calc.html">세금계산기</a>
+  <button class="hamburger" onclick="this.closest('nav').classList.toggle('nav-open')" aria-label="메뉴">☰</button>
 </nav>
 <div class="hero">
   <div class="hero-inner">

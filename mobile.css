@@ -1,0 +1,175 @@
+/* ─────────────────────────────────────────────
+   mobile.css  ·  주식인포 모바일 반응형 공통
+   ───────────────────────────────────────────── */
+
+/* ===== 햄버거 버튼 (데스크톱에서 숨김) ===== */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text, #e2e8f0);
+  font-size: 22px;
+  cursor: pointer;
+  padding: 0 6px;
+  line-height: 56px;
+  height: 56px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* ─────────────────────────────
+   768px 이하
+   ───────────────────────────── */
+@media (max-width: 768px) {
+
+  /* 햄버거 표시 */
+  .hamburger { display: block; }
+
+  /* NAV: 드롭다운 구조로 전환 */
+  nav {
+    flex-wrap: wrap !important;
+    overflow: visible !important;
+    padding: 0 16px !important;
+    gap: 0 !important;
+    align-items: flex-start;
+  }
+  nav .logo {
+    line-height: 56px;
+    padding: 0 !important;
+  }
+
+  /* 기본 상태: 링크 모두 숨김 */
+  nav > a:not(.logo),
+  nav .nav-links,
+  nav .nav-right { display: none !important; }
+
+  /* 열린 상태: 드롭다운 */
+  nav.nav-open > a:not(.logo) {
+    display: block !important;
+    width: 100%;
+    padding: 13px 4px;
+    border-top: 1px solid var(--border, #1e2d4a);
+    font-size: 14px !important;
+    color: var(--text2, #94a3b8) !important;
+    white-space: normal;
+  }
+  nav.nav-open .nav-links {
+    display: flex !important;
+    flex-direction: column;
+    width: 100%;
+  }
+  nav.nav-open .nav-links a {
+    display: block !important;
+    padding: 13px 4px;
+    border-top: 1px solid var(--border, #1e2d4a);
+    font-size: 14px !important;
+    color: var(--text2, #94a3b8) !important;
+  }
+  nav.nav-open .nav-right {
+    display: flex !important;
+    width: 100%;
+    padding: 10px 0 12px;
+    border-top: 1px solid var(--border, #1e2d4a);
+  }
+  nav.nav-open .search-bar { width: 100% !important; }
+
+  /* ── 페이지 레이아웃 ── */
+  .hero        { padding: 20px 16px !important; }
+  .hero h1     { font-size: 20px !important; }
+  .hero p      { font-size: 13px; }
+  .page-header { padding: 20px 16px !important; }
+  .page-header h1 { font-size: 20px !important; }
+  .main        { padding: 16px !important; grid-template-columns: 1fr !important; }
+  .breadcrumb  { padding: 10px 16px; }
+
+  /* ── 테이블 ── */
+  .table-wrap  { overflow-x: auto; }
+  tbody td     { padding: 9px 10px !important; font-size: 12px; }
+  thead th     { padding: 8px 10px !important; font-size: 10px; }
+
+  /* ── 그리드 ── */
+  .grid2, .grid3          { grid-template-columns: 1fr !important; }
+  .calc-grid              { grid-template-columns: 1fr !important; }
+  .compare-header         { grid-template-columns: 1fr !important; }
+  .selector-row           { grid-template-columns: 1fr 40px 1fr !important; }
+  .category-grid          { grid-template-columns: 1fr 1fr !important; }
+  .detail-grid            { grid-template-columns: 1fr 1fr !important; }
+  .popular-grid           { grid-template-columns: 1fr 1fr !important; }
+  .broker-grid            { grid-template-columns: 1fr !important; }
+  .input-row              { grid-template-columns: 1fr !important; }
+  .input-grid             { grid-template-columns: 1fr 1fr !important; }
+  .indicator-row          { grid-template-columns: 1fr 1fr !important; }
+
+  /* ── 카드 ── */
+  .card        { padding: 16px; }
+  .card-title  { font-size: 13px; margin-bottom: 14px; }
+  .broker-header { padding: 14px; }
+  .broker-body   { padding: 14px; }
+
+  /* ── 히어로 통계 ── */
+  .hero-stats          { gap: 10px; }
+  .hero-stat           { min-width: 140px; padding: 12px 14px; }
+  .hero-stat .value    { font-size: 16px !important; }
+
+  /* ── 종목 상세 ── */
+  .stock-header { flex-direction: column; gap: 16px; }
+  .stock-stats  {
+    border-left: none !important;
+    padding-left: 0 !important;
+    border-top: 1px solid var(--border, #1e2d4a);
+    padding-top: 14px;
+    flex-wrap: wrap;
+  }
+  .stat-item       { min-width: 120px; }
+  .stock-name-big  { font-size: 20px !important; }
+  .price-big       { font-size: 28px !important; }
+  .chart-wrap      { height: 180px !important; }
+
+  /* ── 검색/필터 ── */
+  .search-row         { flex-direction: column; }
+  .search-row select  { width: 100%; }
+  .stats-row          { gap: 8px; }
+  .stat-pill          { padding: 6px 12px; font-size: 12px; }
+
+  /* ── 계산기 ── */
+  .goal-row     { flex-direction: column; align-items: flex-start; }
+  .goal-input   { width: 100% !important; }
+  .result-val   { font-size: 18px !important; }
+  .result-big .value { font-size: 24px !important; }
+  .result-grid  { grid-template-columns: 1fr 1fr !important; }
+
+  /* ── 기타 ── */
+  .good-bad     { flex-direction: column; }
+  .tabs, .tab-row { overflow-x: auto; }
+  .tab, .tab-btn  { white-space: nowrap; }
+  .filter-row     { gap: 6px; }
+  .filter-btn     { padding: 6px 12px; font-size: 11px; }
+  .theme-tabs     { gap: 6px; }
+  .theme-tab      { padding: 6px 12px; font-size: 12px; }
+  .cat-tabs       { gap: 6px; }
+  .cat-tab        { padding: 6px 12px; font-size: 12px; }
+  .section-title  { font-size: 14px; }
+  .term-header    { flex-wrap: wrap; gap: 8px; }
+  .term-short     { margin-left: 0 !important; text-align: left !important; }
+  .full-width     { grid-column: 1 !important; }
+  .ind-val        { font-size: 14px !important; }
+  .pagination     { flex-wrap: wrap; }
+  .dart-title     { white-space: normal; }
+  .featured-img   { height: 120px; }
+}
+
+/* ─────────────────────────────
+   480px 이하
+   ───────────────────────────── */
+@media (max-width: 480px) {
+  .hero h1         { font-size: 18px !important; }
+  .hero-stats      { flex-direction: column; }
+  .hero-stat       { min-width: unset; width: 100%; }
+  .result-grid     { grid-template-columns: 1fr !important; }
+  .stock-grid      { grid-template-columns: 1fr 1fr !important; }
+  .category-grid   { grid-template-columns: 1fr 1fr !important; }
+  .col-mob-hide, .col-div-hide { display: none !important; }
+  .news-thumb      { display: none; }
+  .input-grid      { grid-template-columns: 1fr !important; }
+  .indicator-row   { grid-template-columns: 1fr !important; }
+}

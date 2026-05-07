@@ -53,7 +53,6 @@
   /* GRID */
   .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
   .grid3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-bottom:16px; }
-  @media(max-width:700px) { .grid2,.grid3 { grid-template-columns:1fr; } .stock-stats { border-left:none; padding-left:0; border-top:1px solid var(--border); padding-top:16px; } }
 
   .card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; }
   .card-title { font-size:13px; font-weight:700; color:var(--text2); margin-bottom:16px; display:flex; align-items:center; gap:8px; }
@@ -83,6 +82,7 @@
   .related-link:hover { color:var(--accent); }
   footer { border-top:1px solid var(--border); padding:24px; text-align:center; color:var(--text3); font-size:12px; margin-top:48px; }
 </style>
+<link rel="stylesheet" href="/mobile.css">
 </head>
 <body>
 <nav>
@@ -94,6 +94,7 @@
   <a href="/news.html">뉴스</a>
   <a href="/dart.html">공시</a>
   <a href="/tax-calc.html">세금계산기</a>
+  <button class="hamburger" onclick="this.closest('nav').classList.toggle('nav-open')" aria-label="메뉴">☰</button>
 </nav>
 
 <div class="breadcrumb">

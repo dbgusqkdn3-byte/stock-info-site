@@ -48,7 +48,6 @@
   .etf-detail{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;display:none;}
   .etf-detail.show{display:block;}
   .detail-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;}
-  @media(max-width:600px){.detail-grid{grid-template-columns:repeat(2,1fr);}}
   .detail-item{background:var(--bg);border-radius:8px;padding:12px;}
   .detail-label{font-size:11px;color:var(--text3);margin-bottom:4px;}
   .detail-val{font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:500;}
@@ -58,6 +57,7 @@
 
   footer{border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--text3);font-size:12px;margin-top:48px;}
 </style>
+<link rel="stylesheet" href="/mobile.css">
 </head>
 <body>
 <nav>
@@ -71,6 +71,7 @@
   <a href="/news.html">뉴스</a>
   <a href="/dart.html">공시</a>
   <a href="/tax-calc.html">세금계산기</a>
+  <button class="hamburger" onclick="this.closest('nav').classList.toggle('nav-open')" aria-label="메뉴">☰</button>
 </nav>
 
 <div class="hero">
