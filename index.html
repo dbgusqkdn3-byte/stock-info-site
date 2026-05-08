@@ -10,50 +10,61 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0e1a;
-    --bg2: #0f1629;
-    --bg3: #151d35;
-    --card: #111827;
-    --border: #1e2d4a;
+    --bg: #0d1421;
+    --bg2: #111c2d;
+    --bg3: #162035;
+    --card: #1a2332;
+    --border: #243044;
     --accent: #00d4aa;
-    --accent2: #0ea5e9;
-    --up: #22c55e;
-    --down: #ef4444;
-    --text: #e2e8f0;
+    --accent2: #4d9eff;
+    --up: #ff4d4d;
+    --down: #4d9eff;
+    --text: #ffffff;
     --text2: #94a3b8;
     --text3: #64748b;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { background: var(--bg); color: var(--text); font-family: 'Noto Sans KR', sans-serif; font-size: 14px; line-height: 1.6; }
 
-  /* NAV */
-  nav { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; align-items: center; min-height: 56px; gap: 24px; position: sticky; top: 0; z-index: 100; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
-  nav::-webkit-scrollbar { display: none; }
-  .logo { font-size: 18px; font-weight: 700; color: var(--accent); letter-spacing: -0.5px; text-decoration: none; flex-shrink: 0; }
-  .logo span { color: var(--text); }
-  nav a { color: var(--text2); text-decoration: none; font-size: 13px; transition: color 0.2s; white-space: nowrap; flex-shrink: 0; }
-  nav a:hover { color: var(--text); }
-  .nav-right { margin-left: auto; display: flex; gap: 12px; flex-shrink: 0; }
-  .search-bar { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 6px 14px; color: var(--text); font-size: 13px; font-family: inherit; width: 200px; outline: none; transition: border-color 0.2s; }
-  .search-bar::placeholder { color: var(--text3); }
-  .search-bar:focus { border-color: var(--accent); }
+  nav { background: var(--bg); border-bottom: 1px solid var(--border); padding: 0 20px; display: flex; align-items: center; height: 54px; gap: 0; position: sticky; top: 0; z-index: 200; flex-wrap: nowrap; }
+  .logo { font-size: 18px; font-weight: 700; color: #fff; letter-spacing: -0.5px; text-decoration: none; flex-shrink: 0; }
+  .nav-tabs { display: flex; align-items: center; overflow-x: auto; scrollbar-width: none; flex: 1; margin-left: 20px; height: 54px; }
+  .nav-tabs::-webkit-scrollbar { display: none; }
+  .ntab { display: inline-flex; align-items: center; padding: 0 16px; height: 54px; font-size: 14px; color: var(--text2); text-decoration: none; white-space: nowrap; flex-shrink: 0; border-bottom: 2px solid transparent; box-sizing: border-box; transition: color 0.2s; }
+  .ntab:hover { color: var(--text); }
+  .ntab.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 500; }
+  .hamburger { flex-shrink: 0; margin-left: auto; background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; padding: 6px 4px; line-height: 1; transition: opacity 0.2s; }
+  .hamburger:hover { opacity: 0.7; }
+
+  /* TICKER */
+  .ticker { background: var(--bg3); border-bottom: 1px solid var(--border); padding: 8px 0; overflow: hidden; white-space: nowrap; }
+  .ticker-inner { display: inline-flex; gap: 40px; animation: scroll 30s linear infinite; }
+  .ticker-item { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--text2); }
+  .ticker-item span { margin-left: 6px; }
+  @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
   /* HERO */
-  .hero { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 48px 24px 40px; }
+  .hero { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 32px 24px 28px; }
   .hero-inner { max-width: 1100px; margin: 0 auto; }
-  .hero h1 { font-size: 32px; font-weight: 700; line-height: 1.2; margin-bottom: 12px; }
+  .hero h1 { font-size: 26px; font-weight: 700; line-height: 1.3; margin-bottom: 6px; }
   .hero h1 em { color: var(--accent); font-style: normal; }
-  .hero p { color: var(--text2); font-size: 15px; margin-bottom: 28px; }
-  .hero-stats { display: flex; gap: 32px; flex-wrap: wrap; }
-  .hero-stat { background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 14px 20px; min-width: 160px; }
-  .hero-stat .label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; }
-  .hero-stat .value { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
-  .hero-stat .change { font-size: 12px; margin-top: 4px; }
+  .hero-sub { color: var(--text2); font-size: 13px; margin-bottom: 20px; }
+
+  /* INDEX CARDS (KOSPI / KOSDAQ / 환율) */
+  .index-row { display: flex; gap: 14px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .index-row::-webkit-scrollbar { display: none; }
+  .idx-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; min-width: 200px; flex: 1; display: flex; gap: 12px; align-items: flex-start; cursor: pointer; transition: border-color 0.2s; }
+  .idx-card:hover { border-color: var(--accent); }
+  .idx-info { flex: 1; min-width: 0; }
+  .idx-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 4px; }
+  .idx-value { font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 500; line-height: 1; }
+  .idx-change { font-size: 12px; margin-top: 4px; font-family: 'IBM Plex Mono', monospace; }
+  .sparkline { width: 80px; height: 30px; flex-shrink: 0; align-self: center; }
   .up { color: var(--up); }
   .down { color: var(--down); }
 
   /* MAIN */
-  .main { max-width: 1100px; margin: 0 auto; padding: 32px 24px; display: grid; grid-template-columns: 1fr 320px; gap: 24px; }
+  .main { max-width: 1100px; margin: 0 auto; padding: 28px 24px; display: grid; grid-template-columns: 1fr 300px; gap: 24px; }
 
   /* SECTION */
   .section-title { font-size: 15px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
@@ -73,11 +84,14 @@
   .price-col { font-family: 'IBM Plex Mono', monospace; font-weight: 500; text-align: right; }
   .change-col { text-align: right; font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
   .vol-col { text-align: right; color: var(--text2); font-size: 12px; font-family: 'IBM Plex Mono', monospace; }
+  .spark-col { text-align: right; width: 64px; }
+  .spark-col svg { display: block; margin-left: auto; }
 
   /* SIDEBAR */
   .sidebar { display: flex; flex-direction: column; gap: 20px; }
   .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
-  .card-title { font-size: 13px; font-weight: 700; margin-bottom: 14px; color: var(--text2); }
+  .card-title { font-size: 13px; font-weight: 700; margin-bottom: 14px; color: var(--text2); display: flex; align-items: center; gap: 6px; }
+  .card-title::before { content: ''; width: 3px; height: 14px; background: var(--accent); border-radius: 2px; display: block; flex-shrink: 0; }
   .mini-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
   .mini-row:last-child { border-bottom: none; }
   .mini-name { color: var(--text); }
@@ -85,27 +99,14 @@
 
   /* CATEGORY GRID */
   .category-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 28px; }
-  .cat-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; cursor: pointer; transition: border-color 0.2s, background 0.2s; text-decoration: none; display: block; }
+  .cat-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px 16px 14px; cursor: pointer; transition: border-color 0.2s, background 0.2s; text-decoration: none; display: block; }
   .cat-card:hover { border-color: var(--accent); background: var(--bg3); }
-  .cat-icon { font-size: 22px; margin-bottom: 8px; }
-  .cat-name { font-size: 13px; font-weight: 700; color: var(--text); }
-  .cat-desc { font-size: 11px; color: var(--text3); margin-top: 3px; }
-  .cat-count { font-size: 10px; color: var(--accent); margin-top: 6px; font-family: 'IBM Plex Mono', monospace; }
+  .cat-name { font-size: 14px; font-weight: 700; color: var(--text); }
+  .cat-desc { font-size: 11px; color: var(--text3); margin-top: 4px; }
+  .cat-count { font-size: 11px; color: var(--accent); margin-top: 8px; font-family: 'IBM Plex Mono', monospace; font-weight: 500; }
 
   /* FOOTER */
   footer { border-top: 1px solid var(--border); padding: 24px; text-align: center; color: var(--text3); font-size: 12px; margin-top: 48px; }
-
-  /* TICKER TAPE */
-  .ticker { background: var(--bg3); border-bottom: 1px solid var(--border); padding: 8px 0; overflow: hidden; white-space: nowrap; }
-  .ticker-inner { display: inline-flex; gap: 40px; animation: scroll 30s linear infinite; }
-  .ticker-item { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--text2); }
-  .ticker-item span { margin-left: 6px; }
-  @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-  /* LOADING SHIMMER */
-  @keyframes shimmer { 0% { opacity: 0.4; } 50% { opacity: 0.8; } 100% { opacity: 0.4; } }
-  .shimmer { animation: shimmer 1.5s infinite; background: var(--bg3); border-radius: 4px; }
-
 </style>
 <link rel="stylesheet" href="/mobile.css">
 <link rel="stylesheet" href="/common.css">
@@ -113,18 +114,40 @@
 <body>
 
 <nav>
-  <a href="/" class="logo">주식<span>인포</span></a>
-  <a href="/stocks.html">국내주식</a>
-  <a href="/etf.html">ETF</a>
-  <a href="/dividend-calc.html">배당계산기</a>
-  <a href="/compare.html">종목비교</a>
-  <a href="/news.html">뉴스</a>
-  <a href="/dart.html">공시</a>
-  <a href="/tax-calc.html">세금계산기</a>
-  <div class="nav-right">
-    <input class="search-bar" type="text" placeholder="종목명 또는 코드 검색..." id="searchInput">
+  <a href="/" class="logo">주식인포</a>
+  <div class="nav-tabs">
+    <a href="/stocks.html" class="ntab">주식</a>
+    <a href="/hot.html" class="ntab">급등</a>
+    <a href="/calculator.html" class="ntab">손익계산기</a>
+    <a href="/etf.html" class="ntab">ETF</a>
+    <a href="/theme.html" class="ntab">테마주</a>
   </div>
+  <button class="hamburger" onclick="document.getElementById('sideMenu').classList.add('open')">≡</button>
 </nav>
+
+<div class="side-menu" id="sideMenu">
+  <div class="side-overlay" onclick="document.getElementById('sideMenu').classList.remove('open')"></div>
+  <div class="side-panel">
+    <div class="side-header">
+      <span>전체 메뉴</span>
+      <button class="side-close" onclick="document.getElementById('sideMenu').classList.remove('open')">✕</button>
+    </div>
+    <div class="side-links">
+      <a href="/stocks.html">국내주식</a>
+      <a href="/etf.html">ETF</a>
+      <a href="/theme.html">테마주</a>
+      <a href="/hot.html">급등주</a>
+      <a href="/dividend-calc.html">배당계산기</a>
+      <a href="/calculator.html">손익계산기</a>
+      <a href="/compare.html">종목비교</a>
+      <a href="/news.html">뉴스</a>
+      <a href="/dart.html">공시정보</a>
+      <a href="/tax-calc.html">세금계산기</a>
+      <a href="/glossary.html">용어사전</a>
+      <a href="/broker.html">증권사비교</a>
+    </div>
+  </div>
+</div>
 
 <div class="ticker" aria-hidden="true">
   <div class="ticker-inner" id="tickerInner">
@@ -149,28 +172,41 @@
 
 <div class="hero">
   <div class="hero-inner">
-    <h1>한국 주식 <em>전종목</em> 정보를<br>한 곳에서</h1>
-    <p>KOSPI · KOSDAQ 2,700개 종목 · ETF · 배당 · 재무제표 · 종목 비교</p>
-    <div class="hero-stats">
-      <div class="hero-stat">
-        <div class="label">KOSPI</div>
-        <div class="value up" id="kospi">2,584.32</div>
-        <div class="change up" id="kospiChg">▲ 12.45 (+0.48%)</div>
+    <h1>한국 주식 <em>전종목</em> 정보를 한 곳에서</h1>
+    <p class="hero-sub">KOSPI · KOSDAQ 2,700개 종목 · ETF · 배당 · 재무제표 · 종목 비교</p>
+    <div class="index-row">
+      <div class="idx-card">
+        <div class="idx-info">
+          <div class="idx-label">KOSPI</div>
+          <div class="idx-value up" id="kospi">2,584.32</div>
+          <div class="idx-change up" id="kospiChg">▲ 12.45 (+0.48%)</div>
+        </div>
+        <svg class="sparkline" viewBox="0 0 80 30" preserveAspectRatio="none">
+          <polyline points="0,22 10,20 20,18 30,17 40,15 50,13 60,14 70,10 80,7"
+            fill="none" stroke="#ff4d4d" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
       </div>
-      <div class="hero-stat">
-        <div class="label">KOSDAQ</div>
-        <div class="value up" id="kosdaq">743.21</div>
-        <div class="change up" id="kosdaqChg">▲ 3.87 (+0.52%)</div>
+      <div class="idx-card">
+        <div class="idx-info">
+          <div class="idx-label">KOSDAQ</div>
+          <div class="idx-value up" id="kosdaq">743.21</div>
+          <div class="idx-change up" id="kosdaqChg">▲ 3.87 (+0.52%)</div>
+        </div>
+        <svg class="sparkline" viewBox="0 0 80 30" preserveAspectRatio="none">
+          <polyline points="0,24 10,21 20,23 30,19 40,17 50,14 60,16 70,11 80,8"
+            fill="none" stroke="#ff4d4d" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
       </div>
-      <div class="hero-stat">
-        <div class="label">원/달러</div>
-        <div class="value down" id="usdkrw">1,378.50</div>
-        <div class="change down" id="usdChg">▼ 2.30 (-0.17%)</div>
-      </div>
-      <div class="hero-stat">
-        <div class="label">등록 종목</div>
-        <div class="value" style="color:var(--accent2)">2,741</div>
-        <div class="change" style="color:var(--text3)">실시간 업데이트</div>
+      <div class="idx-card">
+        <div class="idx-info">
+          <div class="idx-label">원/달러</div>
+          <div class="idx-value down" id="usdkrw">1,378.50</div>
+          <div class="idx-change down" id="usdChg">▼ 2.30 (-0.17%)</div>
+        </div>
+        <svg class="sparkline" viewBox="0 0 80 30" preserveAspectRatio="none">
+          <polyline points="0,7 10,9 20,8 30,11 40,13 50,15 60,14 70,18 80,21"
+            fill="none" stroke="#4d9eff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
       </div>
     </div>
   </div>
@@ -181,26 +217,22 @@
 
     <div class="category-grid">
       <a href="/stocks.html" class="cat-card">
-        <div class="cat-icon">📈</div>
-        <div class="cat-name">국내 주식</div>
+        <div class="cat-name">국내주식</div>
         <div class="cat-desc">KOSPI · KOSDAQ 전종목</div>
         <div class="cat-count">2,741개 종목</div>
       </a>
       <a href="/etf.html" class="cat-card">
-        <div class="cat-icon">🗂</div>
         <div class="cat-name">ETF</div>
         <div class="cat-desc">구성종목 · 수익률 분석</div>
         <div class="cat-count">742개 ETF</div>
       </a>
       <a href="/dividend-calc.html" class="cat-card">
-        <div class="cat-icon">💰</div>
         <div class="cat-name">배당주</div>
         <div class="cat-desc">배당일 · 배당률 · 이력</div>
         <div class="cat-count">배당 캘린더</div>
       </a>
       <a href="/compare.html" class="cat-card">
-        <div class="cat-icon">⚖️</div>
-        <div class="cat-name">종목 비교</div>
+        <div class="cat-name">종목비교</div>
         <div class="cat-desc">재무 · 주가 · 수익률</div>
         <div class="cat-count">A vs B 비교</div>
       </a>
@@ -217,10 +249,11 @@
             <th style="text-align:right">등락률</th>
             <th style="text-align:right">거래량</th>
             <th style="text-align:right">시가총액</th>
+            <th style="text-align:right" class="col-spark">추세</th>
           </tr>
         </thead>
         <tbody id="stockTable">
-          <tr><td colspan="6" style="text-align:center;padding:20px;color:var(--text3)">데이터 로딩 중...</td></tr>
+          <tr><td colspan="7" style="text-align:center;padding:20px;color:var(--text3)">데이터 로딩 중...</td></tr>
         </tbody>
       </table>
     </div>
@@ -239,15 +272,15 @@
 
   <div class="sidebar">
     <div class="card">
-      <div class="card-title">📊 업종별 등락</div>
+      <div class="card-title">업종별 등락</div>
       <div id="sectorList"></div>
     </div>
     <div class="card">
-      <div class="card-title">🔥 오늘의 급등주</div>
+      <div class="card-title">오늘의 급등주</div>
       <div id="hotList"></div>
     </div>
     <div class="card">
-      <div class="card-title">📅 이번 달 배당 일정</div>
+      <div class="card-title">이번 달 배당 일정</div>
       <div id="dividendList"></div>
     </div>
   </div>
@@ -260,15 +293,31 @@
 
 <script>
 const stocks = [
-  { rank:1, name:'삼성전자', code:'005930', price:74800, change:0.48, vol:'18,234,521', cap:'446조' },
-  { rank:2, name:'SK하이닉스', code:'000660', price:168500, change:1.23, vol:'4,823,100', cap:'122조' },
-  { rank:3, name:'LG에너지솔루션', code:'373220', price:412000, change:-0.72, vol:'312,440', cap:'96조' },
-  { rank:4, name:'삼성바이오로직스', code:'207940', price:952000, change:0.85, vol:'124,332', cap:'67조' },
-  { rank:5, name:'현대차', code:'005380', price:234000, change:0.43, vol:'892,100', cap:'50조' },
-  { rank:6, name:'NAVER', code:'035420', price:181500, change:-1.08, vol:'1,234,500', cap:'29조' },
-  { rank:7, name:'셀트리온', code:'068270', price:178900, change:2.11, vol:'2,341,200', cap:'24조' },
-  { rank:8, name:'카카오', code:'035720', price:43200, change:-0.46, vol:'5,123,400', cap:'19조' },
+  { rank:1, name:'삼성전자', code:'005930', price:74800, change:0.48, vol:'18,234,521', cap:'446조', spark:'up' },
+  { rank:2, name:'SK하이닉스', code:'000660', price:168500, change:1.23, vol:'4,823,100', cap:'122조', spark:'up' },
+  { rank:3, name:'LG에너지솔루션', code:'373220', price:412000, change:-0.72, vol:'312,440', cap:'96조', spark:'dn' },
+  { rank:4, name:'삼성바이오로직스', code:'207940', price:952000, change:0.85, vol:'124,332', cap:'67조', spark:'up' },
+  { rank:5, name:'현대차', code:'005380', price:234000, change:0.43, vol:'892,100', cap:'50조', spark:'up' },
+  { rank:6, name:'NAVER', code:'035420', price:181500, change:-1.08, vol:'1,234,500', cap:'29조', spark:'dn' },
+  { rank:7, name:'셀트리온', code:'068270', price:178900, change:2.11, vol:'2,341,200', cap:'24조', spark:'up' },
+  { rank:8, name:'카카오', code:'035720', price:43200, change:-0.46, vol:'5,123,400', cap:'19조', spark:'dn' },
 ];
+
+const upSparks = [
+  '0,20 10,18 20,16 30,17 40,14 50,13 60,11 70,12 80,9',
+  '0,22 10,19 20,21 30,17 40,15 50,13 60,14 70,10 80,8',
+  '0,21 10,19 20,17 30,16 40,18 50,14 60,12 70,10 80,7',
+];
+const dnSparks = [
+  '0,8 10,9 20,11 30,10 40,13 50,15 60,14 70,18 80,21',
+  '0,7 10,10 20,9 30,12 40,13 50,16 60,15 70,19 80,22',
+];
+
+function sparkSVG(s, idx) {
+  const pts = s === 'up' ? upSparks[idx % upSparks.length] : dnSparks[idx % dnSparks.length];
+  const color = s === 'up' ? 'var(--up)' : 'var(--down)';
+  return `<svg width="60" height="22" viewBox="0 0 80 30" preserveAspectRatio="none"><polyline points="${pts}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+}
 
 const popular = [
   { rank:1, name:'삼성전자', code:'005930', price:74800, change:0.48 },
@@ -299,7 +348,7 @@ const dividends = [
 function fmt(n) { return n.toLocaleString('ko-KR'); }
 
 function renderStockTable() {
-  document.getElementById('stockTable').innerHTML = stocks.map(s => `
+  document.getElementById('stockTable').innerHTML = stocks.map((s, i) => `
     <tr onclick="location.href='/stock.html?code=${s.code}&name=${encodeURIComponent(s.name)}'">
       <td style="color:var(--text3);font-size:12px">${s.rank}</td>
       <td><div class="stock-name">${s.name}</div><div class="stock-code">${s.code}</div></td>
@@ -307,6 +356,7 @@ function renderStockTable() {
       <td class="change-col ${s.change>=0?'up':'down'}">${s.change>=0?'▲':'▼'} ${Math.abs(s.change).toFixed(2)}%</td>
       <td class="vol-col">${s.vol}</td>
       <td class="vol-col">${s.cap}</td>
+      <td class="spark-col">${sparkSVG(s.spark, i)}</td>
     </tr>`).join('');
 }
 
@@ -340,49 +390,19 @@ function renderDividends() {
   document.getElementById('dividendList').innerHTML = dividends.map(d => `
     <div class="mini-row">
       <div><div class="mini-name">${d.name}</div><div style="font-size:11px;color:var(--text3)">${d.date}</div></div>
-      <span class="mini-val" style="color:var(--accent2)">${d.amount}</span>
+      <span class="mini-val" style="color:var(--accent)">${d.amount}</span>
     </div>`).join('');
 }
-
-document.getElementById('searchInput').addEventListener('keydown', e => {
-  if(e.key === 'Enter') {
-    const q = e.target.value.trim();
-    if(q) location.href = '/stocks.html?q=' + encodeURIComponent(q);
-  }
-});
 
 renderStockTable(); renderPopular(); renderSectors(); renderHot(); renderDividends();
 </script>
 
 <nav class="bottom-nav">
-  <a href="/" class="bn-item active"><span class="bn-icon">🏠</span><span class="bn-label">홈</span></a>
-  <a href="/stocks.html" class="bn-item"><span class="bn-icon">📈</span><span class="bn-label">주식</span></a>
-  <a href="/hot.html" class="bn-item"><span class="bn-icon">🔥</span><span class="bn-label">급등</span></a>
-  <a href="/calculator.html" class="bn-item"><span class="bn-icon">🧮</span><span class="bn-label">계산기</span></a>
-  <button class="bn-item" onclick="document.getElementById('moreMenu').classList.add('open')"><span class="bn-icon">☰</span><span class="bn-label">더보기</span></button>
+  <a href="/" class="bn-item active">홈</a>
+  <a href="/stocks.html" class="bn-item">주식</a>
+  <a href="/hot.html" class="bn-item">급등</a>
+  <a href="/calculator.html" class="bn-item">계산기</a>
+  <button class="bn-item" onclick="document.getElementById('sideMenu').classList.add('open')">더보기</button>
 </nav>
-<div class="more-menu" id="moreMenu">
-  <div class="more-overlay" onclick="document.getElementById('moreMenu').classList.remove('open')"></div>
-  <div class="more-panel">
-    <div class="more-header">
-      <a href="/" class="logo" style="text-decoration:none">주식<span>인포</span></a>
-      <button class="more-close" onclick="document.getElementById('moreMenu').classList.remove('open')">✕</button>
-    </div>
-    <div class="more-links">
-      <a href="/stocks.html">📈 국내주식</a>
-      <a href="/etf.html">🗂 ETF</a>
-      <a href="/theme.html">🎯 테마주</a>
-      <a href="/hot.html">🔥 급등주</a>
-      <a href="/dividend-calc.html">💰 배당계산기</a>
-      <a href="/compare.html">⚖️ 종목비교</a>
-      <a href="/calculator.html">🧮 수익률계산기</a>
-      <a href="/news.html">📰 뉴스</a>
-      <a href="/dart.html">📋 공시</a>
-      <a href="/tax-calc.html">💸 세금계산기</a>
-      <a href="/glossary.html">📖 용어사전</a>
-      <a href="/broker.html">🏦 증권사비교</a>
-    </div>
-  </div>
-</div>
 </body>
 </html>
