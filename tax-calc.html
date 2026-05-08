@@ -84,20 +84,40 @@
 <body>
 
 <nav>
-  <a href="/" class="logo">주식<span>인포</span></a>
-  <div class="nav-links">
-    <a href="/stocks.html">국내주식</a>
-    <a href="/etf.html">ETF</a>
-    <a href="/news.html">뉴스</a>
-    <a href="/tax-calc.html" class="active">세금계산기</a>
-    <a href="/heatmap.html">히트맵</a>
-    <a href="/ipo.html">IPO</a>
-    <a href="/calendar.html">경제캘린더</a>
+  <a href="/" class="logo">주식인포</a>
+  <div class="nav-tabs">
+    <a href="/stocks.html" class="ntab">주식</a>
+    <a href="/hot.html" class="ntab">급등</a>
+    <a href="/calculator.html" class="ntab active">손익계산기</a>
+    <a href="/etf.html" class="ntab">ETF</a>
+    <a href="/theme.html" class="ntab">테마주</a>
   </div>
-  <div class="nav-right">
-    <input class="search-bar" type="text" placeholder="종목 검색..." id="searchInput">
-  </div>
+  <button class="hamburger" onclick="document.getElementById('sideMenu').classList.add('open')">≡</button>
 </nav>
+
+<div class="side-menu" id="sideMenu">
+  <div class="side-overlay" onclick="document.getElementById('sideMenu').classList.remove('open')"></div>
+  <div class="side-panel">
+    <div class="side-header">
+      <span>전체 메뉴</span>
+      <button class="side-close" onclick="document.getElementById('sideMenu').classList.remove('open')">✕</button>
+    </div>
+    <div class="side-links">
+      <a href="/stocks.html">국내주식</a>
+      <a href="/etf.html">ETF</a>
+      <a href="/theme.html">테마주</a>
+      <a href="/hot.html">급등주</a>
+      <a href="/dividend-calc.html">배당계산기</a>
+      <a href="/calculator.html">손익계산기</a>
+      <a href="/compare.html">종목비교</a>
+      <a href="/news.html">뉴스</a>
+      <a href="/dart.html">공시정보</a>
+      <a href="/tax-calc.html">세금계산기</a>
+      <a href="/glossary.html">용어사전</a>
+      <a href="/broker.html">증권사비교</a>
+    </div>
+  </div>
+</div>
 
 <div class="page-header">
   <div class="page-header-inner">
@@ -456,34 +476,11 @@ document.getElementById('searchInput').addEventListener('keydown', e => {
 </script>
 
 <nav class="bottom-nav">
-  <a href="/" class="bn-item"><span class="bn-icon">🏠</span><span class="bn-label">홈</span></a>
-  <a href="/stocks.html" class="bn-item"><span class="bn-icon">📈</span><span class="bn-label">주식</span></a>
-  <a href="/hot.html" class="bn-item"><span class="bn-icon">🔥</span><span class="bn-label">급등</span></a>
-  <a href="/calculator.html" class="bn-item active"><span class="bn-icon">🧮</span><span class="bn-label">계산기</span></a>
-  <button class="bn-item" onclick="document.getElementById('moreMenu').classList.add('open')"><span class="bn-icon">☰</span><span class="bn-label">더보기</span></button>
+  <a href="/" class="bn-item">홈</a>
+  <a href="/stocks.html" class="bn-item">주식</a>
+  <a href="/hot.html" class="bn-item">급등</a>
+  <a href="/calculator.html" class="bn-item">계산기</a>
+  <button class="bn-item" onclick="document.getElementById('sideMenu').classList.add('open')">더보기</button>
 </nav>
-<div class="more-menu" id="moreMenu">
-  <div class="more-overlay" onclick="document.getElementById('moreMenu').classList.remove('open')"></div>
-  <div class="more-panel">
-    <div class="more-header">
-      <a href="/" class="logo" style="text-decoration:none">주식<span>인포</span></a>
-      <button class="more-close" onclick="document.getElementById('moreMenu').classList.remove('open')">✕</button>
-    </div>
-    <div class="more-links">
-      <a href="/stocks.html">📈 국내주식</a>
-      <a href="/etf.html">🗂 ETF</a>
-      <a href="/theme.html">🎯 테마주</a>
-      <a href="/hot.html">🔥 급등주</a>
-      <a href="/dividend-calc.html">💰 배당계산기</a>
-      <a href="/compare.html">⚖️ 종목비교</a>
-      <a href="/calculator.html">🧮 수익률계산기</a>
-      <a href="/news.html">📰 뉴스</a>
-      <a href="/dart.html">📋 공시</a>
-      <a href="/tax-calc.html">💸 세금계산기</a>
-      <a href="/glossary.html">📖 용어사전</a>
-      <a href="/broker.html">🏦 증권사비교</a>
-    </div>
-  </div>
-</div>
 </body>
 </html>
