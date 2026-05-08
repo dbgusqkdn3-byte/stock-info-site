@@ -294,6 +294,15 @@ footer { background: var(--bg2) !important; border-top: 1px solid var(--border) 
 .bn-item.active { color: var(--accent); }
 .bn-item:hover  { color: var(--accent); }
 .bottom-nav .bn-item { display: flex !important; }
+.bn-logo {
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: var(--accent) !important;
+  letter-spacing: -0.5px !important;
+  flex: 1.2 !important;
+}
+.bn-logo:hover { color: var(--accent) !important; opacity: 0.8; }
+.bn-ham { font-size: 20px !important; }
 
 /* ─────────────────────────────
    더보기 슬라이드 패널 (more-menu)
