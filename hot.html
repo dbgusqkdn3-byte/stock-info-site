@@ -26,8 +26,8 @@
 
   .main{max-width:1100px;margin:0 auto;padding:32px 24px;display:grid;grid-template-columns:1fr 1fr;gap:20px;}
 
-  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
-  .card-title{font-size:15px;font-weight:700;padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+  .card-title{font-size:15px;font-weight:700;padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;}
   .card-title::before{content:'';width:3px;height:16px;background:var(--accent);border-radius:2px;}
   .card-title .badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;margin-left:4px;}
   .badge-up{background:rgba(34,197,94,0.15);color:var(--up);}
@@ -35,12 +35,12 @@
   .badge-foreign{background:rgba(14,165,233,0.15);color:var(--accent2);}
 
   table{width:100%;border-collapse:collapse;}
-  thead th{background:var(--bg3);padding:9px 16px;text-align:left;font-size:11px;color:var(--text3);font-weight:500;border-bottom:1px solid var(--border);}
+  thead th{background:var(--bg3);padding:10px 14px;text-align:left;font-size:11px;color:var(--text3);font-weight:500;letter-spacing:0.5px;border-bottom:1px solid var(--border);}
   tbody tr{border-bottom:1px solid var(--border);transition:background 0.15s;cursor:pointer;}
   tbody tr:last-child{border-bottom:none;}
   tbody tr:hover{background:var(--bg3);}
-  tbody td{padding:11px 16px;font-size:13px;}
-  .rank{color:var(--text3);font-size:12px;width:24px;}
+  tbody td{padding:11px 14px;font-size:13px;}
+  .rank{color:var(--text3);font-size:12px;white-space:nowrap;}
   .rank.top{color:var(--down);font-weight:700;}
   .sname{font-weight:500;}
   .scode{font-size:11px;color:var(--text3);font-family:'IBM Plex Mono',monospace;}
@@ -103,7 +103,7 @@
   <div class="card">
     <div class="card-title">오늘의 급등주 <span class="badge badge-hot">KOSPI+KOSDAQ</span></div>
     <table>
-      <thead><tr><th>순위</th><th>종목명</th><th style="text-align:right">현재가</th><th style="text-align:right">등락률</th></tr></thead>
+      <thead><tr><th style="width:40px">순위</th><th>종목명</th><th style="text-align:right">현재가</th><th style="text-align:right">등락률</th></tr></thead>
       <tbody id="hotTable"></tbody>
     </table>
   </div>
@@ -111,7 +111,7 @@
   <div class="card">
     <div class="card-title">52주 신고가 <span class="badge badge-up">신규 돌파</span></div>
     <table>
-      <thead><tr><th>순위</th><th>종목명</th><th style="text-align:right">현재가</th><th style="text-align:right">신고가</th></tr></thead>
+      <thead><tr><th style="width:40px">순위</th><th>종목명</th><th style="text-align:right">현재가</th><th style="text-align:right">신고가</th></tr></thead>
       <tbody id="highTable"></tbody>
     </table>
   </div>
@@ -119,7 +119,7 @@
   <div class="card">
     <div class="card-title">외국인 순매수 Top 10 <span class="badge badge-foreign">외국인</span></div>
     <table>
-      <thead><tr><th>순위</th><th>종목명</th><th style="text-align:right">현재가</th><th style="text-align:right">순매수</th></tr></thead>
+      <thead><tr><th style="width:40px">순위</th><th>종목명</th><th style="text-align:right">현재가</th><th style="text-align:right">순매수</th></tr></thead>
       <tbody id="foreignTable"></tbody>
     </table>
   </div>
@@ -127,7 +127,7 @@
   <div class="card">
     <div class="card-title">기관 순매수 Top 10 <span class="badge badge-up">기관</span></div>
     <table>
-      <thead><tr><th>순위</th><th>종목명</th><th style="text-align:right">현재가</th><th style="text-align:right">순매수</th></tr></thead>
+      <thead><tr><th style="width:40px">순위</th><th>종목명</th><th style="text-align:right">현재가</th><th style="text-align:right">순매수</th></tr></thead>
       <tbody id="instTable"></tbody>
     </table>
   </div>
@@ -135,7 +135,7 @@
   <div class="card full-width">
     <div class="card-title">거래량 급증 종목 <span class="badge badge-hot">전일 대비</span></div>
     <table>
-      <thead><tr><th>순위</th><th>종목명</th><th style="text-align:right">현재가</th><th style="text-align:right">등락률</th><th style="text-align:right">거래량</th><th style="text-align:right">전일비</th></tr></thead>
+      <thead><tr><th style="width:40px">순위</th><th>종목명</th><th style="text-align:right">현재가</th><th style="text-align:right">등락률</th><th style="text-align:right">거래량</th><th style="text-align:right">전일비</th></tr></thead>
       <tbody id="volTable"></tbody>
     </table>
   </div>
