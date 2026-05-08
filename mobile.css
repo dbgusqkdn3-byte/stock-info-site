@@ -8,19 +8,35 @@
    ───────────────────────────── */
 @media (max-width: 768px) {
 
+  /* ── 가로 넘침 방지 ── */
+  html, body   { overflow-x: hidden !important; max-width: 100vw !important; }
+
   /* ── 페이지 레이아웃 ── */
-  .hero        { padding: 20px 16px !important; }
+  .hero        { padding: 12px 12px 16px !important; }
   .hero h1     { font-size: 20px !important; }
   .hero p      { font-size: 13px; }
   .page-header { padding: 20px 16px !important; }
   .page-header h1 { font-size: 20px !important; }
-  .main        { padding: 16px !important; grid-template-columns: 1fr !important; }
+  .main        { padding: 12px !important; grid-template-columns: 1fr !important; }
   .breadcrumb  { padding: 10px 16px; }
 
   /* ── 테이블 ── */
   .table-wrap  { overflow-x: auto; }
   tbody td     { padding: 9px 10px !important; font-size: 12px; }
   thead th     { padding: 8px 10px !important; font-size: 11px; }
+
+  /* ── 모바일 컬럼 숨김 ── */
+  .col-mob-hide { display: none !important; }
+
+  /* ── 인덱스 순위 테이블 (index.html) ── */
+  .idx-rank-table             { overflow-x: hidden !important; }
+  .idx-rank-table table       { table-layout: auto !important; width: 100% !important; }
+  .idx-rank-table thead th    { width: auto !important; min-width: 0 !important; }
+
+  /* ── 인덱스 카드 ── */
+  .idx-card           { min-width: 160px !important; padding: 10px 12px !important; }
+  .idx-spark-labels   { display: none !important; }
+  .sparkline          { width: 60px !important; height: 26px !important; }
 
   /* ── 그리드 ── */
   .grid2, .grid3          { grid-template-columns: 1fr !important; }
@@ -107,4 +123,19 @@
   .news-thumb      { display: none; }
   .input-grid      { grid-template-columns: 1fr !important; }
   .indicator-row   { grid-template-columns: 1fr !important; }
+
+  /* ── 인덱스 카드 3열 그리드 ── */
+  .index-row   { display: grid !important; grid-template-columns: repeat(3, 1fr) !important; overflow: visible !important; gap: 8px !important; }
+  .idx-card    { min-width: 0 !important; padding: 8px !important; }
+  .idx-spark   { display: none !important; }
+  .idx-value   { font-size: 13px !important; }
+  .idx-change  { font-size: 10px !important; }
+  .idx-label   { font-size: 10px !important; }
+
+  /* ── 종목명 말줄임 ── */
+  .stock-name  { max-width: 90px !important; overflow: hidden !important; text-overflow: ellipsis !important; }
+
+  /* ── 패딩 최소화 ── */
+  .main        { padding: 10px !important; }
+  .hero        { padding: 10px 10px 14px !important; }
 }
